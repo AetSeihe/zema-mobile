@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- <ImageView
+        android:id="@+id/launch_screen.png"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/loading_app"
+        android:scaleType="centerCrop"
+        android:src="@drawable/launch_screen"
+        android:visibility="visible"
+        tools:ignore="ImageContrastCheck"
+        tools:visibility="visible" /> -->
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_splash" 
+/>
+</RelativeLayout>
