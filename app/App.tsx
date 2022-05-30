@@ -1,14 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React, {useEffect, useState} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {SafeAreaView, StatusBar, Text} from 'react-native';
 
 const App = () => {
@@ -16,6 +7,10 @@ const App = () => {
   const [text, setText] = useState('Текста нет!');
 
   const init = async () => {
+    await new Promise(res => {
+      setTimeout(() => res(true), 5000);
+    });
+
     const res = await fetch(url, {
       headers: {
         Authorization:
@@ -24,6 +19,8 @@ const App = () => {
     });
     const json = await res.json();
     setText(JSON.stringify(json, null, 2));
+
+    SplashScreen.hide();
   };
 
   useEffect(() => {

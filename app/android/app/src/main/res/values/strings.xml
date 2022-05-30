@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Зёма</string>
+    <string name="loading_app">loading app</string>
 </resources>
