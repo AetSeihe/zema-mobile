@@ -21,8 +21,8 @@ const initalValues = {
   password: '',
 };
 const schema = yup.object({
-  login: yup.string().required('Это обязатаельное поле'),
-  password: yup.string().required('Это обязатаельное поле'),
+  login: yup.string().required(locale.fields.required),
+  password: yup.string().required(locale.fields.required),
 });
 
 const isErrorField = (error: any, param1: string, param2: string) => {

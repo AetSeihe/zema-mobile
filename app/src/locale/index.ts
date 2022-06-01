@@ -20,12 +20,22 @@ export const locale = {
     confirmPassword: 'Подтверждение пароля',
 
   },
-
   errors: {
     authError: {
       title: 'Похоже вы не авторизованны',
       description: 'Войдите  заного чтобы продолжить работу',
       button: 'Перейти к авторизации',
     },
+  },
+  fields: {
+    required: 'Это обязатаельное поле',
+    invalidEmail: 'Введите валидный email',
+    invalidPassword: 'Пароль должен содержать минимум 5 символов',
+  },
+  screensName: {
+    posts: 'Посты',
+    friends: 'Друзья',
+    work: 'Работа',
+    profile: 'Профиль',
   },
 };

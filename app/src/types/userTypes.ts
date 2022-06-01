@@ -23,25 +23,51 @@ export type AuthUserApiType = {
     user: UserType;
 }
 
+
+export type GenderType = 'null' | 'male' | 'female'
+
+export type EducationType = 'null'
+| 'average'
+| 'secondary_special'
+| 'secondary_special'
+| 'unfinished_higher_education'
+| 'higher'
+| 'bachelor_degree'
+| 'master'
+| 'candidate'
+| 'doctor'
+
+
+export type UserImageType = {
+    id: number;
+    fileName: string;
+    createdAt: string;
+    updatedAt: string;
+    userId: string;
+}
+
 export type UserType = {
     id: number;
     name: string;
     phone: string;
     email: string;
     isUpdateProfile: boolean;
-    surname: null;
-    patronomic: null;
-    currentCityID: null;
-    birthCityID: null;
-    work: null;
-    howCanHelp: null;
-    needHelp: null;
-    gender: string;
-    interesting: null;
-    age: number;
-    education: string;
+    surname?: string;
+    patronomic?: string;
+    currentCityID?: number;
+    birthCityID?: number;
+    work?: string;
+    howCanHelp?: string;
+    needHelp?: string;
+    gender: GenderType;
+    interesting?: string;
+    age?: number;
+    education: EducationType;
     createdAt: Date;
     updatedAt: Date;
-    images: any[];
-    mainPhoto: null;
+    images: UserImageType[];
+    mainPhoto?: {
+      id: number;
+      image: UserImageType;
+    };
 }

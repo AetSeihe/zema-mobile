@@ -26,12 +26,12 @@ const initalValues = {
 
 };
 const schema = yup.object({
-  name: yup.string().required('Это обязатаельное поле'),
-  phone: yup.string().required('Это обязатаельное поле'),
-  email: yup.string().email('Введите валидный email').required('Это обязатаельное поле'),
-  password: yup.string().min(5, 'Пароль должен содержать минимум 5 символов').required('Это обязатаельное поле'),
+  name: yup.string().required(locale.fields.required),
+  phone: yup.string().required(locale.fields.required),
+  email: yup.string().email(locale.fields.invalidEmail).required(locale.fields.required),
+  password: yup.string().min(5, locale.fields.invalidPassword).required(locale.fields.required),
   confirmPassword: yup.string()
-      .oneOf([yup.ref('password'), null], 'Пароли должны совпадать').required('Это обязатаельное поле'),
+      .oneOf([yup.ref('password'), null], locale.fields.required),
 });
 
 const isErrorField = (error: any, param1: string, param2: string) => {

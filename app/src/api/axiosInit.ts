@@ -7,7 +7,7 @@ const authErrorLocale = locale.errors.authError;
 
 const apiConfig = {
   headers: {
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ItCa0LjRgNC40LvQuyIsInVzZXJJZCI6MSwiaWF0IjoxNjUxNzQ2OTU3fQ.mhFyZ3nNzz1wpXmG-ITOmiRlCGLZBZjPWgAwCgOAC7E',
+    'Authorization': '',
   },
 };
 

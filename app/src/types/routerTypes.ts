@@ -23,11 +23,11 @@ export type SignUpScreenType = {
 }
 
 
-export type HomeScreenType = {
+export type PostsScreenType = {
     name: routerNames.HOME,
     options?: {}
 
 }
 
 
-export type RouterType = ErrorScreenType | SignInScreenType | HomeScreenType | SignUpScreenType
+export type RouterType = ErrorScreenType | SignInScreenType | PostsScreenType | SignUpScreenType

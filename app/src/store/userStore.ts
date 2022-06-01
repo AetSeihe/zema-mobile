@@ -8,6 +8,7 @@ class UserStore {
   loading: boolean = false;
 
   authErrors: string[] = [];
+
   constructor() {
     makeAutoObservable(this);
   }
