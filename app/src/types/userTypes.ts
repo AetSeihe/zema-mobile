@@ -1,3 +1,4 @@
+import {Asset} from 'react-native-image-picker';
 
 export type SignInDataType = {
     login: string,
@@ -11,6 +12,25 @@ export type SignUpDataType = {
     password: string;
 }
 
+export type UpdateProfileType = {
+    images: Asset[];
+    name?: string;
+    phone?: string;
+    mainPhotoId?: number | null;
+    password?: string;
+    email?: string;
+    currentCityId?: number | null;
+    birthCityId?: number | null;
+    work?: string;
+    how_can_help?: string;
+    need_help?: string;
+    gender?: GenderType;
+    education?: EducationType | string;
+    surname?: string;
+    patronomic?: string;
+    interesting?: string;
+    [x: string]: any;
+}
 
 export type OneUserApiType = {
     message: string;
@@ -46,6 +66,12 @@ export type UserImageType = {
     userId: string;
 }
 
+export type CityType = {
+    id: number,
+    regionId: number,
+    title: string;
+}
+
 export type UserType = {
     id: number;
     name: string;
@@ -57,14 +83,16 @@ export type UserType = {
     currentCityID?: number;
     birthCityID?: number;
     work?: string;
-    howCanHelp?: string;
-    needHelp?: string;
+    how_can_help?: string;
+    need_help?: string;
     gender: GenderType;
     interesting?: string;
     age?: number;
     education: EducationType;
     createdAt: Date;
     updatedAt: Date;
+    birthCity?: CityType;
+    currentCity?: CityType;
     images: UserImageType[];
     mainPhoto?: {
       id: number;

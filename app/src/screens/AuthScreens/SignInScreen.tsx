@@ -41,6 +41,7 @@ const SignInScreen = () => {
     });
   };
 
+
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style={styles.content}>
@@ -77,6 +78,7 @@ const SignInScreen = () => {
 
               <Button
                 loading={userStore.loading}
+                disabled={userStore.loading}
                 style={styles.submitButton}
                 titleStyle={styles.submitText}
                 title={signInLocale.buttonText} color={theme.main}

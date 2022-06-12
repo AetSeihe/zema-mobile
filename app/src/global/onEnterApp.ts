@@ -7,17 +7,15 @@ import {getAuthDataIfExist} from '../utils/userAuthToken';
 export const onEnterApp = async () => {
   const authData = await getAuthDataIfExist();
 
-  console.log('!authData', !authData);
 
   if (!authData) {
     applicationStore.appIsLoading = true;
     return routerNames.SIGN_IN;
   }
 
-  console.log('!!!!!!!======!!!!!!!', !authData);
-
 
   setAuthorizationToken(authData.token);
-  userStore.signInById(authData.userId);
+  await userStore.signInById(authData.userId);
+  applicationStore.appIsLoading = true;
   return routerNames.HOME;
 };

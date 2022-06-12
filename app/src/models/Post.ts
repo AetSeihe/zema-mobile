@@ -1,4 +1,5 @@
-import {LikeType, PostFileType, PostType} from '../types/postTypes';
+import {CommentType, LikeType, PostType} from '../types/postTypes';
+import {FileModule} from './FileModule';
 import {User} from './User';
 
 
@@ -6,22 +7,41 @@ export class Post {
   id: number;
   title: string;
   text: string;
-  createdAt: Date;
   user: User;
   likes: LikeType[];
-  postFiles: PostFileType[];
+  comments: CommentType[];
+  files: FileModule[];
   userId: number;
   updatedAt: Date;
+  createdAt: Date;
+
 
   constructor(data: PostType) {
     this.id = data.id;
     this.title = data.title;
     this.text = data.text;
-    this.user = data.user;
+    this.user = new User(data.user);
     this.likes = data.likes;
     this.userId = data.userId;
-    this.postFiles = data.postFiles;
-    this.createdAt = data.createdAt;
+    this.files = data.postFiles.map((file) => new FileModule({
+      id: file.id,
+      fileName: file.fileName,
+    }));
+    this.createdAt = new Date(data.createdAt);
     this.updatedAt = data.updatedAt;
+    this.comments = data.comments || [];
+  }
+
+
+  get images(): FileModule[] {
+    return this.files.filter((file) => file.type === 'image');
+  }
+
+  get dateCreated(): string {
+    return `${this.createdAt.getDate()}.${this.createdAt.getMonth()}.${this.createdAt.getFullYear()}`;
+  }
+
+  userLiked(userId:number): boolean {
+    return this.likes.some((like) => like.userId == userId);
   }
 }

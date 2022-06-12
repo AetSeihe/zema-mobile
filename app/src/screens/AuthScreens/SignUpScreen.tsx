@@ -47,15 +47,16 @@ const SignUpScreen = () => {
 
 
   const onSubmit = async (values: typeof initalValues) => {
-    const resError = await userStore.signUp(values);
-    if (resError) {
-      Alert.alert(resError);
+    const error = await userStore.signUp(values);
+    if (error) {
+      Alert.alert(error);
       return;
     }
     routerStore.pushToScene({
       name: routerNames.HOME,
     });
   };
+
 
   return (
     <ScrollView>
@@ -132,7 +133,7 @@ const SignUpScreen = () => {
                   </Text>
                 </TouchableOpacity>
                 <Button
-                  disabled={!consent}
+                  disabled={!consent || userStore.loading}
                   loading={userStore.loading}
                   style={styles.submitButton}
                   titleStyle={styles.submitText}

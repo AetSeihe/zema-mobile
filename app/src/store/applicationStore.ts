@@ -3,6 +3,7 @@ import {makeAutoObservable} from 'mobx';
 
 class ApplicationStore {
   appIsLoading = false;
+
   constructor() {
     makeAutoObservable(this);
   }

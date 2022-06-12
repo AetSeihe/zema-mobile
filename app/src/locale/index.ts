@@ -12,6 +12,7 @@ export const locale = {
       signInTitle: 'Уже есть аккаунт ?',
       signInText: 'Войти',
     },
+
     login: 'Номер телефона или email',
     name: 'Ваше имя',
     phone: 'Номер телефона',
@@ -19,6 +20,13 @@ export const locale = {
     password: 'Пароль',
     confirmPassword: 'Подтверждение пароля',
 
+  },
+  postForm: {
+    labelTitle: 'Заголовок',
+    labelPlaceholder: 'Моя история переезда на Кубань',
+    text: 'Текст поста',
+    textPlaceholder: 'Все началось с того что...',
+    submit: 'Добавить пост',
   },
   errors: {
     authError: {
@@ -37,5 +45,16 @@ export const locale = {
     friends: 'Друзья',
     work: 'Работа',
     profile: 'Профиль',
+    chat: ' Чаты',
+    postForm: 'Добавление поста',
+    settings: 'Настройки',
+  },
+  network: {
+    title: 'Ошиба соеденения',
+    description: 'Попробуйте перезагрузить приложение',
+    button: 'Перегразузить ',
+  },
+  header: {
+    backButtonTitle: 'Назад',
   },
 };

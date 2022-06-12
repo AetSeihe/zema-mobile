@@ -1,17 +1,54 @@
 import {postApi} from '../api/postApi';
 import {Post} from '../models/Post';
-import {GetAllPostsOptions} from '../types/postTypes';
+import {CommentType, CreatePostType, GetAllPostsOptions, LikeType} from '../types/postTypes';
 
 
 const getAllPosts = async (options: GetAllPostsOptions): Promise<Post[]> => {
   try {
     const data = await postApi.getAllPostsByOptions(options);
-    return [];
+    return data.data.posts.map((data) =>new Post(data));
   } catch (e: any) {
-    console.log(e.response.data);
-    throw new Error('хер');
+    throw new Error(e.message);
   }
 };
 
-export const postService = {getAllPosts};
+const createPost = async (data: CreatePostType): Promise<void> => {
+  try {
+    await postApi.createPost(data);
+  } catch (e: any) {
+    console.log('!!! error ', e);
+    throw new Error('Упс... что-то пошло не так');
+  }
+};
+
+const likePost = async (post: Post): Promise<LikeType> => {
+  try {
+    const res = await postApi.likePostById(post.id);
+    return res.data;
+  } catch (e: any) {
+    throw new Error('Упс... что-то пошло не так');
+  }
+};
+
+
+const commentPost = async (comment: string, postId: number): Promise<CommentType> => {
+  try {
+    const res = await postApi.commentPostById(comment, postId);
+    return res.data.comment;
+  } catch (e: any) {
+    throw new Error('Упс... что-то пошло не так');
+  }
+};
+
+
+const getPostById = async (postId: number) => {
+  try {
+    const res = await postApi.getPostById(postId);
+    return new Post(res.data.post);
+  } catch (e: any) {
+    throw new Error('Упс... что-то пошло не так');
+  }
+};
+
+export const postService = {getAllPosts, createPost, likePost, commentPost, getPostById};
 

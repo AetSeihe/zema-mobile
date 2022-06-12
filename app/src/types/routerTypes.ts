@@ -1,10 +1,13 @@
 import {routerNames} from '../constants/routerNames';
+import {Post} from '../models/Post';
+import {User} from '../models/User';
 
 
 export type ErrorScreenOptionsType = {
     title: string;
     description?: string;
     buttonText: string;
+    onPressButton: () => void;
 }
 
 export type ErrorScreenType = {
@@ -22,12 +25,38 @@ export type SignUpScreenType = {
     options?: {}
 }
 
+export type ProfileScreenOptionsType = {
+    user: User
+}
 
-export type PostsScreenType = {
-    name: routerNames.HOME,
+export type ProfileScreenType = {
+    name: routerNames.PROFILE,
+    options: ProfileScreenOptionsType
+}
+
+export type ProfileSettingsScreenType = {
+    name: routerNames.PROFILE_SETTING,
+    options: {}
+}
+
+export type PostScreenOptionsType = {
+  post: Post,
+};
+export type PostScreenType = {
+    name: routerNames.Post,
+    options: PostScreenOptionsType
+}
+
+export type PostFormScreenType = {
+    name: routerNames.POST_FORM,
     options?: {}
-
 }
 
 
-export type RouterType = ErrorScreenType | SignInScreenType | PostsScreenType | SignUpScreenType
+export type RouterType = ErrorScreenType |
+                        SignInScreenType |
+                        PostScreenType |
+                        SignUpScreenType |
+                        ProfileScreenType |
+                        ProfileSettingsScreenType |
+                        PostFormScreenType

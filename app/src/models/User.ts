@@ -1,5 +1,33 @@
-import {EducationType, GenderType, UserImageType, UserType} from '../types/userTypes';
+import {CityType, EducationType, GenderType, UserType} from '../types/userTypes';
+import {FileModule} from './FileModule';
 
+type GendersLiteralType = {
+  // eslint-disable-next-line no-unused-vars
+  [key in GenderType]: string;
+};
+
+export const GENDER_LITERAL: GendersLiteralType = {
+  null: 'Не указан',
+  male: 'муж',
+  female: 'жен',
+};
+
+export type EducationsLiteralType = {
+  // eslint-disable-next-line no-unused-vars
+  [key in EducationType]: string;
+};
+
+export const EDUCATION_LITERAL: EducationsLiteralType = {
+  null: 'Не указан',
+  average: 'Среднее',
+  secondary_special: 'Колледж',
+  unfinished_higher_education: 'Незаконченное высшее',
+  higher: 'Высшее',
+  bachelor_degree: 'Бакалавриат',
+  master: 'Магистратура',
+  candidate: 'Кандидат наук',
+  doctor: 'Доктор наук',
+};
 
 export class User {
   id: number;
@@ -20,10 +48,12 @@ export class User {
   education: EducationType;
   createdAt: Date;
   updatedAt: Date;
-  images: UserImageType[];
+  birthCity?: CityType;
+  currentCity?: CityType;
+  images: FileModule[];
   mainPhoto?: {
     id: number;
-    image: UserImageType;
+    image: FileModule;
   };
 
   constructor(data: UserType) {
@@ -35,8 +65,8 @@ export class User {
     this.currentCityID = data.currentCityID;
     this.birthCityID = data.birthCityID;
     this.work = data.work;
-    this.howCanHelp = data.howCanHelp;
-    this.needHelp = data.needHelp;
+    this.howCanHelp = data.how_can_help;
+    this.needHelp = data.need_help;
     this.gender = data.gender;
     this.email = data.email;
     this.interesting = data.interesting;
@@ -44,8 +74,35 @@ export class User {
     this.age = data.age;
     this.education = data.education;
     this.createdAt = data.createdAt;
-    this.mainPhoto = data.mainPhoto;
-    this.images = data.images;
+    this.birthCity = data.birthCity;
+    this.currentCity = data.currentCity;
+    const mainPhoto = data.mainPhoto;
+    if (mainPhoto) {
+      this.mainPhoto = {
+        id: mainPhoto.id,
+        image: new FileModule({
+          id: mainPhoto.image.id,
+          fileName: mainPhoto.image.fileName,
+        }),
+      };
+    }
+    this.images = data.images.map((file) => new FileModule({
+      id: file.id,
+      fileName: file.fileName,
+    }));
     this.updatedAt = data.updatedAt;
+  }
+
+  get fullName(): string {
+    return `${this.name} ${this.surname || ''}`;
+  }
+
+
+  get nameOfGender() {
+    return GENDER_LITERAL[this.gender] || GENDER_LITERAL.null;
+  }
+
+  get nameOfEducation() {
+    return EDUCATION_LITERAL[this.education] || EDUCATION_LITERAL.null;
   }
 }
