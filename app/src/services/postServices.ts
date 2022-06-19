@@ -1,6 +1,7 @@
 import {postApi} from '../api/postApi';
+import {Comment} from '../models/Comment';
 import {Post} from '../models/Post';
-import {CommentType, CreatePostType, GetAllPostsOptions, LikeType} from '../types/postTypes';
+import {CreatePostType, GetAllPostsOptions, LikeType} from '../types/postTypes';
 
 
 const getAllPosts = async (options: GetAllPostsOptions): Promise<Post[]> => {
@@ -16,7 +17,6 @@ const createPost = async (data: CreatePostType): Promise<void> => {
   try {
     await postApi.createPost(data);
   } catch (e: any) {
-    console.log('!!! error ', e);
     throw new Error('Упс... что-то пошло не так');
   }
 };
@@ -31,10 +31,10 @@ const likePost = async (post: Post): Promise<LikeType> => {
 };
 
 
-const commentPost = async (comment: string, postId: number): Promise<CommentType> => {
+const commentPost = async (comment: string, postId: number): Promise<Comment> => {
   try {
     const res = await postApi.commentPostById(comment, postId);
-    return res.data.comment;
+    return new Comment(res.data.comment);
   } catch (e: any) {
     throw new Error('Упс... что-то пошло не так');
   }

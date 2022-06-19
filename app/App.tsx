@@ -1,13 +1,22 @@
 import React from 'react';
-import {MainNavigator} from './src/navigation/MainNavigator';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Text, View} from 'react-native';
+
+// const App = () => {
+//   return (
+//     <SafeAreaProvider>
+//       <MainNavigator />
+//     </SafeAreaProvider>
+//   );
+// };
 
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <MainNavigator />
-    </SafeAreaProvider>
+
+    <View>
+      <Text>123</Text>
+    </View>
   );
 };
+
 
 export default App;

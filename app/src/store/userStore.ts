@@ -1,8 +1,9 @@
-import {makeAutoObservable, runInAction} from 'mobx';
+import {makeAutoObservable, reaction, runInAction} from 'mobx';
 import {Alert} from 'react-native';
 import {User} from '../models/User';
 import {userService} from '../services/userService';
 import {SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
+import {friendStore} from './friendStore';
 
 
 class UserStore {
@@ -11,8 +12,17 @@ class UserStore {
 
   authErrors: string[] = [];
 
+
   constructor() {
     makeAutoObservable(this);
+
+    reaction(() => !!this.user?.id, () => {
+      const user = this.user;
+      if (user) {
+        friendStore.fetchFriendsByUserId(user.id);
+        friendStore.fetchRequestsByUserId(user.id);
+      }
+    });
   }
 
 

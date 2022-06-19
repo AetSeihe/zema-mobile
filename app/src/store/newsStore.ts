@@ -8,6 +8,7 @@ class PostStore {
   posts: Post[] = [];
   loading = false;
   neverLoad = true;
+  
   constructor() {
     makeAutoObservable(this);
   }

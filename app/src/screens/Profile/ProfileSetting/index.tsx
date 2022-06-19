@@ -2,8 +2,8 @@ import {Button} from '@react-native-material/core';
 import {Formik} from 'formik';
 import {observer} from 'mobx-react';
 import React, {useState} from 'react';
-import {Alert, FlatList, Image, ListRenderItemInfo, ScrollView, TouchableOpacity, TouchableOpacityBase, View} from 'react-native';
-import {Asset, launchImageLibrary} from 'react-native-image-picker';
+import {Alert, FlatList, Image, ListRenderItemInfo, ScrollView, TouchableOpacity, View} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {Card} from '../../../components/Card';
 import {CheckBoxWithLabel} from '../../../components/CheckBoxWithLabel';
 import {InputField} from '../../../components/InputField';
@@ -104,7 +104,7 @@ const ProfileSettingScreen = () => {
   const handleSubmit = async (values: typeof initialValues) => {
     setLoading(true);
     try {
-      const user = await userStore.update({
+      await userStore.update({
         name: values.name,
         surname: values.surname,
         patronomic: values.patronomic,
@@ -122,10 +122,7 @@ const ProfileSettingScreen = () => {
       });
 
       routerStore.pushToScene({
-        name: routerNames.PROFILE,
-        options: {
-          user: user,
-        },
+        name: routerNames.HOME,
       });
     } catch (e) {
 
@@ -206,7 +203,6 @@ const ProfileSettingScreen = () => {
               onChangeText={(text) => {
                 getCitiesByName(text);
                 const candidate = getCityByName(text);
-                console.log('candidate', candidate);
                 if (candidate) {
                   setBirthCity(candidate);
                 }

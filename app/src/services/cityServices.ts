@@ -4,6 +4,9 @@ import {CityType} from '../types/userTypes';
 
 
 const getCityByName = async (name: string): Promise<CityType[]> => {
+  if (!name) {
+    return [];
+  }
   try {
     const data = await cityApi.getCitiesByName(name);
     return data.data.cities;

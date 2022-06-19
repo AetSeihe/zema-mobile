@@ -50,7 +50,7 @@ export class User {
   updatedAt: Date;
   birthCity?: CityType;
   currentCity?: CityType;
-  images: FileModule[];
+  images: FileModule[] = [];
   mainPhoto?: {
     id: number;
     image: FileModule;
@@ -76,7 +76,11 @@ export class User {
     this.createdAt = data.createdAt;
     this.birthCity = data.birthCity;
     this.currentCity = data.currentCity;
+    this.createdAt = data.createdAt;
+    this.updatedAt = data.updatedAt;
+
     const mainPhoto = data.mainPhoto;
+
     if (mainPhoto) {
       this.mainPhoto = {
         id: mainPhoto.id,
@@ -86,11 +90,13 @@ export class User {
         }),
       };
     }
-    this.images = data.images.map((file) => new FileModule({
-      id: file.id,
-      fileName: file.fileName,
-    }));
-    this.updatedAt = data.updatedAt;
+
+    if (data.images) {
+      this.images = data.images.map((file) => new FileModule({
+        id: file.id,
+        fileName: file.fileName,
+      }));
+    }
   }
 
   get fullName(): string {

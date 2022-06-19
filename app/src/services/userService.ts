@@ -1,9 +1,15 @@
 import {setAuthorizationToken} from '../api/axiosInit';
 import {userApi} from '../api/userApi';
 import {User} from '../models/User';
-import {SignInDataType, SignUpDataType, UpdateProfileType, UserType} from '../types/userTypes';
+import {GetAllUsersOptions, SignInDataType, SignUpDataType, UpdateProfileType, UserType} from '../types/userTypes';
 import {setAuthUserData} from '../utils/userAuthToken';
 
+
+const getAllUsersByOptions = async (data: GetAllUsersOptions): Promise<User[]> => {
+  const res = await userApi.getAllUsersByOptions(data);
+  console.log('!!!res', JSON.stringify(res.data.users));
+  return res.data.users.map((user) => new User(user));
+};
 
 const signIn = async (data: SignInDataType): Promise<UserType> => {
   try {
@@ -53,4 +59,4 @@ const update = async (data: UpdateProfileType): Promise<User> => {
 };
 
 
-export const userService = {signIn, signUp, getUserById, update};
+export const userService = {signIn, signUp, getUserById, update, getAllUsersByOptions};

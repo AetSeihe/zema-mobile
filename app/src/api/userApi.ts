@@ -1,7 +1,18 @@
 import {AxiosResponse} from 'axios';
 import {Asset} from 'react-native-image-picker';
-import {AuthUserApiType, OneUserApiType, SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
+import {AuthUserApiType, GetAllUsersOptions, GetUsersArray, OneUserApiType, SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
 import {axiosInstants, getApiConfig} from './axiosInit';
+
+
+const getAllUsersByOptions = (data: GetAllUsersOptions): Promise<AxiosResponse<GetUsersArray>> => {
+  return axiosInstants.get('user/all', {
+    headers: {
+      ...getApiConfig().headers,
+    },
+    params: data,
+  });
+};
+
 
 const signIn = (data: SignInDataType): Promise<AxiosResponse<AuthUserApiType>> => {
   return axiosInstants.post('auth/login', {
@@ -42,8 +53,7 @@ const update = (data: UpdateProfileType): Promise<AxiosResponse<OneUserApiType>>
       'Content-Type': 'multipart/form-data',
     },
   });
-
-  // return axiosInstants.post('user/update', data);
 };
 
-export const userApi = {signIn, signUp, getUserById, update};
+
+export const userApi = {signIn, signUp, getUserById, update, getAllUsersByOptions};

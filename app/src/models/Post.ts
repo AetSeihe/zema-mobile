@@ -1,4 +1,5 @@
-import {CommentType, LikeType, PostType} from '../types/postTypes';
+import {LikeType, PostType} from '../types/postTypes';
+import {Comment} from './Comment';
 import {FileModule} from './FileModule';
 import {User} from './User';
 
@@ -9,7 +10,7 @@ export class Post {
   text: string;
   user: User;
   likes: LikeType[];
-  comments: CommentType[];
+  comments: Comment[] = [];
   files: FileModule[];
   userId: number;
   updatedAt: Date;
@@ -29,7 +30,13 @@ export class Post {
     }));
     this.createdAt = new Date(data.createdAt);
     this.updatedAt = data.updatedAt;
-    this.comments = data.comments || [];
+    try {
+      if (data.comments) {
+        this.comments = data.comments.map((comment) => new Comment(comment));
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 

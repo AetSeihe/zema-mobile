@@ -24,7 +24,7 @@ export const ProfileHeader = ({user, renderProfileButtons, renderPhoto, posts}: 
     <View style={styles.wrapper}>
       <Card style={styles.content}>
         <Avatar style={styles.avatar} image={user.mainPhoto?.image}/>
-        <Text style={styles.fullName}>{user.fullName}</Text>
+        <Text style={styles.fullName}>{user.id} {user.fullName}</Text>
         <View style={styles.cities}>
           <Text style={styles.city}>{user.birthCity?.title}</Text>
           <Icon name='arrow-right2' size={16} color={theme.main}/>

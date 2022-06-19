@@ -6,6 +6,9 @@ export const styles = StyleSheet.create({
     marginHorizontal: BASE_MARGIN_SCREEN,
     marginBottom: 20,
   },
+  buttonWrapper: {
+    marginBottom: 10,
+  },
   buttonText: {
     color: '#fff',
   },

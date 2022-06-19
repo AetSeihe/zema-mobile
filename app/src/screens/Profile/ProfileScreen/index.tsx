@@ -17,7 +17,9 @@ import {ProfileScreenOptionsType} from '../../../types/routerTypes';
 import {Post} from '../../Posts/components/Post';
 import {ProfileHeader} from '../components/ProfileHeader';
 import {styles} from './styles';
-
+import RNRestart from 'react-native-restart';
+import {clearAuthUserData} from '../../../utils/userAuthToken';
+import ButtonUserEvent from '../../../components/ButtonUserEvent';
 
 type Props = {
   navigation: NavigationProp<any>,
@@ -52,12 +54,6 @@ const onPressLearnMore = async (post: PostModel) => {
   });
 };
 
-const goToSettings = () => {
-  routerStore.pushToScene({
-    name: routerNames.PROFILE_SETTING,
-    options: {},
-  });
-};
 
 const FETCH_POST_LIMIT = 15;
 
@@ -117,16 +113,24 @@ const ProfileS = ({route, navigation}:Props) => {
     }));
   };
 
+  const exitUser = async () => {
+    await clearAuthUserData();
+    // eslint-disable-next-line new-cap
+    RNRestart.Restart();
+  };
+
   const renderProfileButtons = (user: User) => {
-    if (user.id === userApp.id) {
-      return <Button
-        title={'Редактировать'}
-        color={theme.main}
-        titleStyle={styles.buttonText}
-        onPress={goToSettings}
-      />;
-    }
-    return <></>;
+    return (
+      <>
+        <ButtonUserEvent currentUser={user}/>
+        {user.id === userApp.id && <Button
+          title={'Выйти'}
+          color={theme.error}
+          titleStyle={styles.buttonText}
+          onPress={exitUser}
+        />}
+      </>
+    );
   };
 
   const renderPost = ({item}: ListRenderItemInfo<PostModel>)=> {

@@ -53,6 +53,16 @@ export type PostFormScreenType = {
 }
 
 
+export type ChatScreenType = {
+    name: routerNames.Chat,
+    options: {
+        user?: User
+    }
+}
+
+export type RouterTabBarType = ChatScreenType | ChatScreenType
+
+
 export type RouterType = ErrorScreenType |
                         SignInScreenType |
                         PostScreenType |

@@ -2,16 +2,17 @@ import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import {observer} from 'mobx-react';
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, ScrollView, View} from 'react-native';
+import {FlatList, Image, InteractionManager, ListRenderItemInfo, ScrollView, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {Avatar} from '../../../components/Avatar';
 import {routerNames} from '../../../constants/routerNames';
+import {Comment} from '../../../models/Comment';
 import {FileModule} from '../../../models/FileModule';
 import {Post} from '../../../models/Post';
 import {User} from '../../../models/User';
 import {postService} from '../../../services/postServices';
 import {postStore} from '../../../store/newsStore';
 import {routerStore} from '../../../store/routerStore';
-import {CommentType} from '../../../types/postTypes';
 import {PostScreenOptionsType} from '../../../types/routerTypes';
 import {CommentForm} from '../components/CommentForm';
 import {PostUserHeader} from '../components/PostUserHeader';
@@ -33,13 +34,23 @@ const renderImages = (images: FileModule[]) => {
   ));
 };
 
-const renderComment = ({item}: any) => {
-  return <Text>{item.text}</Text>;
+const renderComment = ({item}: ListRenderItemInfo<Comment>) => {
+  const user = item.user;
+  return (
+    <View>
+      <View>
+        <Avatar image={user.mainPhoto?.image}/>
+      </View>
+      <View>
+        <Text>{user.fullName}</Text>
+        <Text>{item.text}</Text>
+      </View>
+    </View>);
 };
 
 const PostS = ({navigation, route}: Props) => {
   const [post, setPost] = useState<Post>(route.params.post);
-  const [comments, setComments] = useState<CommentType[]>(route.params.post.comments);
+  const [comments, setComments] = useState<Comment[]>(route.params.post.comments);
 
 
   const getPost = async () => {
@@ -53,8 +64,7 @@ const PostS = ({navigation, route}: Props) => {
     navigation.setOptions({
       title: post.title,
     });
-
-    getPost();
+    InteractionManager.runAfterInteractions(getPost);
   }, []);
 
   const onPressProfile = (user: User) => {
