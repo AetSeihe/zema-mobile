@@ -9,22 +9,29 @@ import {styles} from './styles';
 type Props = {
   wrapperStyle?: ViewStyle,
   options: string[];
+  onPressOption?: (name: string) => void
 }
 
 
-const InputSelect = ({wrapperStyle, options, ...props}: Props & InputFieldProps & TextInputProps) => {
+const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...props}: Props & InputFieldProps & TextInputProps) => {
   const [needShowOptions, setNeedShowOptions] = useState(false);
 
-  const onPressOption = (option: string) => {
-    if (props.onChangeText) {
-      props?.onChangeText(option);
+  const onPress = (option: string) => {
+    if (onChangeText) {
+      onChangeText(option);
+      onPressOption && onPressOption(option);
     }
     setNeedShowOptions(false);
   };
 
+  const onChange = (text: string) => {
+    onChangeText && onChangeText(text);
+    setNeedShowOptions(true);
+  };
+
 
   const renderOption = ({item}: ListRenderItemInfo<string> ) => {
-    return <TouchableOpacity onPress={() => onPressOption(item)} style={styles.option}>
+    return <TouchableOpacity onPress={() => onPress(item)} style={styles.option}>
       <Text style={styles.optionText}>{item}</Text>
     </TouchableOpacity>;
   };
@@ -35,6 +42,7 @@ const InputSelect = ({wrapperStyle, options, ...props}: Props & InputFieldProps 
       elevation: needShowOptions ?200: 0,
     }]}>
       <InputField
+        onChangeText={onChange}
         color={theme.main}
         {...props}
         onPressIn={() => setNeedShowOptions(true)}

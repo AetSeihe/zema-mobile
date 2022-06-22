@@ -1,6 +1,7 @@
 import {Button, Text} from '@react-native-material/core';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
+import {ViewStyle} from 'react-native-material-ui';
 import {Avatar} from '../../../../components/Avatar';
 import {Card} from '../../../../components/Card';
 import {Title} from '../../../../components/Title';
@@ -12,13 +13,14 @@ import {optionRowStyles, styles} from './styles';
 
 type Props = {
     onPressCard: (vacancy: Vacancy) => void;
-    data: Vacancy
+    data: Vacancy,
+    wrapperStyle?: ViewStyle,
 }
 
 
 type OptionRowType = {
   title: string,
-  description: string
+  description: string,
 }
 
 const OptionRow = ({title, description}: OptionRowType) => {
@@ -31,7 +33,7 @@ const OptionRow = ({title, description}: OptionRowType) => {
 };
 
 
-const VacantyItem = ({data}: Props) => {
+const VacantyItem = ({data, wrapperStyle}: Props) => {
   const user = data.user;
 
   const onPressAvatar = () => {
@@ -54,7 +56,7 @@ const VacantyItem = ({data}: Props) => {
 
 
   return (
-    <Card style={styles.wrapper}>
+    <Card style={[styles.wrapper, wrapperStyle]}>
       <TouchableOpacity style={styles.avatarWrapper} onPress={onPressAvatar}>
         <Avatar image={user.mainPhoto?.image} style={styles.avatar}/>
         <View >

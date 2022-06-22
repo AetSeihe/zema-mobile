@@ -72,7 +72,7 @@ export const CustomTabBar = ({state, descriptors, navigation}: BottomTabBarProps
       {routers[0]}
       {routers[1]}
       <TouchableOpacity style={styles.plusWrapper} onPress={() => routerStore.pushToScene({
-        name: routerNames.POST_FORM,
+        name: routerNames.FORM_SELECT,
       })}>
         <Icon name={'plus'} color={'gray'}/>
       </TouchableOpacity>

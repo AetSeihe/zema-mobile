@@ -11,8 +11,12 @@ export enum routerNames {
     WORK = 'WORK',
     SIGN_IN = 'SIGN_IN',
     SIGN_UP = 'SIGN_UP',
-    POST_FORM = 'POST_FORM',
     PROFILE_SETTING = 'PROFILE_SETTING',
+
+    FORM_SELECT = 'FORM_SELECT',
+    POST_FORM = 'POST_FORM',
+    VACANCY_FORM = 'VACANCY_FORM',
+
 }
 
 

@@ -60,6 +60,15 @@ export type ChatScreenType = {
     }
 }
 
+export type FormSelectScreenType = {
+    name: routerNames.FORM_SELECT,
+}
+
+export type VacancyFormScreenType = {
+    name: routerNames.VACANCY_FORM,
+}
+
+
 export type RouterTabBarType = ChatScreenType | ChatScreenType
 
 
@@ -69,4 +78,6 @@ export type RouterType = ErrorScreenType |
                         SignUpScreenType |
                         ProfileScreenType |
                         ProfileSettingsScreenType |
-                        PostFormScreenType
+                        PostFormScreenType |
+                        FormSelectScreenType |
+                        VacancyFormScreenType

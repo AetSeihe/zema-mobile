@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 20,
     marginHorizontal: 15,
+
   },
   title: {
     fontWeight: 'bold',

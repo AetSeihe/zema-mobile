@@ -1,9 +1,9 @@
 import axios, {AxiosError} from 'axios';
-import {Alert} from 'react-native';
 import {serverUrl} from '../constants/root';
 import {routerNames} from '../constants/routerNames';
 import {locale} from '../locale';
 import {routerStore} from '../store/routerStore';
+import RNRestart from 'react-native-restart';
 
 const authErrorLocale = locale.errors.authError;
 
@@ -41,8 +41,9 @@ axiosInstants.interceptors.response.use(function(response) {
       options: {
         title: locale.network.title,
         description: locale.network.description,
-        buttonText: authErrorLocale.button,
-        onPressButton: () => Alert.alert('Перегразука приложения'),
+        buttonText: 'Перезагрузить приложение',
+        // eslint-disable-next-line new-cap
+        onPressButton: () => RNRestart.Restart(),
       },
     });
     if (error.response?.data.message) {

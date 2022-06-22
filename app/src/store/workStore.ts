@@ -14,6 +14,7 @@ class WorkStore {
     makeAutoObservable(this);
   }
 
+  
 
   async fetchVacancy(data: GetAllVacancyDTO) {
     runInAction(() => {

@@ -12,6 +12,7 @@ import {ChatNavigator} from './ChatNavigator';
 import {CustomTabBar} from './components/CustomTabBar';
 import {FriendNavigator} from './FriendNavigator';
 import {PostsNavigator} from './PostsNavigator';
+import WorkNavigator from './WorkNavigator';
 
 const screensNameLocale = locale.screensName;
 
@@ -46,6 +47,10 @@ export const HomeTabNavigation = () => {
         }}/>
         <Tab.Screen name={routerNames.FRIENDS} component={FriendNavigator} options={{
           title: screensNameLocale.friends,
+          tabBarIcon: ({color}) => <Icon name='users' color={color} />,
+        }}/>
+        <Tab.Screen name={routerNames.WORK} component={WorkNavigator} options={{
+          title: screensNameLocale.work,
           tabBarIcon: ({color}) => <Icon name='users' color={color} />,
         }}/>
         <Tab.Screen name={routerNames.Chat} component={ChatNavigator} options={{

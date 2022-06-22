@@ -47,6 +47,9 @@ export const locale = {
     profile: 'Профиль',
     chat: ' Чаты',
     postForm: 'Добавление поста',
+    vacancyForm: 'Добавление вакансий',
+
+    formsSelect: 'Добавить',
     settings: 'Настройки',
   },
   network: {
