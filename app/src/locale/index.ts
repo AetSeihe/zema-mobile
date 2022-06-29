@@ -37,7 +37,9 @@ export const locale = {
   },
   fields: {
     required: 'Это обязатаельное поле',
+    invalidTypeNumber: 'Это поле должно быть числом',
     invalidEmail: 'Введите валидный email',
+    invalidNumberPhone: 'Невалидный номер телефона',
     invalidPassword: 'Пароль должен содержать минимум 5 символов',
   },
   screensName: {

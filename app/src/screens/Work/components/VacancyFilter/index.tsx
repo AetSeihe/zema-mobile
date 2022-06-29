@@ -26,7 +26,8 @@ const schema = yup.object({
 
 type Props = {
     onSubmit: (data: GetAllVacancyDataType) => void,
-    initialOptions: GetAllVacancyDataType
+    initialOptions: GetAllVacancyDataType,
+    title: string
 }
 
 const initialValues = {
@@ -38,7 +39,7 @@ const initialValues = {
   city: '',
 };
 
-const VacancyFilter = ({onSubmit, initialOptions}: Props) => {
+const VacancyFilter = ({onSubmit, title}: Props) => {
   const [cityes, setCityes] = useState<CityType[]>([]);
   const [city, setCity] = useState<CityType | null>(null);
 
@@ -66,7 +67,7 @@ const VacancyFilter = ({onSubmit, initialOptions}: Props) => {
 
   return (
     <Card style={styles.wrapper}>
-      <Title style={styles.field}>Фильтр</Title>
+      <Title style={styles.field}>{title}</Title>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}

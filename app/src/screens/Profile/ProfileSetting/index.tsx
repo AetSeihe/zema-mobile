@@ -72,7 +72,7 @@ const ProfileSettingScreen = () => {
   };
 
 
-  const [images, setImages] = useState<FileModule[]>([]);
+  const [images, setImages] = useState<FileModule[]>(user.images);
   const [cities, setCities] = useState<CityType[]>([]);
   const [loading, setLoading] = useState(false);
   const [mainPhoto, setMainPhoto] = useState<FileModule | undefined>(user.mainPhoto?.image);
@@ -96,7 +96,7 @@ const ProfileSettingScreen = () => {
       const user = await userService.update({
         images: [imageAsset[0]],
       });
-      setImages((images) => user.images);
+      setImages(user.images);
     }
   };
 
@@ -162,7 +162,7 @@ const ProfileSettingScreen = () => {
         <Title style={styles.title}>Фотографии</Title>
         <Tint>Нажмите на фото чтобы сделать его главным</Tint>
         <FlatList
-          data={[...user.images, ...images]}
+          data={images}
           renderItem={renderImages}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={() => <AddPhotoButton onPress={addPhoto}/>}

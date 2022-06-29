@@ -60,16 +60,32 @@ export type ChatScreenType = {
     }
 }
 
+
+export type PostsScreenType = {
+    name: routerNames.Posts,
+    options?: {}
+
+}
+
+
 export type FormSelectScreenType = {
     name: routerNames.FORM_SELECT,
+    options?: {}
+
 }
 
 export type VacancyFormScreenType = {
     name: routerNames.VACANCY_FORM,
+    options?: {}
+}
+
+export type HomeScreenType = {
+    name: routerNames.HOME,
+    options?: {}
 }
 
 
-export type RouterTabBarType = ChatScreenType | ChatScreenType
+export type RouterTabBarType = ChatScreenType | ChatScreenType | PostsScreenType
 
 
 export type RouterType = ErrorScreenType |
@@ -80,4 +96,5 @@ export type RouterType = ErrorScreenType |
                         ProfileSettingsScreenType |
                         PostFormScreenType |
                         FormSelectScreenType |
-                        VacancyFormScreenType
+                        VacancyFormScreenType |
+                        HomeScreenType

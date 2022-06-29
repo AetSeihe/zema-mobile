@@ -51,7 +51,7 @@ export const HomeTabNavigation = () => {
         }}/>
         <Tab.Screen name={routerNames.WORK} component={WorkNavigator} options={{
           title: screensNameLocale.work,
-          tabBarIcon: ({color}) => <Icon name='users' color={color} />,
+          tabBarIcon: ({color}) => <Icon name='laptop' color={color} />,
         }}/>
         <Tab.Screen name={routerNames.Chat} component={ChatNavigator} options={{
           title: screensNameLocale.chat,

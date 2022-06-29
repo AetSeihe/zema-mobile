@@ -64,7 +64,7 @@ const VacantyItem = ({data, wrapperStyle}: Props) => {
           <Text style={styles.city}>{data.city.title}</Text>
         </View>
       </TouchableOpacity>
-      <Title style={styles.title}>{data.title}</Title>
+      <Title style={styles.title}>{data.id} {data.title}</Title>
       <View style={styles.title}>
         <OptionRow title='Опыт работы:' description={`${data.workExperience} года`}/>
         <OptionRow title='Зарплата:' description={`${data.salary} рублей`}/>

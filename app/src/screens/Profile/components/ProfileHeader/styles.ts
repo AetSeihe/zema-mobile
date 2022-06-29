@@ -48,6 +48,8 @@ export const styles = StyleSheet.create({
     marginTop: 15,
   },
   photosText: {},
-  muiltiField: {},
+  muiltiField: {
+    marginTop: 10,
+  },
   counterTitleWrapper: {},
 });
