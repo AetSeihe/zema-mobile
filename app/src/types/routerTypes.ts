@@ -1,4 +1,5 @@
 import {routerNames} from '../constants/routerNames';
+import {Chat} from '../models/Chat';
 import {Post} from '../models/Post';
 import {User} from '../models/User';
 
@@ -56,7 +57,8 @@ export type PostFormScreenType = {
 export type ChatScreenType = {
     name: routerNames.Chat,
     options: {
-        user?: User
+        user?: User,
+        chat: Chat,
     }
 }
 

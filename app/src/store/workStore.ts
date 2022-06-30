@@ -41,7 +41,6 @@ class WorkStore {
 
       return false;
     } catch (e) {
-      console.log('!!! error', JSON.stringify(e, null, 2));
       return true;
     }
   }
@@ -73,7 +72,6 @@ class WorkStore {
       });
       return false;
     } catch (e) {
-      console.log('!!! error', JSON.stringify(e, null, 2));
       return true;
     }
   }

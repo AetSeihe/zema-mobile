@@ -2,5 +2,8 @@ import {StyleSheet} from 'react-native';
 
 
 export const styles = StyleSheet.create({
-  tint: {},
+  tint: {
+    fontSize: 14,
+    color: '#909090',
+  },
 });

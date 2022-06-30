@@ -36,8 +36,6 @@ const rejectRequests = (userId: number): Promise<AxiosResponse<RequestType>> => 
 };
 
 const acceptRequests = (userId: number): Promise<AxiosResponse<RequestType>> => {
-  console.log('!!!!accept id ', userId);
-
   return axiosInstants.post(`friend/accept/${userId}`, {}, {
     headers: {
       ...getApiConfig().headers,

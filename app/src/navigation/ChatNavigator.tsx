@@ -3,8 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useRef} from 'react';
 import {ChatEnum} from '../constants/routerNames';
+import {Chat} from '../models/Chat';
 import {User} from '../models/User';
-import {Chat} from '../screens/Chats/Chat';
+import {Chat as ChatScreen} from '../screens/Chats/Chat';
 import {ChatList} from '../screens/Chats/ChatList';
 
 const Stack = createNativeStackNavigator();
@@ -13,7 +14,8 @@ type Props = {
     navigation: NavigationProp<any>,
     route: {
       params?: {
-          user?: User
+          user?: User,
+          chat: Chat
       }
     }
   }
@@ -21,6 +23,8 @@ type Props = {
 export const ChatNavigator = ({route}: Props) => {
   const navigator = useRef<NavigationContainerRef<any>>(null);
   const user = route.params?.user;
+  const chat = route.params?.chat;
+
 
   useEffect(() => {
     if (navigator.current) {
@@ -44,7 +48,13 @@ export const ChatNavigator = ({route}: Props) => {
         }}
       >
         <Stack.Screen name={ChatEnum.CHAT_LIST} component={ChatList}/>
-        <Stack.Screen name={ChatEnum.CHAT_USER} component={() => <Chat user={user}/>}/>
+        <Stack.Screen
+          name={ChatEnum.CHAT_USER}
+          component={() => <ChatScreen user={user} chat={chat}/>}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

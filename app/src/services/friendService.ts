@@ -11,7 +11,6 @@ const getAllRequests = async (userId: number): Promise<Friend[]> => {
 
 const getAllFriends = async (userId: number): Promise<Friend[]> => {
   const data = await friendApi.getAllFriends(userId);
-  console.log(JSON.stringify(data.data.friends, null, 2));
   return data.data.friends.map((req) => new Friend(req));
 };
 

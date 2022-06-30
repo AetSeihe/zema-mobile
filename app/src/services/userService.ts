@@ -7,7 +7,6 @@ import {setAuthUserData} from '../utils/userAuthToken';
 
 const getAllUsersByOptions = async (data: GetAllUsersOptions): Promise<User[]> => {
   const res = await userApi.getAllUsersByOptions(data);
-  console.log('!!!res', JSON.stringify(res.data.users));
   return res.data.users.map((user) => new User(user));
 };
 

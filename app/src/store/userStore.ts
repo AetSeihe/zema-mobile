@@ -3,6 +3,7 @@ import {Alert} from 'react-native';
 import {User} from '../models/User';
 import {userService} from '../services/userService';
 import {SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
+import {chatStore} from './chatStore';
 import {friendStore} from './friendStore';
 
 
@@ -19,6 +20,7 @@ class UserStore {
     reaction(() => !!this.user?.id, () => {
       const user = this.user;
       if (user) {
+        chatStore.init(user);
         friendStore.fetchFriendsByUserId(user.id);
         friendStore.fetchRequestsByUserId(user.id);
       }

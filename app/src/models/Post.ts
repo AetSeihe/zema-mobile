@@ -35,7 +35,6 @@ export class Post {
         this.comments = data.comments.map((comment) => new Comment(comment));
       }
     } catch (e) {
-      console.log(e);
     }
   }
 
