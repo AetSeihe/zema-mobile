@@ -40,19 +40,23 @@ export const PostFormScreen = ({navigation}: Props) => {
 
   const onSubmit = async (values: typeof initialValues) => {
     setLoading(true);
-    const error = await postStore.createPost({
-      ...values,
-      images,
-    });
+    try {
+      const error = await postStore.createPost({
+        ...values,
+        images,
+      });
 
-    if (error) {
-      Alert.alert(error);
-      return;
+      if (error) {
+        Alert.alert(error);
+        return;
+      }
+    } catch (e) {
+      Alert.alert('Не удалось создать пост, попробуйте позже');
     }
 
     setLoading(false);
-    // form.current?.handleReset();
-    // navigation.goBack();
+    form.current?.handleReset();
+    navigation.goBack();
   };
 
   const addPhoto = async () => {
@@ -118,8 +122,9 @@ export const PostFormScreen = ({navigation}: Props) => {
               value={values.text}
               onChangeText={handleChange('text')}
             />
-            <Text style={styles.charCount}>{values.text.length}/{MAX_POST_TEXT_COUNT}</Text>
           </View>
+          <Text style={styles.charCount}>{values.text.length}/{MAX_POST_TEXT_COUNT}</Text>
+
           <Button
             disabled={loading}
             loading={loading}

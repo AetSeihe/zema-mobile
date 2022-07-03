@@ -1,6 +1,6 @@
 import {Button, Text} from '@react-native-material/core';
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Linking, TouchableOpacity, View} from 'react-native';
 import {ViewStyle} from 'react-native-material-ui';
 import {Avatar} from '../../../../components/Avatar';
 import {Card} from '../../../../components/Card';
@@ -54,6 +54,13 @@ const VacantyItem = ({data, wrapperStyle}: Props) => {
     });
   };
 
+  const onPressToEmail = () => {
+    Linking.openURL(`mailto:${data.email}`);
+  };
+  const onPressToPhone = () => {
+    Linking.openURL(`tel:${data.email}`);
+  };
+
 
   return (
     <Card style={[styles.wrapper, wrapperStyle]}>
@@ -64,15 +71,19 @@ const VacantyItem = ({data, wrapperStyle}: Props) => {
           <Text style={styles.city}>{data.city.title}</Text>
         </View>
       </TouchableOpacity>
-      <Title style={styles.title}>{data.id} {data.title}</Title>
+      <Title style={styles.title}>{data.title}</Title>
       <View style={styles.title}>
         <OptionRow title='Опыт работы:' description={`${data.workExperience} года`}/>
         <OptionRow title='Зарплата:' description={`${data.salary} рублей`}/>
       </View>
       <Text style={styles.description}>{data.description}</Text>
       <View style={styles.title}>
-        <OptionRow title='Номер для связи:' description={`${data.phone}`}/>
-        <OptionRow title='E-mail для связи:' description={`${data.email}`}/>
+        <TouchableOpacity onPress={onPressToPhone}>
+          <OptionRow title='Номер для связи:' description={`${data.phone}`}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPressToEmail}>
+          <OptionRow title='E-mail для связи:' description={`${data.email}`}/>
+        </TouchableOpacity>
       </View>
       <Button title='Написать' color={theme.main} titleStyle={styles.textButton} onPress={onPressChat}/>
     </Card>

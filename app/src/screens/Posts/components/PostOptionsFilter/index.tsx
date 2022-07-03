@@ -1,7 +1,8 @@
 import {Button, Text, TextInput} from '@react-native-material/core';
 import {Formik} from 'formik';
-import React from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
+import Dropdown from '../../../../components/Dropdown';
 import {theme} from '../../../../styles/theme';
 import {styles} from './styles';
 
@@ -19,9 +20,12 @@ type Props = {
 
 
 export const PostOptionsFilter = ({onSubmit, loading}: Props) => {
+  const [visible, setVisible] = useState(false);
   return (
-    <View style={styles.wrapper}>
-      <Text style={styles.title}>Фильтры</Text>
+    <Dropdown title='Фильтры постов'
+      visible={visible}
+      wrapperStyle={styles.wrapper}
+      onPressClose={() => setVisible(!visible)}>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({values, handleSubmit, handleChange}) => <>
           <TextInput
@@ -59,6 +63,6 @@ export const PostOptionsFilter = ({onSubmit, loading}: Props) => {
           />
         </>}
       </Formik>
-    </View>
+    </Dropdown>
   );
 };

@@ -2,9 +2,7 @@ import {Button} from '@react-native-material/core';
 import {Formik} from 'formik';
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {Card} from '../../../../components/Card';
 import {InputField} from '../../../../components/InputField';
-import {Title} from '../../../../components/Title';
 import {theme} from '../../../../styles/theme';
 import {GetAllVacancyDataType} from '../../../../types/workTypes';
 import {styles} from './styles';
@@ -12,6 +10,7 @@ import * as yup from 'yup';
 import InputSelect from '../../../../components/InputSelect';
 import {cityServices} from '../../../../services/cityServices';
 import {CityType} from '../../../../types/userTypes';
+import Dropdown from '../../../../components/Dropdown';
 
 
 const schema = yup.object({
@@ -42,6 +41,7 @@ const initialValues = {
 const VacancyFilter = ({onSubmit, title}: Props) => {
   const [cityes, setCityes] = useState<CityType[]>([]);
   const [city, setCity] = useState<CityType | null>(null);
+  const [visible, setVisible] = useState(false);
 
 
   const handleSubmit = (values: typeof initialValues) => {
@@ -66,8 +66,7 @@ const VacancyFilter = ({onSubmit, title}: Props) => {
   };
 
   return (
-    <Card style={styles.wrapper}>
-      <Title style={styles.field}>{title}</Title>
+    <Dropdown title={title} onPressClose={() => setVisible(!visible)} visible={visible} wrapperStyle={styles.wrapper}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -117,7 +116,7 @@ const VacancyFilter = ({onSubmit, title}: Props) => {
           </>
         )}
       </Formik>
-    </Card>
+    </Dropdown>
   );
 };
 

@@ -1,5 +1,6 @@
-import React, {ReactNode, useState} from 'react';
-import {TouchableOpacity} from 'react-native';
+import React, {ReactNode} from 'react';
+import {TouchableOpacity, View} from 'react-native';
+import {ViewStyle} from 'react-native-material-ui';
 import {theme} from '../../styles/theme';
 import {Card} from '../Card';
 import Icon from '../Icon';
@@ -9,18 +10,26 @@ import {styles} from './styles';
 
 type Props = {
     title: string;
-    children: ReactNode
+    children: ReactNode,
+    visible: boolean,
+    onPressClose: () => void,
+    wrapperStyle?: ViewStyle
 }
 
-const Dropdown = ({title, children}: Props) => {
-  const [visible, setVisible] = useState(false);
+const Dropdown = ({title, children, visible, onPressClose, wrapperStyle}: Props) => {
   return (
-    <Card style={styles.wrapper}>
-      <Title>{title}</Title>
-      <TouchableOpacity onPress={() => setVisible(!visible)}>
-        <Icon name={visible ? 'circle-up': 'circle-down'} size={23} color={theme.main}/>
-      </TouchableOpacity>
-      {visible && children}
+    <Card style={wrapperStyle}>
+      <View style={styles.content}>
+        <Title>{title}</Title>
+        <TouchableOpacity onPress={() => onPressClose()} >
+          <Icon name={visible ? 'circle-up': 'circle-down'} size={23} color={theme.main}/>
+        </TouchableOpacity>
+      </View>
+      {visible && <View style={styles.children}>
+        {children}
+      </View>}
+
+
     </Card>
   );
 };

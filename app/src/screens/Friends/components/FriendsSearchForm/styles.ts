@@ -1,9 +1,14 @@
 import {StyleSheet} from 'react-native';
+import {BASE_MARGIN_SCREEN} from '../../../../constants/styles';
 import {theme} from '../../../../styles/theme';
 
 
 export const styles = StyleSheet.create({
-  wrapper: {},
+  wrapper: {
+    marginTop: 15,
+    paddingVertical: 25,
+    marginHorizontal: BASE_MARGIN_SCREEN,
+  },
   titleWrapper: {
     flexDirection: 'row',
     alignItems: 'center',

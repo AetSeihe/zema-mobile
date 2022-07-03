@@ -49,7 +49,6 @@ const ChatListScreen = () => {
   };
 
   const fetchChatsOnScroll = () => {
-    console.log('!! fetch on scroll!!');
     chatStore.fetchChats({
       data: {
         userName: search,

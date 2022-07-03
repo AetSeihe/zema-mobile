@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import React from 'react';
 import {FlatList, View} from 'react-native';
 import ButtonUserEvent from '../../../components/ButtonUserEvent';
+import {CatAlert} from '../../../components/CatAlert';
 import {UserCard} from '../../../components/UserCard';
 import {FriendNames, routerNames} from '../../../constants/routerNames';
 import {Friend} from '../../../models/Friend';
@@ -49,6 +50,7 @@ const Friends = ({navigation}: Props) => {
         onPressSearch={onPressSearch}
       />
       <FlatList
+        ListEmptyComponent={<CatAlert title='Похоже у вас еще нет друзей, но мы скоро это исправим!'/>}
         style={styles.cardWrapper}
         data={friendStore.friends}
         renderItem={({item}) => <View style={styles.card}>

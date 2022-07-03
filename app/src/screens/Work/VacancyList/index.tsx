@@ -3,6 +3,7 @@ import {NavigationProp} from '@react-navigation/core';
 import {observer} from 'mobx-react';
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, View} from 'react-native';
+import {CatAlert} from '../../../components/CatAlert';
 import {WorkEnum} from '../../../constants/routerNames';
 import {workStore} from '../../../store/workStore';
 import {GetAllVacancyDataType} from '../../../types/workTypes';
@@ -70,6 +71,7 @@ const VacancyList = ({navigation}: Props) => {
       <FlatList
         onEndReached={onScroll}
         onEndReachedThreshold={0.2}
+        ListEmptyComponent={<CatAlert title='Вы просмотрели все доступные вакансии'/>}
         ListHeaderComponent={<VacancyFilter onSubmit={handleSubmit} initialOptions={options} title='Вакансии'/>}
         style={styles.listWrapper}
         data={workStore.vacancy}

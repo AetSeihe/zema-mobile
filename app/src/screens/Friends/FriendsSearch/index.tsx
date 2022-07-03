@@ -2,6 +2,8 @@ import {NavigationProp} from '@react-navigation/core';
 import React, {useEffect, useRef, useState} from 'react';
 import {Alert, FlatList, View} from 'react-native';
 import ButtonUserEvent from '../../../components/ButtonUserEvent';
+import {CatAlert} from '../../../components/CatAlert';
+import {Tint} from '../../../components/Tint';
 import {UserCard} from '../../../components/UserCard';
 import {FriendNames, routerNames} from '../../../constants/routerNames';
 import {EDUCATION_LITERAL, User} from '../../../models/User';
@@ -45,10 +47,7 @@ const FriendsSearch = ({navigation}: Props) => {
   const onSubmit = async (values: typeof initialValueUsersSearch) => {
     const cityFrom = await cityServices.getCityByName(values.cityFrom);
     const cityTo = await cityServices.getCityByName(values.cityTo);
-    setOptions(values);
-    cityFromRef.current = cityFrom[0];
-    cityToRef.current = cityTo[0];
-    offsetSearch.current = 0;
+
 
     try {
       const currentUsers = await userService.getAllUsersByOptions({
@@ -62,6 +61,11 @@ const FriendsSearch = ({navigation}: Props) => {
         birthCityId: cityFrom[0]?.id,
         currentCityId: cityTo[0]?.id,
       });
+      setOptions(values);
+      cityFromRef.current = cityFrom[0];
+      cityToRef.current = cityTo[0];
+      offsetSearch.current = 0;
+      offsetSearch.current += LIMIT_TO_SEARCH_FRIEND;
       setUsers(currentUsers);
     } catch (e: any) {
       Alert.alert('Упс... что-то пошло не так', e.message);
@@ -111,6 +115,8 @@ const FriendsSearch = ({navigation}: Props) => {
       <FriendsSearchForm onSubmit={onSubmit}/>
       <FlatList
         onEndReached={handleScrollFlatList}
+        ListEmptyComponent={<CatAlert title='Похоже по вашему запросу ничего не найденно'/>}
+        ListFooterComponent={<Tint style={styles.tint}>Вы просмотрели всю ленту!</Tint>}
         onEndReachedThreshold={0.2}
         style={styles.cardWrapper}
         data={users}

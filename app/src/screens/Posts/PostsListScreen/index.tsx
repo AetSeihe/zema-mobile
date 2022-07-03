@@ -2,6 +2,7 @@ import {observer} from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import {FlatList, ListRenderItemInfo, View} from 'react-native';
 import {CatAlert} from '../../../components/CatAlert';
+import {Tint} from '../../../components/Tint';
 import {routerNames} from '../../../constants/routerNames';
 import {Post as PostModel} from '../../../models/Post';
 import {User} from '../../../models/User';
@@ -112,14 +113,15 @@ const PostsScreen = () => {
         <View style={styles.form}>
           <PostOptionsFilter onSubmit={onSubmit} loading={false}/>
         </View>
-        {!!postStore.posts.length ? (
-          <FlatList
-            onEndReached={onScrollFlatList}
-            onEndReachedThreshold={0.2}
-            data={postStore.posts}
-            renderItem={renderPosts}
-            keyExtractor={(item) => item.id.toString()}
-          />) : <CatAlert title={'По вашему запросу ничего не найдено'}/>}
+        <FlatList
+          onEndReached={onScrollFlatList}
+          ListEmptyComponent={<CatAlert title={'По вашему запросу ничего не найдено'}/>}
+          ListFooterComponent={<Tint style={styles.tint}>{postStore.loading ? 'Загрузка': 'Вы просмотрели все новости за сегодня'}</Tint>}
+          onEndReachedThreshold={0.2}
+          data={postStore.posts}
+          renderItem={renderPosts}
+          keyExtractor={(item) => item.id.toString()}
+        />
       </View>
     </View>
   );

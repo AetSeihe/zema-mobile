@@ -45,7 +45,7 @@ const accessRequest = async (user: Friend) => {
 };
 
 const deleteFriend = async (user: Friend) => {
-  Alert.alert(`Удаление из друзей`, `ы уверенны что хотите удалить пользователя ${user.id} ${user.user.fullName} из друзей?`, [
+  Alert.alert(`Удаление из друзей`, `ы уверенны что хотите удалить пользователя ${user.user.fullName} из друзей?`, [
     {
       text: 'Отмена',
       style: 'default',

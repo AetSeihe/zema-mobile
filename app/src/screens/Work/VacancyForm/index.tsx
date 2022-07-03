@@ -11,17 +11,18 @@ import {workStore} from '../../../store/workStore';
 import {routerStore} from '../../../store/routerStore';
 import {routerNames} from '../../../constants/routerNames';
 import {phoneRegExp} from '../../../constants/root';
-
+import {CityType} from '../../../types/userTypes';
+import {cityServices} from '../../../services/cityServices';
+import InputSelect from '../../../components/InputSelect';
 
 const schema = yup.object({
   title: yup.string().required(locale.fields.required),
   salary: yup.number().typeError(locale.fields.invalidTypeNumber).required(locale.fields.required),
   workExperience: yup.number().typeError(locale.fields.invalidTypeNumber).required(locale.fields.required),
   description: yup.string().required(locale.fields.required),
-  // city: yup.string().required(locale.fields.required),
   experience: yup.string().required(locale.fields.required),
-  phone: yup.string().matches(phoneRegExp, locale.fields.invalidNumberPhone),
-  email: yup.string().email(locale.fields.invalidEmail),
+  phone: yup.string().matches(phoneRegExp, locale.fields.invalidNumberPhone).required(locale.fields.required),
+  email: yup.string().email(locale.fields.invalidEmail).required(locale.fields.required),
 
 });
 
@@ -40,29 +41,51 @@ const initialValue = {
 
 const VacancyForm = () => {
   const [loading, setLoading] = useState(false);
+  const [cityes, setCityes] = useState<CityType[]>([]);
+  const [city, setCity] = useState<CityType | null>(null);
+
+  const handleChangeCity = async (name: string) => {
+    if (name.length < 3) {
+      return;
+    };
+
+    const cities = await cityServices.getCityByName(name);
+    const city = cities[0];
+    setCity(city);
+    setCityes(cities);
+  };
+
   const handleSubmit = async (data: typeof initialValue) => {
+    if (!city) {
+      Alert.alert('Ошибка... не удалось найти город');
+      return;
+    }
+
     setLoading(true);
-    await workStore.createVacancy({
+
+    const isSuccess = await workStore.createVacancy({
       title: data.title,
       salary: +data.salary,
       workExperience: +data.workExperience,
       description: data.description,
       experience: data.experience,
-      cityId: 1,
+      cityId: city.id,
       phone: data.phone,
       email: data.email,
     });
 
-    Alert.alert('Новая вакансия успешно добавленна!');
-
+    if (isSuccess) {
+      Alert.alert('Новая вакансия успешно добавленна!');
+    } else {
+      Alert.alert('Упс... что-то пошло не так');
+    }
 
     routerStore.pushToScene({
       name: routerNames.HOME,
     });
-
-
     setLoading(false);
   };
+
 
   return (
     <ScrollView >
@@ -84,6 +107,18 @@ const VacancyForm = () => {
                 value={values.salary}
                 error={errors.salary}
                 onChangeText={handleChange('salary')}
+              />
+              <InputSelect
+                options={cityes.map((city) => city.title)}
+                label='Город'
+                wrapperStyle={styles.field}
+                onChangeText={(text) => {
+                  handleChangeCity(text);
+                  handleChange('city')(text);
+                }}
+                onPressOption={handleChangeCity}
+                value={values.city}
+                error={errors.city}
               />
               <InputField label='Опыт работы от' keyboardType='numeric' wrapperStyle={styles.field}
                 value={values.workExperience}

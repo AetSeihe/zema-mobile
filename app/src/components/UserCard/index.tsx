@@ -26,7 +26,7 @@ export const UserCard = ({friend, onPress, renderButtons}: Props) => {
       <TouchableOpacity onPress={() => onPress(friend)} style={styles.wrapper}>
         <Avatar image={user.mainPhoto?.image} style={styles.image}/>
         <View style={styles.content}>
-          <Text style={styles.fullName}>{user.id} {user.fullName}</Text>
+          <Text style={styles.fullName}>{user.fullName}</Text>
           <Text style={styles.age}>{user.age} Лет</Text>
           <Text style={styles.interesting}>{user.interesting?.replace(/[\n]/gi, ' ').slice(0, 50).trim()}...</Text>
           {renderButtons(friend)}

@@ -10,9 +10,19 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   submit: {
-    marginLeft: 10,
   },
   submitDisabled: {
     opacity: 0.2,
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  avatar: {
+    borderRadius: 50,
+    marginRight: 10,
+    width: 30,
+    height: 30,
   },
 });

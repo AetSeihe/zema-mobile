@@ -53,13 +53,15 @@ class WorkStore {
 
   async fetchResume(data: GetAllVacancyDTO) {
     runInAction(() => {
-      this.isLoadingVacancy = true;
+      this.isLoadingResume = true;
     });
-    const newVacancy = await resumeService.getAllResume(data);
+    const resumes = await resumeService.getAllResume(data);
+    console.log('I data resumes: ', JSON.stringify(data, null, 2));
+    console.log('I make resumes: ', JSON.stringify(resumes, null, 2));
     runInAction(() => {
       this.isLoadingResume = false;
       this.isNeverLoadingResume = false;
-      this.resume = [...this.resume, ...newVacancy];
+      this.resume = [...this.resume, ...resumes];
     });
   }
 

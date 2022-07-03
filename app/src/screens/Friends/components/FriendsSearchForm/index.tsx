@@ -2,12 +2,10 @@ import {Button, Text} from '@react-native-material/core';
 import {Formik} from 'formik';
 import React, {useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
-import {Card} from '../../../../components/Card';
 import {CheckBoxWithLabel} from '../../../../components/CheckBoxWithLabel';
 import Icon from '../../../../components/Icon';
 import {InputField} from '../../../../components/InputField';
 import InputSelect from '../../../../components/InputSelect';
-import {Title} from '../../../../components/Title';
 import {EDUCATION_LITERAL, GENDER_LITERAL} from '../../../../models/User';
 import {theme} from '../../../../styles/theme';
 import {initialValueUsersSearch} from '../../constants';
@@ -15,6 +13,7 @@ import {styles} from './styles';
 import * as yup from 'yup';
 import {CityType} from '../../../../types/userTypes';
 import {cityServices} from '../../../../services/cityServices';
+import Dropdown from '../../../../components/Dropdown';
 
 const schema = yup.object({
   name: yup.string(),
@@ -56,20 +55,14 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
 
 
   return (
-    <ScrollView>
-      <Card style={styles.wrapper}>
-        <View style={styles.titleWrapper}>
-          <Title>Фильтры</Title>
-          <TouchableOpacity onPress={() => setIsShown(!isShown)}>
-            <Icon name={isShown ? 'circle-up': 'circle-down'} size={23} color={theme.main}/>
-          </TouchableOpacity>
-        </View>
+    <Dropdown title='Фильтры' visible={isShown} onPressClose={() => setIsShown(!isShown)} wrapperStyle={styles.wrapper}>
+      <ScrollView>
         <Formik
           initialValues={initialValueUsersSearch}
           validationSchema={schema}
           onSubmit={onSubmit}
         >
-          {({values, errors, handleChange, resetForm, handleSubmit}) => isShown && <>
+          {({values, errors, handleChange, resetForm, handleSubmit}) => <>
             <InputField
               label='ФИО'
               style={styles.field}
@@ -148,7 +141,7 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
             </TouchableOpacity>
           </>}
         </Formik>
-      </Card>
-    </ScrollView>
+      </ScrollView>
+    </Dropdown>
   );
 };

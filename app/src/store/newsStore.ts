@@ -1,4 +1,5 @@
 import {makeAutoObservable, runInAction} from 'mobx';
+import {Comment} from '../models/Comment';
 import {Post} from '../models/Post';
 import {postService} from '../services/postServices';
 import {CreatePostType, GetAllPostsOptions} from '../types/postTypes';
@@ -8,7 +9,7 @@ class PostStore {
   posts: Post[] = [];
   loading = false;
   neverLoad = true;
-  
+
   constructor() {
     makeAutoObservable(this);
   }
@@ -92,6 +93,11 @@ class PostStore {
   async commentPost(comment: string, postId: number) {
     const newComment = await postService.commentPost(comment, postId);
     return newComment;
+  }
+
+
+  async deleteComment(comment: Comment) {
+    await postService.deleteComment(comment.id);
   }
 }
 

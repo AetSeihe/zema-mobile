@@ -50,5 +50,14 @@ const getPostById = async (postId: number) => {
   }
 };
 
-export const postService = {getAllPosts, createPost, likePost, commentPost, getPostById};
+const deleteComment = async (commentId: number) => {
+  try {
+    await postApi.deleteComment(commentId);
+  } catch (e: any) {
+    throw new Error('Упс... что-то пошло не так');
+  }
+};
+
+
+export const postService = {getAllPosts, createPost, likePost, commentPost, getPostById, deleteComment};
 

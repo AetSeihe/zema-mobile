@@ -15,9 +15,15 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   post: {
-    marginBottom: 20,
+    marginTop: 20,
   },
   form: {
     marginBottom: 10,
+  },
+
+  tint: {
+    textAlign: 'center',
+    marginTop: 15,
+    marginBottom: 35,
   },
 });

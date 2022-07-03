@@ -21,8 +21,8 @@ const getPostById = (postId: number): Promise<AxiosResponse<GetOnePostType>> => 
 
 const createPost = (data: CreatePostType): Promise<AxiosResponse<GetOnePostType>> => {
   const formData = new FormData();
-  formData.append('text', data.text);
-  formData.append('title', data.title);
+  formData.append('text', data.text.trim());
+  formData.append('title', data.title.trim());
 
   data.images.forEach((photo: Asset) => {
     formData.append('files', {uri: photo.uri, name: photo.fileName, type: photo.type});
@@ -60,5 +60,12 @@ const commentPostById = (text: string, postId:number): Promise<AxiosResponse<Com
   });
 };
 
+const deleteComment = (commentId:number): Promise<AxiosResponse<null>> => {
+  return axiosInstants.delete(`post/comment/${commentId}`, {
+    headers: {
+      ...getApiConfig().headers,
+    },
+  });
+};
 
-export const postApi = {getAllPostsByOptions, createPost, likePostById, commentPostById, getPostById};
+export const postApi = {getAllPostsByOptions, createPost, likePostById, commentPostById, getPostById, deleteComment};

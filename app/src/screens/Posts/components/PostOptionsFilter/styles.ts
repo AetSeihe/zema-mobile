@@ -1,12 +1,12 @@
 import {StyleSheet} from 'react-native';
+import {BASE_MARGIN_SCREEN} from '../../../../constants/styles';
 import {theme} from '../../../../styles/theme';
 
 
 export const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 20,
+    marginTop: 10,
+    marginHorizontal: BASE_MARGIN_SCREEN,
   },
   title: {
     fontSize: 20,
