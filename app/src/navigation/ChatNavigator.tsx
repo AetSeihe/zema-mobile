@@ -1,6 +1,7 @@
 import {NavigationContainerRef, NavigationProp} from '@react-navigation/core';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {observer} from 'mobx-react';
 import React, {useEffect, useRef} from 'react';
 import {ChatEnum} from '../constants/routerNames';
 import {Chat} from '../models/Chat';
@@ -20,19 +21,17 @@ type Props = {
     }
   }
 
-export const ChatNavigator = ({route}: Props) => {
+const ChatNavigatorScreen = ({route}: Props) => {
   const navigator = useRef<NavigationContainerRef<any>>(null);
   const user = route.params?.user;
-  const chat = route.params?.chat;
 
 
   useEffect(() => {
     if (navigator.current) {
       if (user) {
-        navigator.current.navigate(ChatEnum.CHAT_USER, {
-          user: user,
-        });
+        navigator.current.navigate(ChatEnum.CHAT_USER);
       }
+
       if (!user) {
         navigator.current.navigate(ChatEnum.CHAT_LIST);
       }
@@ -50,7 +49,7 @@ export const ChatNavigator = ({route}: Props) => {
         <Stack.Screen name={ChatEnum.CHAT_LIST} component={ChatList}/>
         <Stack.Screen
           name={ChatEnum.CHAT_USER}
-          component={() => <ChatScreen user={user} chat={chat}/>}
+          component={() => <ChatScreen user={user}/>}
           options={{
             headerShown: false,
           }}
@@ -59,3 +58,5 @@ export const ChatNavigator = ({route}: Props) => {
     </NavigationContainer>
   );
 };
+
+export const ChatNavigator = observer(ChatNavigatorScreen);

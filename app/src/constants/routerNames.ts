@@ -15,6 +15,7 @@ export enum routerNames {
 
     FORM_SELECT = 'FORM_SELECT',
     POST_FORM = 'POST_FORM',
+    RESUME_FORM = 'RESUME_FORM',
     VACANCY_FORM = 'VACANCY_FORM',
 
 }

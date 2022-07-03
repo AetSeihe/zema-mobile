@@ -1,12 +1,50 @@
 import {Text} from '@react-native-material/core';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {Menu, MenuItem} from 'react-native-material-menu';
 import Icon from '../../../components/Icon';
 import {routerNames} from '../../../constants/routerNames';
 import {routerStore} from '../../../store/routerStore';
 import {theme} from '../../../styles/theme';
 import {styles} from './styles';
+
+
+const PlusButton = () => {
+  const [visible, setVisible] = useState(false);
+
+  const onPressToPost = () => {
+    setVisible(false);
+    routerStore.pushToScene({
+      name: routerNames.POST_FORM,
+    });
+  };
+
+  const onPressToVacancy = () => {
+    setVisible(false);
+    routerStore.pushToScene({
+      name: routerNames.VACANCY_FORM,
+    });
+  };
+
+  const onPressToResume = () => {
+    setVisible(false);
+    routerStore.pushToScene({
+      name: routerNames.RESUME_FORM,
+    });
+  };
+
+  return ( <>
+    <TouchableOpacity style={styles.plusWrapper} onPress={() => setVisible(true)}>
+      <Icon name={'plus'} color={'gray'}/>
+    </TouchableOpacity>
+    <Menu visible={visible} onRequestClose={() => setVisible(false)} >
+      <MenuItem onPress={onPressToPost}>Добавить Пост</MenuItem>
+      <MenuItem onPress={onPressToVacancy}>Добавить Вакансию</MenuItem>
+      <MenuItem onPress={onPressToResume}>Добавить Резюме</MenuItem>
+    </Menu>
+  </>);
+};
 
 
 export const CustomTabBar = ({state, descriptors, navigation}: BottomTabBarProps) => {
@@ -71,11 +109,7 @@ export const CustomTabBar = ({state, descriptors, navigation}: BottomTabBarProps
     <SafeAreaView style={styles.wrapper}>
       {routers[0]}
       {routers[1]}
-      <TouchableOpacity style={styles.plusWrapper} onPress={() => routerStore.pushToScene({
-        name: routerNames.FORM_SELECT,
-      })}>
-        <Icon name={'plus'} color={'gray'}/>
-      </TouchableOpacity>
+      <PlusButton />
       {routers[2]}
       {routers[3]}
 

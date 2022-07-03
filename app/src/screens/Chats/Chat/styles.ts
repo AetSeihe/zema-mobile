@@ -60,14 +60,16 @@ export const stylesMessage = StyleSheet.create({
   wrapper: {
     alignSelf: 'flex-end',
     backgroundColor: '#E2EFFF',
-    padding: 24,
+    paddingVertical: 24,
+    paddingHorizontal: 12,
     marginBottom: 10,
     maxWidth: '80%',
+    minWidth: '25%',
+
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     borderBottomRightRadius: 5,
     borderBottomLeftRadius: 15,
-    minWidth: '35%',
   },
   text: {
     color: '#3A3A3A',

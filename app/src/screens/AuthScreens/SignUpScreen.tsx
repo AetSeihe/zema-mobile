@@ -1,4 +1,4 @@
-import {Button, Text, TextInput} from '@react-native-material/core';
+import {Button, Text} from '@react-native-material/core';
 import {Formik} from 'formik';
 import React, {useState} from 'react';
 import {Alert, Image, Linking, ScrollView, TouchableOpacity, View} from 'react-native';
@@ -13,30 +13,29 @@ import {routerStore} from '../../store/routerStore';
 import {routerNames} from '../../constants/routerNames';
 import {observer} from 'mobx-react-lite';
 import CheckBox from '@react-native-community/checkbox';
+import {InputField} from '../../components/InputField';
+import {phoneRegExp} from '../../constants/root';
 
 const authLocale = locale.auth;
 const signUpLocale = locale.auth.signUp;
 
 const initalValues = {
-  name: 'Илья',
-  phone: '+79080421577',
-  email: 'quasar02@icloud.com',
-  password: 'qwerty',
-  confirmPassword: 'qwerty',
+  name: '',
+  phone: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 
 };
 const schema = yup.object({
   name: yup.string().required(locale.fields.required),
-  phone: yup.string().required(locale.fields.required),
+  phone: yup.string().matches(phoneRegExp, locale.fields.invalidNumberPhone),
   email: yup.string().email(locale.fields.invalidEmail).required(locale.fields.required),
   password: yup.string().min(5, locale.fields.invalidPassword).required(locale.fields.required),
   confirmPassword: yup.string()
-      .oneOf([yup.ref('password'), null], locale.fields.required),
+      .oneOf([yup.ref('password'), null], locale.fields.confirmPassword).required(locale.fields.required),
 });
 
-const isErrorField = (error: any, param1: string, param2: string) => {
-  return error ? param2 :param1;
-};
 
 const goToUserAgreement = () => {
   Linking.openURL('https://www.youtube.com/watch?v=8AHCfZTRGiI&list=RD8AHCfZTRGiI&start_radio=1');
@@ -71,56 +70,45 @@ const SignUpScreen = () => {
           >
             {({handleChange, handleSubmit, values, errors}) => (
               <>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    label={authLocale.name}
-                    color={isErrorField(errors.name, theme.main, theme.error)}
-                    onChangeText={handleChange('name')}
-                    value={values.name}
-                  />
-                  {errors.name && <Text color={theme.error}>{errors.name}</Text>}
-                </View>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    label={authLocale.phone}
-                    color={isErrorField(errors.phone, theme.main, theme.error)}
-                    onChangeText={handleChange('phone')}
-                    value={values.phone}
-                  />
-                  {errors.phone && <Text color={theme.error}>{errors.phone}</Text>}
-                </View>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    label={authLocale.email}
-                    color={isErrorField(errors.email, theme.main, theme.error)}
-                    onChangeText={handleChange('email')}
-                    value={values.email}
-                  />
-                  {errors.email && <Text color={theme.error}>{errors.email}</Text>}
-                </View>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    label={authLocale.password}
-                    color={isErrorField(errors.password, theme.main, theme.error)}
-                    onChangeText={handleChange('password')}
-                    value={values.password}
-                  />
-                  {errors.password && <Text color={theme.error}>{errors.password}</Text>}
-                </View>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    label={authLocale.confirmPassword}
-                    color={isErrorField(errors.confirmPassword, theme.main, theme.error)}
-                    onChangeText={handleChange('confirmPassword')}
-                    value={values.confirmPassword}
-                  />
-                  {errors.confirmPassword && <Text color={theme.error}>{errors.confirmPassword}</Text>}
-                </View>
+                <InputField
+                  wrapperStyle={styles.inputWrapper}
+                  label={authLocale.name}
+                  onChangeText={handleChange('name')}
+                  value={values.name}
+                  error={errors.name}
+                />
+                <InputField
+                  wrapperStyle={styles.inputWrapper}
+                  label={authLocale.phone}
+                  onChangeText={handleChange('phone')}
+                  value={values.phone}
+                  error={errors.phone}
+                  keyboardType='name-phone-pad'
+                />
+                <InputField
+                  wrapperStyle={styles.inputWrapper}
+                  label={authLocale.email}
+                  onChangeText={handleChange('email')}
+                  value={values.email}
+                  error={errors.email}
+                  keyboardType='email-address'
+                />
+                <InputField
+                  wrapperStyle={styles.inputWrapper}
+                  label={authLocale.password}
+                  onChangeText={handleChange('password')}
+                  value={values.password}
+                  error={errors.password}
+                  secureTextEntry={true}
+                />
+                <InputField
+                  wrapperStyle={styles.inputWrapper}
+                  label={authLocale.confirmPassword}
+                  onChangeText={handleChange('confirmPassword')}
+                  value={values.confirmPassword}
+                  error={errors.confirmPassword}
+                  secureTextEntry={true}
+                />
                 <TouchableOpacity style={styles.userAgreementWrapper} onPress={() => setConsent(!consent)}>
                   <CheckBox
                     value={consent}

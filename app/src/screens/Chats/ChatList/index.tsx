@@ -20,7 +20,6 @@ const ChatListScreen = () => {
   const offsetFetch = useRef(0);
 
   const fetchChats = () => {
-    chatStore.clearChats();
     offsetFetch.current = 0;
     chatStore.fetchChats({
       data: {
@@ -35,11 +34,8 @@ const ChatListScreen = () => {
     offsetFetch.current += CHAT_LIMIT_FETCH;
   };
 
-
   useEffect(() => {
-    if (chatStore.isNeverLoading) {
-      fetchChats();
-    }
+    fetchChats();
   }, []);
 
   const onPressUserCard = (chat: Chat) => {
@@ -53,6 +49,7 @@ const ChatListScreen = () => {
   };
 
   const fetchChatsOnScroll = () => {
+    console.log('!! fetch on scroll!!');
     chatStore.fetchChats({
       data: {
         userName: search,

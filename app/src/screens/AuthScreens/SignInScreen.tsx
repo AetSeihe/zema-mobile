@@ -1,4 +1,4 @@
-import {Button, Text, TextInput} from '@react-native-material/core';
+import {Text} from '@react-native-material/core';
 import {Formik} from 'formik';
 import React from 'react';
 import {Alert, Image, TouchableOpacity, View} from 'react-native';
@@ -12,6 +12,8 @@ import {userStore} from '../../store/userStore';
 import {routerStore} from '../../store/routerStore';
 import {routerNames} from '../../constants/routerNames';
 import {observer} from 'mobx-react-lite';
+import {InputField} from '../../components/InputField';
+import CustomButton from '../../components/CustomButton';
 
 const authLocale = locale.auth;
 const signInLocale = locale.auth.signIn;
@@ -24,10 +26,6 @@ const schema = yup.object({
   login: yup.string().required(locale.fields.required),
   password: yup.string().required(locale.fields.required),
 });
-
-const isErrorField = (error: any, param1: string, param2: string) => {
-  return error ? param2 :param1;
-};
 
 const SignInScreen = () => {
   const onSubmit = async (values: typeof initalValues) => {
@@ -54,29 +52,22 @@ const SignInScreen = () => {
         >
           {({handleChange, handleSubmit, values, errors}) => (
             <>
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  style={styles.input}
-                  label={authLocale.login}
-                  color={isErrorField(errors.login, theme.main, theme.error)}
-                  onChangeText={handleChange('login')}
-                  value={values.login}
-                />
-                {errors.login && <Text color={theme.error}>{errors.login}</Text>}
-              </View>
-              <View style={styles.inputWrapper}>
-                <TextInput style={styles.input}
-                  label={authLocale.password}
-                  color={theme.main}
-                  secureTextEntry={true}
-                  onChangeText={handleChange('password')}
-                  value={values.password}
-                />
-                {errors.password && <Text color={theme.error}>{errors.password}</Text>}
-
-              </View>
-
-              <Button
+              <InputField
+                wrapperStyle={styles.inputWrapper}
+                label={authLocale.login}
+                onChangeText={handleChange('login')}
+                value={values.login}
+                error={errors.login}
+              />
+              <InputField
+                wrapperStyle={styles.inputWrapper}
+                label={authLocale.password}
+                onChangeText={handleChange('password')}
+                value={values.password}
+                error={errors.password}
+                secureTextEntry={true}
+              />
+              <CustomButton
                 loading={userStore.loading}
                 disabled={userStore.loading}
                 style={styles.submitButton}
@@ -86,7 +77,6 @@ const SignInScreen = () => {
               />
             </>
           )}
-
         </Formik>
 
 

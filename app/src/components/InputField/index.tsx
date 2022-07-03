@@ -10,10 +10,10 @@ export type InputFieldProps = {
     error?: string;
 }
 
-export const InputField = ({wrapperStyle, error, ...props}: InputFieldProps & TextInputProps) => {
+export const InputField = ({wrapperStyle, error, style, ...props}: InputFieldProps & TextInputProps) => {
   return (
     <View style={wrapperStyle}>
-      <TextInput color={error ? theme.error : theme.main} {...props}/>
+      <TextInput color={error ? theme.error : theme.main} {...props} inputContainerStyle={[styles.input, style]}/>
       {!!error && <Text style={styles.error}>{error}</Text>}
     </View>
   );

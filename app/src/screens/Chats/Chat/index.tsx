@@ -1,9 +1,10 @@
 import {Text} from '@react-native-material/core';
 import {observer} from 'mobx-react';
-import React, {useState} from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, TouchableOpacity, View, ViewToken} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Avatar} from '../../../components/Avatar';
+import {CatAlert} from '../../../components/CatAlert';
 import Icon from '../../../components/Icon';
 import {InputField} from '../../../components/InputField';
 import {routerNames} from '../../../constants/routerNames';
@@ -16,7 +17,7 @@ import {MessageType} from '../../../types/chatTypes';
 import {styles, stylesHeader, stylesMessage} from './styles';
 
 type Props = {
-  user: User,
+  user?: User,
   chat?: ChatModel
 }
 
@@ -70,27 +71,53 @@ const Message = ({message, isCompanion}: MessageProps) => {
 };
 
 const LIMIT_FETCH_MESSAGES = 15;
-
-const ChatScreen = ({user, chat}: Props) => {
+const TIMEOUT_TO_SEND_READED_MESSAGE = 5 * 1000;
+let readMessageInterval: NodeJS.Timeout;
+const ChatScreen = ({user: propsUser}: Props) => {
   const [value, setValue] = useState('');
+  const [user, setUser] = useState<User | undefined>(propsUser);
   const [loading, setLoading] = useState(false);
-  const currentChat = chatStore.chats.find((c) => c.id === chat?.id);
+  const readedMessages = useRef<number[]>([]).current;
+
+  const currentChat = chatStore.activeChat || chatStore.chats.find((c) => {
+    return c.userOneId === user?.id || c.userTwoId === user?.id;
+  });
+
+
+  useEffect(() => {
+    readMessageInterval = setInterval(() => {
+      if (currentChat) {
+        chatStore.readMessages(currentChat.id, readedMessages);
+      }
+    }, TIMEOUT_TO_SEND_READED_MESSAGE);
+
+    chatStore.activeChat = currentChat;
+    if (!user) {
+      setUser(currentChat?.companion);
+    }
+
+    return () => {
+      clearTimeout(readMessageInterval);
+      if (currentChat) {
+        chatStore.readMessages(currentChat.id, readedMessages);
+      }
+    };
+  }, []);
 
   const appUser = userStore.user;
 
-  if (!appUser || !currentChat) {
+  if (!appUser) {
     return null;
   }
 
   const sendMessage = async () => {
     setLoading(true);
-    await chatStore.sendMessage(user, value, currentChat.id);
+    await chatStore.sendMessage(user, value.trim());
     setValue('');
     setLoading(false);
   };
 
   const handleScrollFlatList = () => {
-    console.log('scroll chat', chat);
     if (currentChat) {
       chatStore.fetchMessages({
         chatId: currentChat.id,
@@ -100,23 +127,58 @@ const ChatScreen = ({user, chat}: Props) => {
     }
   };
 
+  const handleItemsInViewPort = ({viewableItems}: {
+    viewableItems: ViewToken[];
+},
+  ) => {
+    viewableItems.map(({item}: {item: MessageType}) => {
+      if (!readedMessages.includes(item.id) && item.userId != appUser.id) {
+        readedMessages.push(item.id);
+      }
+    });
+  };
+
+  const viewabilityConfigCallbackPairs = useRef([{
+    viewabilityConfig: {
+      minimumViewTime: 500,
+      itemVisiblePercentThreshold: 100,
+    },
+    onViewableItemsChanged: handleItemsInViewPort,
+  },
+  {
+    viewabilityConfig: {
+      minimumViewTime: 150,
+      itemVisiblePercentThreshold: 10,
+    },
+    onViewableItemsChanged: handleItemsInViewPort,
+  },
+  ]).current;
+
+  if (!user) {
+    return <Text>dsfdsfd</Text>;
+  }
+
+
   return (
     <View style={styles.wrapper}>
       <ChatHeader user={user}/>
       <FlatList
         onEndReached={handleScrollFlatList}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs}
+        keyExtractor={(item) => item.id.toString()}
         style={styles.list}
-        data={currentChat.messages}
+        data={currentChat?.messages || []}
+        ListEmptyComponent={<CatAlert title='Похоже у вас еще нет сообщений'/>}
         renderItem={({item}) => <Message
           message={item}
           user={item.userId === user.id ? user:appUser}
           isCompanion={item.userId === user.id}
         />}
-        inverted
+        inverted={!!currentChat?.messages.length}
       />
       <View style={styles.form}>
         <InputField wrapperStyle={styles.input} placeholder='Напишите сообщение' value={value} onChangeText={setValue}/>
-        <TouchableOpacity onPress={sendMessage} style={[styles.button, value && !loading ? null: styles.buttonDisabled]} disabled={!value || loading}>
+        <TouchableOpacity onPress={sendMessage} style={[styles.button, value.trim() && !loading ? null: styles.buttonDisabled]} disabled={!value.trim() || loading}>
           <Icon name='compass' size={26} color='#fff'/>
         </TouchableOpacity>
       </View>

@@ -5,11 +5,11 @@ import {theme} from '../../../styles/theme';
 
 export const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
     justifyContent: 'flex-start',
     marginHorizontal: BASE_MARGIN_SCREEN,
   },
   cardWrapper: {
-    height: '100%',
   },
   card: {
     flex: 1,

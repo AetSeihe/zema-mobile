@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
   },
   content: {
     alignSelf: 'center',
+    backgroundColor: '#fff',
     width: '90%',
     borderColor: '#CDCDCD',
     borderWidth: 2,
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   inputWrapper: {
-    marginBottom: 20,
+    marginBottom: 13,
   },
   input: {
   },
@@ -59,10 +60,12 @@ export const styles = StyleSheet.create({
   },
   userAgreementWrapper: {
     flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+
   },
 
   userAgreementCheckbox: {
-    marginBottom: 10,
     transform: [{
       scale: 0.8,
     }],
@@ -70,5 +73,6 @@ export const styles = StyleSheet.create({
 
   userAgreementText: {
     fontSize: 12,
+    flex: 1,
   },
 });

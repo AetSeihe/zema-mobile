@@ -39,8 +39,9 @@ export const locale = {
     required: 'Это обязатаельное поле',
     invalidTypeNumber: 'Это поле должно быть числом',
     invalidEmail: 'Введите валидный email',
-    invalidNumberPhone: 'Невалидный номер телефона',
+    invalidNumberPhone: 'Формат номера телефона должен быть: 89999999999',
     invalidPassword: 'Пароль должен содержать минимум 5 символов',
+    confirmPassword: 'Пароли не совпадают',
   },
   screensName: {
     posts: 'Посты',

@@ -38,11 +38,11 @@ const initialValue = {
 };
 
 
-const VacancyForm = () => {
+const ResumeForm = () => {
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (data: typeof initialValue) => {
     setLoading(true);
-    await workStore.createVacancy({
+    await workStore.createResume({
       title: data.title,
       salary: +data.salary,
       workExperience: +data.workExperience,
@@ -53,7 +53,7 @@ const VacancyForm = () => {
       email: data.email,
     });
 
-    Alert.alert('Новая вакансия успешно добавленна!');
+    Alert.alert('Вы успешно добавили новое резюме');
 
 
     routerStore.pushToScene({
@@ -67,7 +67,7 @@ const VacancyForm = () => {
   return (
     <ScrollView >
       <View style={styles.wrapper}>
-        <Title style={styles.title}>Добавление вакансии</Title>
+        <Title style={styles.title}>Добавление резюме</Title>
         <Formik
           initialValues={initialValue}
           onSubmit={handleSubmit}
@@ -85,7 +85,7 @@ const VacancyForm = () => {
                 error={errors.salary}
                 onChangeText={handleChange('salary')}
               />
-              <InputField label='Опыт работы от' keyboardType='numeric' wrapperStyle={styles.field}
+              <InputField label='Опыт работы*' keyboardType='numeric' wrapperStyle={styles.field}
                 value={values.workExperience}
                 error={errors.workExperience}
                 onChangeText={handleChange('workExperience')}
@@ -95,7 +95,7 @@ const VacancyForm = () => {
                 error={errors.description}
                 onChangeText={handleChange('description')}
               />
-              <InputField label='Нужные навыки*' wrapperStyle={styles.field} helperText='Перечислите навыки которые должны быть у кандидата'
+              <InputField label='Ваши навыки' wrapperStyle={styles.field} helperText='Перечислите навыки которые должны быть у кандидата'
                 value={values.experience}
                 error={errors.experience}
                 onChangeText={handleChange('experience')}
@@ -123,4 +123,4 @@ const VacancyForm = () => {
   );
 };
 
-export default VacancyForm;
+export default ResumeForm;

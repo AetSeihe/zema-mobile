@@ -14,17 +14,20 @@ type Props = {
 const UserChatItem = ({chat, onPress}: Props) => {
   const companion = chat.companion;
   const lastMessage = chat.messages[0];
-
+  const isNotReadedMessage = chat.messages.some((msg) => !msg.readed && msg.userId == chat.companion.id);
 
   return (
     <TouchableOpacity style={styles.wrapper}onPress={() => onPress(chat)}>
       <Avatar style={styles.avatar}image={companion.mainPhoto?.image}/>
       <View style={styles.column}>
         <View style={styles.titleRow}>
-          <Text style={styles.title}>{companion.id} {companion.fullName}</Text>
+          <Text style={styles.title}>{companion.fullName}</Text>
           {!!lastMessage && <Text style={styles.time}>{Chat.getMessageSendTime(lastMessage)}</Text>}
         </View>
-        {!!lastMessage && <Text style={styles.message}>{lastMessage.message}</Text>}
+        <View style={styles.row}>
+          {!!lastMessage && <Text style={styles.message} numberOfLines={1}>{lastMessage.message}</Text>}
+          {isNotReadedMessage && <View style={styles.notRead}/>}
+        </View>
       </View>
     </TouchableOpacity>
   );

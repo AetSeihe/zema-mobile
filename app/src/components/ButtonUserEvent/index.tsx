@@ -5,6 +5,7 @@ import {Alert, TouchableOpacity, View} from 'react-native';
 import {routerNames} from '../../constants/routerNames';
 import {Friend} from '../../models/Friend';
 import {User} from '../../models/User';
+import {chatStore} from '../../store/chatStore';
 import {friendStore} from '../../store/friendStore';
 import {routerStore} from '../../store/routerStore';
 import {userStore} from '../../store/userStore';
@@ -29,6 +30,9 @@ const onPressChat = (user: User) => {
     name: routerNames.Chat,
     options: {
       user: user,
+      chat: chatStore.chats.find((chat) => {
+        return chat.companion.id === user.id;
+      }),
     },
   });
 };

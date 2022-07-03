@@ -1,7 +1,6 @@
 import {NavigationProp} from '@react-navigation/core';
 import React, {useEffect, useRef, useState} from 'react';
 import {Alert, FlatList, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import ButtonUserEvent from '../../../components/ButtonUserEvent';
 import {UserCard} from '../../../components/UserCard';
 import {FriendNames, routerNames} from '../../../constants/routerNames';
@@ -102,7 +101,7 @@ const FriendsSearch = ({navigation}: Props) => {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} style={styles.wrapper}>
+    <View style={styles.wrapper}>
       <FriendHeader
         tabActive={'first'}
         onPressFriends={onPressFriends}
@@ -115,11 +114,12 @@ const FriendsSearch = ({navigation}: Props) => {
         onEndReachedThreshold={0.2}
         style={styles.cardWrapper}
         data={users}
-        renderItem={({item}) => <View style={styles.card}>
-          <UserCard friend={item} onPress={onPressCard} renderButtons={renderButtons}/>
-        </View>}
+        renderItem={({item}) => (
+          <View style={styles.card}>
+            <UserCard friend={item} onPress={onPressCard} renderButtons={renderButtons}/>
+          </View>)}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

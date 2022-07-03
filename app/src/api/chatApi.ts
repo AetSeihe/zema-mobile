@@ -20,7 +20,6 @@ const getAllMessages = (data: GetAllMessagesInChat): Promise<AxiosResponse<GetAl
     params: data,
   });
 };
-// В процессе
 const sendMessage = (data: FormData): Promise<AxiosResponse<MessageType>> => {
   return axiosInstants.post('chat/send', data, {
     headers: {
@@ -29,5 +28,15 @@ const sendMessage = (data: FormData): Promise<AxiosResponse<MessageType>> => {
   });
 };
 
+const readMessage = (readedIdArr: number[]): Promise<AxiosResponse<boolean>> => {
+  return axiosInstants.post('chat/read', {
+    messagesId: readedIdArr,
+  }, {
+    headers: {
+      ...getApiConfig().headers,
+    },
+  });
+};
 
-export const chatApi = {getAll, sendMessage, getAllMessages};
+
+export const chatApi = {getAll, sendMessage, getAllMessages, readMessage};

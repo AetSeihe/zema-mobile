@@ -27,4 +27,10 @@ const sendMessage = async (user:User, message: string): Promise<MessageType> => 
   return res.data;
 };
 
-export const chatService = {getAll, getMessages, sendMessage};
+
+const readMessages = async (messsagesRead: number[]): Promise<boolean> => {
+  const res = await chatApi.readMessage(messsagesRead);
+  return res.data;
+};
+
+export const chatService = {getAll, getMessages, sendMessage, readMessages};

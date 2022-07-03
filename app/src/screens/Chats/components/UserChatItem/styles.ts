@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
     color: '#909090',
     fontSize: 15,
     fontWeight: '300',
+    maxWidth: '85%',
   },
   column: {
     flex: 1,
@@ -38,5 +39,16 @@ export const styles = StyleSheet.create({
   time: {
     fontSize: 14,
     color: '#909090',
+  },
+  row: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  notRead: {
+    width: 20,
+    height: 20,
+    backgroundColor: theme.main,
+    borderRadius: 20,
   },
 });

@@ -58,7 +58,7 @@ export type ChatScreenType = {
     name: routerNames.Chat,
     options: {
         user?: User,
-        chat: Chat,
+        chat?: Chat,
     }
 }
 
@@ -69,17 +69,16 @@ export type PostsScreenType = {
 
 }
 
-
-export type FormSelectScreenType = {
-    name: routerNames.FORM_SELECT,
-    options?: {}
-
-}
-
 export type VacancyFormScreenType = {
     name: routerNames.VACANCY_FORM,
     options?: {}
 }
+
+export type ResumeFormScreenType = {
+    name: routerNames.RESUME_FORM,
+    options?: {}
+}
+
 
 export type HomeScreenType = {
     name: routerNames.HOME,
@@ -97,6 +96,6 @@ export type RouterType = ErrorScreenType |
                         ProfileScreenType |
                         ProfileSettingsScreenType |
                         PostFormScreenType |
-                        FormSelectScreenType |
                         VacancyFormScreenType |
-                        HomeScreenType
+                        HomeScreenType |
+                        ResumeFormScreenType

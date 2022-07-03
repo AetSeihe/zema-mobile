@@ -1,6 +1,8 @@
 // prettier-ignore
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "experimentalDecorators": true,
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Projects */

@@ -5,6 +5,8 @@ export type ChatType = {
     id: number;
     createdAt: string;
     updatedAt: string;
+    userOneId: number,
+    userTwoId: number,
     messages: MessageType[];
     companion: UserType;
 }
@@ -26,6 +28,32 @@ export type MessagePinnedMessage = {
     pinnedMessage: PinnedMessagePinnedMessage[];
 }
 
+export interface MessageSocketType {
+    id: number;
+    chatId: number;
+    userId: number;
+    message: string;
+    readed: boolean;
+    createdAt: string;
+    updatedAt: string;
+    files: string[];
+    chat: ChatSocket;
+    user: UserType;
+    companion: UserType;
+    pinnedMessage: MessagePinnedMessage[];
+}
+
+export interface ChatSocket {
+    id: number;
+    userOneID: number;
+    userTwoID: number;
+    createdAt: string;
+    updatedAt: string;
+    userOneId: number,
+    userTwoId: number,
+}
+
+
 export type MessageType = {
     id: number;
     chatId: number;
@@ -36,13 +64,6 @@ export type MessageType = {
     createdAt: string;
     updatedAt: string;
     pinnedMessage?: MessagePinnedMessage[];
-    chat?: {
-        id: number,
-        userOneId: number,
-        userTwoId: number,
-        createdAt: string,
-
-    }
 }
 
 
