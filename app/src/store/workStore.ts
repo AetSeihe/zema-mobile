@@ -56,8 +56,6 @@ class WorkStore {
       this.isLoadingResume = true;
     });
     const resumes = await resumeService.getAllResume(data);
-    console.log('I data resumes: ', JSON.stringify(data, null, 2));
-    console.log('I make resumes: ', JSON.stringify(resumes, null, 2));
     runInAction(() => {
       this.isLoadingResume = false;
       this.isNeverLoadingResume = false;
@@ -80,7 +78,7 @@ class WorkStore {
 
 
   clearResume() {
-    this.resume =[];
+    this.resume = [];
   }
 }
 

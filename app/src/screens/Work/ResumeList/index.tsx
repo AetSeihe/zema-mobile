@@ -44,8 +44,10 @@ const ResumeList = ({navigation}: Props) => {
       data: data,
       options: {
         limit: LIMIT_FETCH_VACANCY,
+        offset: 0,
       },
     });
+    offset.current = LIMIT_FETCH_VACANCY;
   };
 
   const onScroll = () => {
@@ -65,6 +67,7 @@ const ResumeList = ({navigation}: Props) => {
     navigation.navigate(WorkEnum.WORK_VACANCY_LIST);
   };
 
+  console.log('Вот сколько у меня резюме нах!', workStore.resume.length);
   return (
     <View style={styles.wrapper}>
       <Button title='Вакансии' onPress={onPressSwitchWork}/>

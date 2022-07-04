@@ -5,7 +5,6 @@ import {CreateResumeDTO, GetAllVacancyDTO} from '../types/workTypes';
 
 const getAllResume = async (data: GetAllVacancyDTO): Promise<Vacancy[]> => {
   const res = await resumeApi.getAllResume(data);
-  console.log('!!!response', JSON.stringify(res.data, null, 2));
   return res.data.vacancies.map((vacancy) => new Vacancy(vacancy));
 };
 
