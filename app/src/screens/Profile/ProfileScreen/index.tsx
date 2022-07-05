@@ -1,4 +1,3 @@
-import {Button} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import {observer} from 'mobx-react';
 import React, {useEffect, useRef, useState} from 'react';
@@ -12,13 +11,10 @@ import {userService} from '../../../services/userService';
 import {postStore} from '../../../store/newsStore';
 import {routerStore} from '../../../store/routerStore';
 import {userStore} from '../../../store/userStore';
-import {theme} from '../../../styles/theme';
 import {ProfileScreenOptionsType} from '../../../types/routerTypes';
 import {Post} from '../../Posts/components/Post';
 import {ProfileHeader} from '../components/ProfileHeader';
 import {styles} from './styles';
-import RNRestart from 'react-native-restart';
-import {clearAuthUserData} from '../../../utils/userAuthToken';
 import ButtonUserEvent from '../../../components/ButtonUserEvent';
 
 type Props = {
@@ -113,23 +109,10 @@ const ProfileS = ({route, navigation}:Props) => {
     }));
   };
 
-  const exitUser = async () => {
-    await clearAuthUserData();
-    // eslint-disable-next-line new-cap
-    RNRestart.Restart();
-  };
 
   const renderProfileButtons = (user: User) => {
     return (
-      <>
-        <ButtonUserEvent currentUser={user}/>
-        {user.id === userApp.id && <Button
-          title={'Выйти'}
-          color={theme.error}
-          titleStyle={styles.buttonText}
-          onPress={exitUser}
-        />}
-      </>
+      <ButtonUserEvent currentUser={user}/>
     );
   };
 

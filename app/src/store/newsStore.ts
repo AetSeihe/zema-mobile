@@ -92,6 +92,7 @@ class PostStore {
 
   async commentPost(comment: string, postId: number) {
     const newComment = await postService.commentPost(comment, postId);
+    console.log('!!! commentPost', JSON.stringify(newComment, null, 2));
     return newComment;
   }
 

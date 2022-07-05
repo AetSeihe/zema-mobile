@@ -53,6 +53,14 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
     return candidate;
   };
 
+  const handleSubmit = (values: typeof initialValueUsersSearch) => {
+    onSubmit({
+      ...values,
+      cityFrom: birthCity?.title || '',
+      cityTo: currentCity?.title || '',
+    });
+  };
+
 
   return (
     <Dropdown title='Фильтры' visible={isShown} onPressClose={() => setIsShown(!isShown)} wrapperStyle={styles.wrapper}>
@@ -60,7 +68,7 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
         <Formik
           initialValues={initialValueUsersSearch}
           validationSchema={schema}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
         >
           {({values, errors, handleChange, resetForm, handleSubmit}) => <>
             <InputField

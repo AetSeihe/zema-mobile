@@ -6,6 +6,7 @@ import {Tint} from '../../../components/Tint';
 import {routerNames} from '../../../constants/routerNames';
 import {Post as PostModel} from '../../../models/Post';
 import {User} from '../../../models/User';
+import {cityServices} from '../../../services/cityServices';
 import {postStore} from '../../../store/newsStore';
 import {routerStore} from '../../../store/routerStore';
 import {userStore} from '../../../store/userStore';
@@ -27,6 +28,7 @@ let fetchPostOffset = 0;
 
 const PostsScreen = () => {
   const [options, setOptions] = useState<typeof initialValues>(initialValues);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     postStore.fetchPostsIsNeverLoad({
@@ -37,19 +39,24 @@ const PostsScreen = () => {
 
 
   const onSubmit = async (values: typeof initialValues) => {
+    setLoading(true);
+    const cityFrom = await cityServices.getCityByName(values.cityFrom);
+    const cityTo = await cityServices.getCityByName(values.cityTo);
+
     setOptions(values);
     fetchPostOffset = 0;
-    postStore.fetchPosts({
+    await postStore.fetchPosts({
       data: {
         text: values.text,
-        cityFromId: +values.cityFrom,
-        cityToId: +values.cityTo,
+        cityFromId: cityFrom[0]?.id,
+        cityToId: cityTo[0]?.id,
       },
       options: {
         limit: FETCH_POST_LIMIT,
         offset: fetchPostOffset,
       },
     });
+    setLoading(false);
   };
 
   const onPressProfile = async (user: User) => {
@@ -111,7 +118,7 @@ const PostsScreen = () => {
     <View style={styles.wrapper} >
       <View style={styles.content}>
         <View style={styles.form}>
-          <PostOptionsFilter onSubmit={onSubmit} loading={false}/>
+          <PostOptionsFilter onSubmit={onSubmit} loading={loading}/>
         </View>
         <FlatList
           onEndReached={onScrollFlatList}

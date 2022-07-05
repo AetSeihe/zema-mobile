@@ -112,8 +112,8 @@ const FriendsSearch = ({navigation}: Props) => {
         onPressRequests={onPressRequests}
         onPressSearch={onPressSearch}
       />
-      <FriendsSearchForm onSubmit={onSubmit}/>
       <FlatList
+        ListHeaderComponent={<FriendsSearchForm onSubmit={onSubmit}/>}
         onEndReached={handleScrollFlatList}
         ListEmptyComponent={<CatAlert title='Похоже по вашему запросу ничего не найденно'/>}
         ListFooterComponent={<Tint style={styles.tint}>Вы просмотрели всю ленту!</Tint>}

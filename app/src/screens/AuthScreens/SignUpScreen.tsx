@@ -29,7 +29,7 @@ const initalValues = {
 };
 const schema = yup.object({
   name: yup.string().required(locale.fields.required),
-  phone: yup.string().matches(phoneRegExp, locale.fields.invalidNumberPhone),
+  phone: yup.string().matches(phoneRegExp, locale.fields.invalidNumberPhone).required(locale.fields.required),
   email: yup.string().email(locale.fields.invalidEmail).required(locale.fields.required),
   password: yup.string().min(5, locale.fields.invalidPassword).required(locale.fields.required),
   confirmPassword: yup.string()
@@ -38,7 +38,7 @@ const schema = yup.object({
 
 
 const goToUserAgreement = () => {
-  Linking.openURL('https://www.youtube.com/watch?v=8AHCfZTRGiI&list=RD8AHCfZTRGiI&start_radio=1');
+  Linking.openURL('https://drive.google.com/file/d/1obzla8V_sUq9P2TxYVpEu2pMUXaUlkof/view?usp=sharing');
 };
 
 const SignUpScreen = () => {
@@ -56,6 +56,8 @@ const SignUpScreen = () => {
     });
   };
 
+  // FIX RELOAD
+  console.log(userStore.loading);
 
   return (
     <ScrollView>

@@ -93,10 +93,10 @@ const ProfileSettingScreen = () => {
 
     const imageAsset = result.assets;
     if (imageAsset && imageAsset[0]) {
-      const user = await userService.update({
+      const updateUser = await userService.update({
         images: [imageAsset[0]],
       });
-      setImages(user.images);
+      setImages(updateUser.images);
     }
   };
 
@@ -174,7 +174,7 @@ const ProfileSettingScreen = () => {
         validationSchema={schema}
         initialValues={initialValues}
       >
-        {({values, handleChange, errors, handleSubmit, setErrors, setFieldError}) => <>
+        {({values, handleChange, errors, handleSubmit}) => <>
           <Card style={styles.cart}>
             <Title style={styles.title}>Основное</Title>
             <InputField wrapperStyle={styles.field} label='Имя' value={values.name} onChangeText={handleChange('name')} error={errors.name}/>

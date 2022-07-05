@@ -1,9 +1,13 @@
-import {Button, Text, TextInput} from '@react-native-material/core';
+import {Button, Text} from '@react-native-material/core';
 import {Formik} from 'formik';
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import Dropdown from '../../../../components/Dropdown';
+import {InputField} from '../../../../components/InputField';
+import InputSelect from '../../../../components/InputSelect';
+import {cityServices} from '../../../../services/cityServices';
 import {theme} from '../../../../styles/theme';
+import {CityType} from '../../../../types/userTypes';
 import {styles} from './styles';
 
 const initialValues = {
@@ -21,15 +25,49 @@ type Props = {
 
 export const PostOptionsFilter = ({onSubmit, loading}: Props) => {
   const [visible, setVisible] = useState(false);
+  const [cities, setCities] = useState<CityType[]>([]);
+  const [birthCity, setBirthCity] = useState<CityType | null>(null);
+  const [currentCity, setCurrentCity] = useState<CityType | null>(null);
+  ;
+
+
+  const getCitiesByName = async (name: string) => {
+    if (name.length < 2 ) {
+      return;
+    }
+
+    const citiesData = await cityServices.getCityByName(name);
+    setCities(citiesData);
+  };
+
+  const getCitiesName = (cityes: CityType[]) => {
+    return cityes.map((city) => city.title);
+  };
+
+
+  const getCityByName = (name: string) => {
+    const candidate = cities.find((city) => city.title.toLowerCase() === name.toLowerCase());
+    return candidate;
+  };
+
+  const handleSubmit = (values: typeof initialValues) => {
+    onSubmit({
+      ...values,
+      cityFrom: birthCity?.title || '',
+      cityTo: currentCity?.title || '',
+    });
+  };
+
+
   return (
     <Dropdown title='Фильтры постов'
       visible={visible}
       wrapperStyle={styles.wrapper}
       onPressClose={() => setVisible(!visible)}>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({values, handleSubmit, handleChange}) => <>
-          <TextInput
-            style={styles.input}
+          <InputField
+            wrapperStyle={styles.input}
             label='Поиск по постам'
             placeholder='Куда лучше эмигрировать'
             color={theme.main}
@@ -37,19 +75,31 @@ export const PostOptionsFilter = ({onSubmit, loading}: Props) => {
             onChangeText={handleChange('text')}
           />
           <View style={styles.citiesWrapper}>
-            <TextInput
-              style={[styles.input, styles.inputCity]}
-              label='Город откуда' color={theme.main}
-              placeholder='Санкт-Петербург'
+            <InputSelect label='Город откуда'
+              options={getCitiesName(cities)}
+              wrapperStyle={[styles.input, styles.inputCity]}
               value={values.cityFrom}
-              onChangeText={handleChange('cityFrom')}
+              onChangeText={(text) => {
+                getCitiesByName(text);
+                const candidate = getCityByName(text);
+                if (candidate) {
+                  setBirthCity(candidate);
+                }
+                return handleChange('cityFrom')(text);
+              }}
             />
-            <TextInput
-              style={[styles.input, styles.inputCity]}
-              label='Нынешний город' color={theme.main}
-              placeholder='Сочи'
+            <InputSelect label='Нынешний город'
+              options={getCitiesName(cities)}
+              wrapperStyle={[styles.input, styles.inputCity]}
               value={values.cityTo}
-              onChangeText={handleChange('cityTo')}
+              onChangeText={(text) => {
+                getCitiesByName(text);
+                const candidate = getCityByName(text);
+                if (candidate) {
+                  setCurrentCity(candidate);
+                }
+                return handleChange('cityTo')(text);
+              }}
             />
           </View>
           <Text style={styles.sort}>Сортировать: <Text style={styles.sortSelected}>C начала новые</Text></Text>

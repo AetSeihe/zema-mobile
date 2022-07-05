@@ -39,6 +39,8 @@ const SignInScreen = () => {
     });
   };
 
+  // FIX RELOAD
+  console.log(userStore.loading);
 
   return (
     <SafeAreaView style={styles.wrapper}>

@@ -13,8 +13,16 @@ export type InputFieldProps = {
 export const InputField = ({wrapperStyle, error, style, ...props}: InputFieldProps & TextInputProps) => {
   return (
     <View style={wrapperStyle}>
-      <TextInput color={error ? theme.error : theme.main} {...props} inputContainerStyle={[styles.input, style]}/>
+      <TextInput
+        color={error ? theme.error : theme.main}
+        inputContainerStyle={[styles.input, style]}
+        inputStyle={styles.input}
+        textAlignVertical={props.multiline ? 'top': 'bottom'}
+        {...props}
+
+      />
       {!!error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
+

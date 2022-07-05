@@ -8,15 +8,14 @@ export const styles = StyleSheet.create({
     overflow: 'visible',
   },
   optionsWrapper: {
-    position: 'absolute',
-    top: '100%',
     width: '100%',
-    height: 150,
-    overflow: 'scroll',
+    maxHeight: 150,
     backgroundColor: '#fff',
-
+    elevation: 2,
+    zIndex: 5,
   },
   option: {
+
     paddingVertical: 20,
     paddingHorizontal: 10,
     borderTopWidth: 1,

@@ -34,7 +34,7 @@ export const ProfileHeader = ({user, renderProfileButtons, renderPhoto, posts}: 
         )}
         <Text style={styles.fieldWrapper}><Text style={styles.fieldTitle}>Пол:</Text>{user.nameOfGender}</Text>
         <Text style={styles.fieldWrapper}><Text style={styles.fieldTitle}>Возраст:</Text> {user.age}</Text>
-        <Text style={styles.fieldWrapper}><Text style={styles.fieldTitle}>Образование:</Text>{user.nameOfEducation}</Text>
+        <Text style={styles.fieldWrapper}><Text style={styles.fieldTitle}>Образование: </Text>{user.nameOfEducation}</Text>
         {!!user.interesting && <TextBlock style={styles.muiltiField} title='Интересы' text={user.interesting}/>}
         {!!user.work && <TextBlock style={styles.muiltiField} title='Работа' text={user.work}/>}
         {!!user.howCanHelp && <TextBlock style={styles.muiltiField} title='Чем могу помочь' text={user.howCanHelp}/>}

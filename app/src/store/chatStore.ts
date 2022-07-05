@@ -4,6 +4,8 @@ import {User} from '../models/User';
 import {chatService} from '../services/chatService';
 import {GetAllMessagesInChat, GetChatsDTO, MessageSocketType} from '../types/chatTypes';
 import io from 'socket.io-client';
+import {socketUrl} from '../constants/root';
+import {Alert} from 'react-native';
 
 
 class ChatStore {
@@ -25,7 +27,7 @@ class ChatStore {
   }
 
   init(user: User) {
-    const socket = io('ws://localhost:305');
+    const socket = io(socketUrl);
 
     socket.on(`msgToClient ${user.id}`, ({chat, ...data}: MessageSocketType) => {
       if (!chat) {
@@ -60,7 +62,6 @@ class ChatStore {
     this.stopFetch = false,
     this.chats = [];
   }
-
 
 
   async fetchChats(data: GetChatsDTO) {

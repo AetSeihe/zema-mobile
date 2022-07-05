@@ -112,8 +112,8 @@ const ChatScreen = ({user: propsUser}: Props) => {
 
   const sendMessage = async () => {
     setLoading(true);
-    await chatStore.sendMessage(user, value.trim());
     setValue('');
+    await chatStore.sendMessage(user, value.trim());
     setLoading(false);
   };
 
@@ -158,7 +158,7 @@ const ChatScreen = ({user: propsUser}: Props) => {
     return <Text>dsfdsfd</Text>;
   }
 
-
+  console.log(chatStore.chats);
   return (
     <View style={styles.wrapper}>
       <ChatHeader user={user}/>

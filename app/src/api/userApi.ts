@@ -33,14 +33,14 @@ const getUserById = (id:number): Promise<AxiosResponse<OneUserApiType>> => {
   });
 };
 
-const update = (data: UpdateProfileType): Promise<AxiosResponse<OneUserApiType>> => {
+const update = ({images, ...data}: UpdateProfileType): Promise<AxiosResponse<OneUserApiType>> => {
   const formData = new FormData();
   Object.keys(data).map((key: string) => {
     if (data[key]) {
       formData.append(key, data[key]);
     }
   });
-  data.images.forEach((photo: Asset) => {
+  images.forEach((photo: Asset) => {
     formData.append('images', {uri: photo.uri, name: 'sadds', type: 'image/png'});
   });
 

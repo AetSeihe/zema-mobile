@@ -17,6 +17,8 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
   const [needShowOptions, setNeedShowOptions] = useState(false);
 
   const onPress = (option: string) => {
+    console.log('fucking presss!!!');
+
     if (onChangeText) {
       onChangeText(option);
       onPressOption && onPressOption(option);
@@ -25,15 +27,18 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
   };
 
   const onChange = (text: string) => {
+    console.log('fucking presss!!!');
     onChangeText && onChangeText(text);
     setNeedShowOptions(true);
   };
 
 
   const renderOption = ({item}: ListRenderItemInfo<string> ) => {
-    return <TouchableOpacity onPress={() => onPress(item)} style={styles.option}>
-      <Text style={styles.optionText}>{item}</Text>
-    </TouchableOpacity>;
+    return (
+      <TouchableOpacity onPress={() => onPress(item)} style={styles.option}>
+        <Text style={styles.optionText}>{item}</Text>
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -46,9 +51,10 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
         color={theme.main}
         {...props}
         onPressIn={() => setNeedShowOptions(true)}
-        onBlur={() => setNeedShowOptions(false)}
+        onBlur={() => setTimeout(() => setNeedShowOptions(false), 2000)}
       />
       {needShowOptions && !!options.length && <FlatList
+        nestedScrollEnabled
         style={styles.optionsWrapper}
         data={options}
         renderItem={renderOption}

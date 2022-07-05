@@ -65,6 +65,7 @@ const HeaderProfileIcon = () => {
       </TouchableOpacity>
       <Menu
         visible={visible}
+        onRequestClose={() => setVisible(false)}
       >
         <MenuItem onPress={onPressProfile}>
           <Text style={styles.menuItem}>Профиль</Text>

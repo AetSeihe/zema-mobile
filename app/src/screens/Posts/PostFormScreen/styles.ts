@@ -17,8 +17,12 @@ export const styles = StyleSheet.create({
   multiInputWrapper: {
     flex: 1,
   },
-  multiInput: {
+
+  inputWrapper: {
     flex: 1,
+
+  },
+  multiInput: {
     minHeight: '90%',
   },
   charCount: {

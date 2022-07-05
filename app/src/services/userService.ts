@@ -39,7 +39,7 @@ const signUp = async (data: SignUpDataType): Promise<UserType> => {
 
     return resData.user;
   } catch (e: any) {
-    throw new Error('Упс..  что-то пошло не так ');
+    throw new Error('Номер телефона или почта уже используется');
   }
 };
 

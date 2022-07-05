@@ -12,4 +12,9 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderRadius: globalBorderRadius,
   },
+
+
+  inputStyle: {
+    textAlign: 'center',
+  },
 });

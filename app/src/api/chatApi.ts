@@ -24,6 +24,7 @@ const sendMessage = (data: FormData): Promise<AxiosResponse<MessageType>> => {
   return axiosInstants.post('chat/send', data, {
     headers: {
       ...getApiConfig().headers,
+      'Content-Type': 'multipart/form-data',
     },
   });
 };

@@ -1,5 +1,4 @@
 import {makeAutoObservable, reaction, runInAction} from 'mobx';
-import {Alert} from 'react-native';
 import {User} from '../models/User';
 import {userService} from '../services/userService';
 import {SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
@@ -30,35 +29,52 @@ class UserStore {
 
   async signIn(data: SignInDataType) {
     try {
-      this.loading = true;
+      runInAction(() => {
+        this.loading = true;
+      });
       const user = await userService.signIn(data);
-      this.user = new User(user);
-      this.loading = false;
+      runInAction(() => {
+        this.user = new User(user);
+        this.loading = false;
+      });
     } catch (e: any) {
-      this.authErrors = ['Пользователь не найден'];
-      this.loading = false;
+      runInAction(() => {
+        this.authErrors = ['Пользователь не найден'];
+        this.loading = false;
+      });
       return e.message;
     }
   }
 
   async signUp(data: SignUpDataType) {
     try {
-      this.loading = true;
+      runInAction(() => {
+        this.loading = true;
+      });
       const user = await userService.signUp(data);
-      this.user = new User(user);
-      this.loading = false;
+      runInAction(() => {
+        this.user = new User(user);
+        this.loading = false;
+      });
     } catch (e: any) {
-      this.authErrors = ['Неверный логин'];
-      this.loading = false;
+      runInAction(() => {
+        this.authErrors = ['Неверный логин'];
+        this.loading = false;
+      });
       return e.message;
     }
   }
 
   async signInById(id:number) {
     try {
-      this.loading = true;
-      this.user = await userService.getUserById(id);
-      this.loading = false;
+      runInAction(() => {
+        this.loading = true;
+      });
+      const user = await userService.getUserById(id);
+      runInAction(() => {
+        this.user = user;
+        this.loading = false;
+      });
     } catch (e) {}
   }
 
@@ -69,9 +85,8 @@ class UserStore {
         this.user = currentUser;
       });
       return currentUser;
-    } catch (e) {
-      Alert.alert('Упс... что-то пошло не так');
-      throw new Error();
+    } catch (e: any) {
+      return e.message || 'Упс... что-то пошло не так';
     }
   }
 }

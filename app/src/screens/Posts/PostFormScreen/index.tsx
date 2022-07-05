@@ -1,4 +1,4 @@
-import {Button, Text, TextInput} from '@react-native-material/core';
+import {Button, Text} from '@react-native-material/core';
 import React, {useRef, useState} from 'react';
 import {Alert, Image, SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
 import {locale} from '../../../locale';
@@ -10,6 +10,7 @@ import {postStore} from '../../../store/newsStore';
 import {NavigationProp} from '@react-navigation/core';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import Icon from '../../../components/Icon';
+import {InputField} from '../../../components/InputField';
 
 const formLocale = locale.postForm;
 const MAX_POST_TEXT_COUNT = 5000;
@@ -102,7 +103,7 @@ export const PostFormScreen = ({navigation}: Props) => {
       >
         {({values, handleChange, handleSubmit, errors}) => <>
           <Text style={styles.title}>Форма добавления поста</Text>
-          <TextInput
+          <InputField
             style={styles.input}
             label={formLocale.labelTitle}
             placeholder={formLocale.labelPlaceholder}
@@ -112,13 +113,14 @@ export const PostFormScreen = ({navigation}: Props) => {
             maxLength={MAX_POST_TITLE_COUNT}
           />
           <View style={styles.multiInputWrapper}>
-            <TextInput
+            <InputField
               label={formLocale.text}
               placeholder={formLocale.textPlaceholder}
               multiline={true}
               maxLength={MAX_POST_TEXT_COUNT}
               color={theme.main}
-              inputStyle={styles.multiInput}
+              wrapperStyle={styles.inputWrapper}
+              style={styles.multiInput}
               value={values.text}
               onChangeText={handleChange('text')}
             />

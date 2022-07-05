@@ -26,6 +26,9 @@ const onPressSettings = () => {
 };
 
 const onPressChat = (user: User) => {
+  routerStore.pushToScene({
+    name: routerNames.HOME,
+  });
   routerStore.tabBarNavigatorGoTo({
     name: routerNames.Chat,
     options: {
@@ -45,7 +48,7 @@ const accessRequest = async (user: Friend) => {
 };
 
 const deleteFriend = async (user: Friend) => {
-  Alert.alert(`Удаление из друзей`, `ы уверенны что хотите удалить пользователя ${user.user.fullName} из друзей?`, [
+  Alert.alert(`Удаление из друзей`, `Вы уверенны что хотите удалить пользователя ${user.user.fullName} из друзей?`, [
     {
       text: 'Отмена',
       style: 'default',
@@ -78,33 +81,28 @@ const ButtonUserEvent = ({user, currentUser}: Props) => {
         <Button title='Редактировать' color={theme.main} onPress={onPressSettings} titleStyle={styles.writeButtonText} />
       </>);
   }
-  if (!user) {
+
+  const friendIfExist = friendStore.friends.find((friend) => friend.user.id === currentUser.id);
+  if (friendIfExist) {
     return (
       <View style={styles.wrapper}>
-        <Button title='Написать' color={theme.main} onPress={() => onPressChat(currentUser)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
-        <TouchableOpacity onPress={() => sendRequest(currentUser)} style={styles.normalButton}>
-          <Icon name='user-plus' size={22} color='#fff'/>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-  if (friendStore.friends.some((friend) => friend.user.id === currentUser.id)) {
-    return (
-      <View style={styles.wrapper}>
-        <Button title='Написать' color={theme.main} onPress={() => onPressChat(user.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
-        <TouchableOpacity onPress={() => deleteFriend(user)} style={styles.deleteButton}>
+        <Button title='Написать' color={theme.main} onPress={() => onPressChat(friendIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
+        <TouchableOpacity onPress={() => deleteFriend(friendIfExist)} style={styles.deleteButton}>
           <Icon name='user-minus' size={22} color='#fff'/>
         </TouchableOpacity>
       </View>);
   }
-  if (friendStore.requests.some((friend) => friend.user.id === currentUser.id)) {
+
+  const requstIfExist = friendStore.requests.find((friend) => friend.user.id === currentUser.id);
+
+  if (requstIfExist) {
     return (
       <View style={styles.wrapper}>
-        <Button title='Написать' color={theme.main} onPress={() => onPressChat(user.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
-        <TouchableOpacity onPress={() => accessRequest(user)} style={styles.normalButton}>
+        <Button title='Написать' color={theme.main} onPress={() => onPressChat(requstIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
+        <TouchableOpacity onPress={() => accessRequest(requstIfExist)} style={styles.normalButton}>
           <Icon name='user-plus' size={22} color='#fff'/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => rejectRequest(user)} style={styles.deleteButton}>
+        <TouchableOpacity onPress={() => rejectRequest(requstIfExist)} style={styles.deleteButton}>
           <Icon name='user-minus' size={22} color='#fff'/>
         </TouchableOpacity>
 
