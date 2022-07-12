@@ -46,8 +46,8 @@ const VacantyItem = ({data, wrapperStyle}: Props) => {
   };
 
   const onPressChat = () => {
-    routerStore.tabBarNavigatorGoTo({
-      name: routerNames.Chat,
+    routerStore.pushToScene({
+      name: routerNames.Chat_Item,
       options: {
         user: user,
       },

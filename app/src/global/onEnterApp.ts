@@ -6,8 +6,6 @@ import {getAuthDataIfExist} from '../utils/userAuthToken';
 
 export const onEnterApp = async () => {
   const authData = await getAuthDataIfExist();
-
-
   if (!authData) {
     applicationStore.appIsLoading = true;
     return routerNames.SIGN_IN;

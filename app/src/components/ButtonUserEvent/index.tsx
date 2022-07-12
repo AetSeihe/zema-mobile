@@ -5,7 +5,6 @@ import {Alert, TouchableOpacity, View} from 'react-native';
 import {routerNames} from '../../constants/routerNames';
 import {Friend} from '../../models/Friend';
 import {User} from '../../models/User';
-import {chatStore} from '../../store/chatStore';
 import {friendStore} from '../../store/friendStore';
 import {routerStore} from '../../store/routerStore';
 import {userStore} from '../../store/userStore';
@@ -26,16 +25,11 @@ const onPressSettings = () => {
 };
 
 const onPressChat = (user: User) => {
+  console.log('USEEEEEEER в ЧАТК ебанноооом', JSON.stringify(user, null, 2));
   routerStore.pushToScene({
-    name: routerNames.HOME,
-  });
-  routerStore.tabBarNavigatorGoTo({
-    name: routerNames.Chat,
+    name: routerNames.Chat_Item,
     options: {
       user: user,
-      chat: chatStore.chats.find((chat) => {
-        return chat.companion.id === user.id;
-      }),
     },
   });
 };
@@ -83,6 +77,7 @@ const ButtonUserEvent = ({user, currentUser}: Props) => {
   }
 
   const friendIfExist = friendStore.friends.find((friend) => friend.user.id === currentUser.id);
+
   if (friendIfExist) {
     return (
       <View style={styles.wrapper}>
@@ -111,7 +106,7 @@ const ButtonUserEvent = ({user, currentUser}: Props) => {
 
   return (
     <View style={styles.wrapper}>
-      <Button title='Написать' color={theme.main} onPress={() => onPressChat(user.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
+      <Button title='Написать' color={theme.main} onPress={() => onPressChat(currentUser)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
       <TouchableOpacity onPress={() => sendRequest(currentUser)} style={styles.normalButton}>
         <Icon name='user-plus' size={22} color='#fff'/>
       </TouchableOpacity>

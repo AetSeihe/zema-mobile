@@ -39,9 +39,15 @@ const PlusButton = () => {
       <Icon name={'plus'} color={'gray'}/>
     </TouchableOpacity>
     <Menu visible={visible} onRequestClose={() => setVisible(false)} >
-      <MenuItem onPress={onPressToPost}>Добавить Пост</MenuItem>
-      <MenuItem onPress={onPressToVacancy}>Добавить Вакансию</MenuItem>
-      <MenuItem onPress={onPressToResume}>Добавить Резюме</MenuItem>
+      <MenuItem onPress={onPressToPost}>
+        <Text style={styles.menuItem}>Добавить Пост</Text>
+      </MenuItem>
+      <MenuItem onPress={onPressToVacancy}>
+        <Text style={styles.menuItem}>Добавить Вакансию</Text>
+      </MenuItem>
+      <MenuItem onPress={onPressToResume}>
+        <Text style={styles.menuItem}>Добавить Резюме</Text>
+      </MenuItem>
     </Menu>
   </>);
 };

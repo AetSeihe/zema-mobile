@@ -30,7 +30,9 @@ export class Chat {
       if (date.getDate() !== currentDate.getDate()) {
         return `${getNameDayByNumber(date.getDay())}`;
       }
-      return `${date.getHours()}:${date.getMinutes()}`;
+      const hours = `${date.getHours()}`.length == 2 ? date.getHours() : '0' + date.getHours();
+      const minutes = `${date.getMinutes()}`.length == 2 ? date.getMinutes() : '0' + date.getMinutes();
+      return `${hours}:${minutes}`;
     }
 
     return `${getNameMonthByNumber(date.getMonth())}`;

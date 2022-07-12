@@ -10,7 +10,6 @@ import {chatStore} from '../store/chatStore';
 import {routerStore} from '../store/routerStore';
 import {userStore} from '../store/userStore';
 import {theme} from '../styles/theme';
-import {ChatNavigator} from './ChatNavigator';
 import {CustomTabBar} from './components/CustomTabBar';
 import {FriendNavigator} from './FriendNavigator';
 import {PostsNavigator} from './PostsNavigator';
@@ -20,10 +19,25 @@ import {Menu, MenuItem} from 'react-native-material-menu';
 import {Text} from '@react-native-material/core';
 import {clearAuthUserData} from '../utils/userAuthToken';
 import RNRestart from 'react-native-restart';
+import {ChatList} from '../screens/Chats/ChatList';
 
 const screensNameLocale = locale.screensName;
 
 const Tab = createBottomTabNavigator();
+
+
+type ChatIconProps = {
+  color: string
+}
+
+const ChatIcon = observer(({color}: ChatIconProps) => {
+  return (
+    <View>
+      <Icon name='bubbles' color={color}/>
+      {!!chatStore.notReadedMessages.length && <View style={styles.dot}/>}
+    </View>
+  );
+});
 
 
 const HeaderProfileIcon = () => {
@@ -83,7 +97,7 @@ const HeaderProfileIcon = () => {
 
 export const HomeTabNavigation = observer(() => {
   return (
-    <NavigationContainer independent={true} ref={(ref) => routerStore.setTabNavigatorRef(ref)}>
+    <NavigationContainer independent={true}>
       <Tab.Navigator initialRouteName={routerNames.HOME} screenOptions={{
         tabBarActiveTintColor: theme.main,
         tabBarInactiveTintColor: 'gray',
@@ -101,15 +115,9 @@ export const HomeTabNavigation = observer(() => {
           title: screensNameLocale.work,
           tabBarIcon: ({color}) => <Icon name='laptop' color={color} />,
         }}/>
-        <Tab.Screen name={routerNames.Chat} component={ChatNavigator} options={{
+        <Tab.Screen name={routerNames.Chat} component={ChatList} options={{
           title: screensNameLocale.chat,
-          headerShown: false,
-          tabBarIcon: ({color}) => (
-            <View>
-              <Icon name='bubbles' color={color}/>
-              {!!chatStore.notReadedMessages.length && <View style={styles.dot}/>}
-            </View>
-          ),
+          tabBarIcon: ({color}) => <ChatIcon color={color}/>,
         }}/>
       </Tab.Navigator>
     </NavigationContainer>

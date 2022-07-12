@@ -1,5 +1,4 @@
 import {routerNames} from '../constants/routerNames';
-import {Chat} from '../models/Chat';
 import {Post} from '../models/Post';
 import {User} from '../models/User';
 
@@ -56,12 +55,16 @@ export type PostFormScreenType = {
 
 export type ChatScreenType = {
     name: routerNames.Chat,
-    options: {
-        user?: User,
-        chat?: Chat,
-    }
 }
 
+export type ChatItemOptionsScreenType = {
+    user: User
+}
+
+export type ChatItemScreenType = {
+    name: routerNames.Chat_Item,
+    options: ChatItemOptionsScreenType
+}
 
 export type PostsScreenType = {
     name: routerNames.Posts,
@@ -98,4 +101,5 @@ export type RouterType = ErrorScreenType |
                         PostFormScreenType |
                         VacancyFormScreenType |
                         HomeScreenType |
-                        ResumeFormScreenType
+                        ResumeFormScreenType |
+                        ChatItemScreenType

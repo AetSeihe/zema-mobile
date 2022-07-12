@@ -51,6 +51,8 @@ export const locale = {
     chat: ' Чаты',
     postForm: 'Добавление поста',
     vacancyForm: 'Добавление вакансий',
+    chatItem: 'Чат',
+
 
     formsSelect: 'Добавить',
     settings: 'Настройки',

@@ -66,9 +66,7 @@ export const styles = StyleSheet.create({
   },
 
   userAgreementCheckbox: {
-    transform: [{
-      scale: 0.8,
-    }],
+    marginRight: 8,
   },
 
   userAgreementText: {

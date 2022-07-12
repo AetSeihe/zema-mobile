@@ -21,6 +21,7 @@ const ChatListScreen = () => {
 
   const fetchChats = () => {
     offsetFetch.current = 0;
+    chatStore.clearChats();
     chatStore.fetchChats({
       data: {
         userName: search,
@@ -39,11 +40,10 @@ const ChatListScreen = () => {
   }, []);
 
   const onPressUserCard = (chat: Chat) => {
-    routerStore.tabBarNavigatorGoTo({
-      name: routerNames.Chat,
+    routerStore.pushToScene({
+      name: routerNames.Chat_Item,
       options: {
         user: chat.companion,
-        chat: chat,
       },
     });
   };
@@ -70,7 +70,7 @@ const ChatListScreen = () => {
         onEndReached={fetchChatsOnScroll}
         onEndReachedThreshold={0.2}
         ListHeaderComponent={<InputField style={styles.input} onBlur={fetchChats} value={search} onChangeText={setSearch} placeholder='Иванов Иван Иванович' label='Поиск'/>}
-        ListEmptyComponent={<CatAlert title={'Похоже у вас еще нет чатов :('}/>}
+        ListEmptyComponent={<CatAlert title={search.length ? 'По вашему запросу ничего не найденно' :'Похоже у вас еще нет чатов :('}/>}
         ListFooterComponent={() => <Tint style={styles.footerTint}>{chatStore.loading ? 'Загрузка...': 'Вы просмотрели все чаты!'}</Tint>}
         renderItem={({item}) => <UserChatItem chat={item} onPress={onPressUserCard}
         />

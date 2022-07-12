@@ -12,9 +12,9 @@ import {userStore} from '../../store/userStore';
 import {routerStore} from '../../store/routerStore';
 import {routerNames} from '../../constants/routerNames';
 import {observer} from 'mobx-react-lite';
-import CheckBox from '@react-native-community/checkbox';
 import {InputField} from '../../components/InputField';
 import {phoneRegExp} from '../../constants/root';
+import Icon from '../../components/Icon';
 
 const authLocale = locale.auth;
 const signUpLocale = locale.auth.signUp;
@@ -112,12 +112,9 @@ const SignUpScreen = () => {
                   secureTextEntry={true}
                 />
                 <TouchableOpacity style={styles.userAgreementWrapper} onPress={() => setConsent(!consent)}>
-                  <CheckBox
-                    value={consent}
-                    style={styles.userAgreementCheckbox}
-                    onValueChange={setConsent}
-                    animationDuration={0.2}
-                  />
+                  <View style={styles.userAgreementCheckbox}>
+                    <Icon name={consent ? 'checkbox-checked': 'checkbox-unchecked'} size={20} color={theme.main}/>
+                  </View>
                   <Text style={styles.userAgreementText}>Даю согласие на обработку{' '}
                     <Text style={[styles.registerLink, styles.userAgreementText]} onPress={goToUserAgreement}>персональных данных</Text>
                   </Text>

@@ -8,6 +8,7 @@ import {onEnterApp} from '../global/onEnterApp';
 import {locale} from '../locale';
 import SignInScreen from '../screens/AuthScreens/SignInScreen';
 import SignUpScreen from '../screens/AuthScreens/SignUpScreen';
+import {Chat} from '../screens/Chats/Chat';
 import {ErrorScreen} from '../screens/ErrorScreen';
 import {PostFormScreen} from '../screens/Posts/PostFormScreen';
 import {PostScreen} from '../screens/Posts/PostScreen';
@@ -15,7 +16,6 @@ import {Profile} from '../screens/Profile/ProfileScreen';
 import {ProfileSetting} from '../screens/Profile/ProfileSetting';
 import ResumeForm from '../screens/Work/ResumeForm';
 import VacancyForm from '../screens/Work/VacancyForm';
-import {applicationStore} from '../store/applicationStore';
 import {routerStore} from '../store/routerStore';
 import {HomeTabNavigation} from './HomeNavigation';
 
@@ -28,6 +28,7 @@ const Main = () => {
 
     routerStore.pushToScene({
       name: routeName,
+      options: {},
     });
 
 
@@ -39,7 +40,6 @@ const Main = () => {
     init();
   }, []);
 
-  if (!applicationStore.appIsLoading) return null;
 
   return (
     <NavigationContainer ref={(ref) => routerStore.setNavigatorRef(ref)} independent={true}>
@@ -91,6 +91,13 @@ const Main = () => {
           animation: 'slide_from_bottom',
           headerShown: true,
           headerLeft: () => null,
+          headerBackTitle: locale.header.backButtonTitle,
+        }}/>
+        <Stack.Screen name={routerNames.Chat_Item} component={Chat} options={{
+          title: locale.screensName.chatItem,
+          animation: 'default',
+
+          headerShown: true,
           headerBackTitle: locale.header.backButtonTitle,
         }}/>
 

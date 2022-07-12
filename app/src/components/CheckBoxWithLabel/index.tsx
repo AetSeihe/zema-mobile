@@ -1,7 +1,8 @@
-import CheckBox from '@react-native-community/checkbox';
 import {Text} from '@react-native-material/core';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
+import {theme} from '../../styles/theme';
+import Icon from '../Icon';
 import {styles} from './styles';
 
 type Props = {
@@ -13,12 +14,9 @@ type Props = {
 export const CheckBoxWithLabel = ({value, title, onPress}: Props) => {
   return (
     <TouchableOpacity style={styles.userAgreementWrapper} onPress={onPress}>
-      <CheckBox
-        value={value}
-        style={styles.userAgreementCheckbox}
-        animationDuration={0.2}
-        disabled={true}
-      />
+      <View style={styles.userAgreementCheckbox}>
+        <Icon name={value ? 'checkbox-checked': 'checkbox-unchecked'} size={20} color={theme.main}/>
+      </View>
       <Text style={styles.userAgreementText}>{title}</Text>
     </TouchableOpacity>
   );

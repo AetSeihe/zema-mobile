@@ -1,30 +1,28 @@
 import {Text} from '@react-native-material/core';
+import {NavigationProp} from '@react-navigation/core';
 import {observer} from 'mobx-react';
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, TouchableOpacity, View, ViewToken} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Avatar} from '../../../components/Avatar';
 import {CatAlert} from '../../../components/CatAlert';
 import Icon from '../../../components/Icon';
 import {InputField} from '../../../components/InputField';
-import {routerNames} from '../../../constants/routerNames';
 import {Chat as ChatModel} from '../../../models/Chat';
 import {User} from '../../../models/User';
 import {chatStore} from '../../../store/chatStore';
-import {routerStore} from '../../../store/routerStore';
 import {userStore} from '../../../store/userStore';
 import {MessageType} from '../../../types/chatTypes';
-import {styles, stylesHeader, stylesMessage} from './styles';
+import {ChatItemOptionsScreenType} from '../../../types/routerTypes';
+import {styles, stylesMessage} from './styles';
 
 type Props = {
-  user?: User,
-  chat?: ChatModel
+  navigation: NavigationProp<any>,
+  route: {
+    params: ChatItemOptionsScreenType
+  }
+
 }
 
-
-type ChatHeaderProps = {
-  user: User,
-}
 
 type MessageProps = {
   message: MessageType,
@@ -32,25 +30,6 @@ type MessageProps = {
   isCompanion: boolean
 }
 
-
-const onPressCompanion = (user: User) => {
-  routerStore.pushToScene({
-    name: routerNames.PROFILE,
-    options: {
-      user: user,
-    },
-  });
-};
-const ChatHeader = ({user}: ChatHeaderProps) => {
-  return (
-    <SafeAreaView edges={['top']} style={stylesHeader.wrapper}>
-      <TouchableOpacity onPress={() => onPressCompanion(user)} style={stylesHeader.content}>
-        <Avatar image={user.mainPhoto?.image} style={stylesHeader.avatar}/>
-        <Text style={stylesHeader.title}>{user.fullName}</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
-  );
-};
 
 const Message = ({message, isCompanion}: MessageProps) => {
   return (
@@ -73,14 +52,15 @@ const Message = ({message, isCompanion}: MessageProps) => {
 const LIMIT_FETCH_MESSAGES = 15;
 const TIMEOUT_TO_SEND_READED_MESSAGE = 5 * 1000;
 let readMessageInterval: NodeJS.Timeout;
-const ChatScreen = ({user: propsUser}: Props) => {
+
+const ChatScreen = ({route, navigation}: Props) => {
+  const user = route.params.user;
   const [value, setValue] = useState('');
-  const [user, setUser] = useState<User | undefined>(propsUser);
   const [loading, setLoading] = useState(false);
   const readedMessages = useRef<number[]>([]).current;
 
-  const currentChat = chatStore.activeChat || chatStore.chats.find((c) => {
-    return c.userOneId === user?.id || c.userTwoId === user?.id;
+  const currentChat = chatStore.chats.find((c) => {
+    return c.userOneId === user.id || c.userTwoId === user.id;
   });
 
 
@@ -91,10 +71,9 @@ const ChatScreen = ({user: propsUser}: Props) => {
       }
     }, TIMEOUT_TO_SEND_READED_MESSAGE);
 
-    chatStore.activeChat = currentChat;
-    if (!user) {
-      setUser(currentChat?.companion);
-    }
+    navigation.setOptions({
+      title: user.fullName,
+    });
 
     return () => {
       clearTimeout(readMessageInterval);
@@ -154,14 +133,10 @@ const ChatScreen = ({user: propsUser}: Props) => {
   },
   ]).current;
 
-  if (!user) {
-    return <Text>dsfdsfd</Text>;
-  }
 
   console.log(chatStore.chats);
   return (
-    <View style={styles.wrapper}>
-      <ChatHeader user={user}/>
+    <SafeAreaView edges={['bottom']} style={styles.wrapper}>
       <FlatList
         onEndReached={handleScrollFlatList}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs}
@@ -182,7 +157,7 @@ const ChatScreen = ({user: propsUser}: Props) => {
           <Icon name='compass' size={26} color='#fff'/>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const USER_AUTH_KEY = 'userAuthToken/USER_AUTH_KEY';
 
 
@@ -10,7 +9,6 @@ export type AuthUserDataType = {
 
 export const getAuthDataIfExist = async (): Promise<AuthUserDataType | null> => {
   const data = await AsyncStorage.getItem(USER_AUTH_KEY);
-
   if (data) {
     return JSON.parse(data);
   }

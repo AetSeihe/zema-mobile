@@ -17,6 +17,7 @@ export enum routerNames {
     POST_FORM = 'POST_FORM',
     RESUME_FORM = 'RESUME_FORM',
     VACANCY_FORM = 'VACANCY_FORM',
+    Chat_Item = 'Chat_Item'
 
 }
 

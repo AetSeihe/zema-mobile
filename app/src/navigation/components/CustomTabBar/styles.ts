@@ -30,4 +30,8 @@ export const styles = StyleSheet.create({
 
     elevation: 5,
   },
+
+  menuItem: {
+    fontWeight: '500',
+  },
 });

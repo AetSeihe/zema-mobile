@@ -5,7 +5,6 @@ import {chatService} from '../services/chatService';
 import {GetAllMessagesInChat, GetChatsDTO, MessageSocketType} from '../types/chatTypes';
 import io from 'socket.io-client';
 import {socketUrl} from '../constants/root';
-import {Alert} from 'react-native';
 
 
 class ChatStore {
@@ -28,7 +27,13 @@ class ChatStore {
 
   init(user: User) {
     const socket = io(socketUrl);
-
+    this.fetchChats({
+      data: {},
+      options: {
+        limit: 15,
+        offset: 0,
+      },
+    });
     socket.on(`msgToClient ${user.id}`, ({chat, ...data}: MessageSocketType) => {
       if (!chat) {
         return;
@@ -46,13 +51,14 @@ class ChatStore {
         });
       });
       if (isEmptyChat) {
+        console.log('Откладка пользователя', JSON.stringify(data, null, 2));
         const newChat = new Chat({
           ...chat,
           messages: [data],
-          companion: data.companion,
+          companion: data.user,
         });
         runInAction(() => {
-          this.chats = [...this.chats, newChat];
+          this.chats = [newChat, ...this.chats];
         });
       }
     });
