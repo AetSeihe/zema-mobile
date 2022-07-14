@@ -21,11 +21,13 @@ const getFileType = (extension: string): FileType => {
 export class FileModule {
   id: number;
   url: string;
+  name: string;
   type: string;
 
 
   constructor(data: FileModuleType) {
     this.id = data.id,
+    this.name = data.fileName;
     this.url = `${serverUrl}/file/${data.fileName}`;
     this.type = getFileType(data.fileName.split('.')[1]);
   }

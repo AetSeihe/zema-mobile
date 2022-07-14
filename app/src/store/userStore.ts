@@ -1,4 +1,5 @@
 import {makeAutoObservable, reaction, runInAction} from 'mobx';
+import {FileModule} from '../models/FileModule';
 import {User} from '../models/User';
 import {userService} from '../services/userService';
 import {SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
@@ -32,8 +33,10 @@ class UserStore {
       runInAction(() => {
         this.loading = true;
       });
+
       const user = await userService.signIn(data);
       runInAction(() => {
+        console.log('!!!user,', JSON.stringify(user, null, 2));
         this.user = new User(user);
         this.loading = false;
       });
@@ -88,6 +91,15 @@ class UserStore {
     } catch (e: any) {
       return e.message || 'Упс... что-то пошло не так';
     }
+  }
+
+  async deletePhoto(photo: FileModule) {
+    await userService.deletePhotoByName(photo.name);
+    runInAction(() => {
+      if (this.user?.images) {
+        this.user.images = this.user?.images.filter((image) => image.id != photo.id);
+      }
+    });
   }
 }
 

@@ -17,6 +17,7 @@ import {ProfileSetting} from '../screens/Profile/ProfileSetting';
 import ResumeForm from '../screens/Work/ResumeForm';
 import VacancyForm from '../screens/Work/VacancyForm';
 import {routerStore} from '../store/routerStore';
+import AuthHeader from './components/AuthHeader';
 import {HomeTabNavigation} from './HomeNavigation';
 
 
@@ -70,7 +71,7 @@ const Main = () => {
           gestureEnabled: true,
           headerShown: true,
         }}/>
-        <Stack.Screen name={routerNames.SIGN_IN} component={SignInScreen}/>
+        <Stack.Screen name={routerNames.SIGN_IN} component={SignInScreen} />
         <Stack.Screen name={routerNames.SIGN_UP} component={SignUpScreen}/>
         <Stack.Screen name={routerNames.POST_FORM} component={PostFormScreen} options={{
           title: locale.screensName.postForm,

@@ -13,6 +13,9 @@ export const styles = StyleSheet.create({
   cart: {
     marginVertical: 10,
   },
+  tint: {
+    marginBottom: 10,
+  },
 
   field: {
     marginBottom: 15,
@@ -29,12 +32,24 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
+  imageWrapper: {
+  },
+
   userImage: {
     width: 120,
     height: 120,
     backgroundColor: theme.gray,
     borderRadius: 15,
     marginRight: 10,
+  },
+
+  deleteImage: {
+    position: 'absolute',
+    top: 4,
+    right: 14,
+    elevation: 2,
+    opacity: 0.6,
+    borderRadius: 50,
   },
   userMainImage: {
     borderWidth: 2,

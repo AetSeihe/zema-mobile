@@ -1,9 +1,7 @@
 import {Text} from '@react-native-material/core';
 import {Formik} from 'formik';
 import React from 'react';
-import {Alert, Image, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {LogoImage} from '../../assets/images';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import {locale} from '../../locale';
 import {theme} from '../../styles/theme';
 import {styles} from './styles';
@@ -14,6 +12,8 @@ import {routerNames} from '../../constants/routerNames';
 import {observer} from 'mobx-react-lite';
 import {InputField} from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
+import AuthHeader from '../../navigation/components/AuthHeader';
+
 
 const authLocale = locale.auth;
 const signInLocale = locale.auth.signIn;
@@ -43,10 +43,10 @@ const SignInScreen = () => {
   console.log(userStore.loading);
 
   return (
-    <SafeAreaView style={styles.wrapper}>
+    <View style={styles.wrapper}>
+      <AuthHeader />
+      <Text style={styles.title}>{signInLocale.title}</Text>
       <View style={styles.content}>
-        <Image source={LogoImage} style={styles.logo}/>
-        <Text style={styles.title}>{signInLocale.title}</Text>
         <Formik
           initialValues={initalValues}
           onSubmit={onSubmit}
@@ -70,17 +70,18 @@ const SignInScreen = () => {
                 secureTextEntry={true}
               />
               <CustomButton
+                theme='main'
                 loading={userStore.loading}
                 disabled={userStore.loading}
                 style={styles.submitButton}
                 titleStyle={styles.submitText}
-                title={signInLocale.buttonText} color={theme.main}
+                title={signInLocale.buttonText}
+                color={theme.main}
                 onPress={handleSubmit}
               />
             </>
           )}
         </Formik>
-
 
         <Text style={styles.registerItem}>{signInLocale.registerTitle}</Text>
         <TouchableOpacity onPress={() => routerStore.pushToScene({
@@ -89,7 +90,7 @@ const SignInScreen = () => {
           <Text style={[styles.registerItem, styles.registerLink]}>{signInLocale.registerText}</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

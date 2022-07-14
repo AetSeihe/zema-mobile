@@ -33,6 +33,17 @@ const getUserById = (id:number): Promise<AxiosResponse<OneUserApiType>> => {
   });
 };
 
+const deletePhotoByName = (photoName: string): Promise<AxiosResponse<void>> => {
+  return axiosInstants.delete(`user/image`, {
+    headers: {
+      ...getApiConfig().headers,
+    },
+    data: {
+      photo_name: photoName,
+    },
+  });
+};
+
 const update = ({images, ...data}: UpdateProfileType): Promise<AxiosResponse<OneUserApiType>> => {
   const formData = new FormData();
   Object.keys(data).map((key: string) => {
@@ -43,6 +54,7 @@ const update = ({images, ...data}: UpdateProfileType): Promise<AxiosResponse<One
   images.forEach((photo: Asset) => {
     formData.append('images', {uri: photo.uri, name: 'sadds', type: 'image/png'});
   });
+
 
   return axiosInstants({
     url: 'user/update',
@@ -56,4 +68,4 @@ const update = ({images, ...data}: UpdateProfileType): Promise<AxiosResponse<One
 };
 
 
-export const userApi = {signIn, signUp, getUserById, update, getAllUsersByOptions};
+export const userApi = {signIn, signUp, getUserById, update, getAllUsersByOptions, deletePhotoByName};

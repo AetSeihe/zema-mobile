@@ -25,6 +25,8 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
   },
   cities: {
+    maxWidth: 200,
+    alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -51,5 +53,7 @@ export const styles = StyleSheet.create({
   muiltiField: {
     marginTop: 10,
   },
-  counterTitleWrapper: {},
+  counterTitleWrapper: {
+    marginBottom: 10,
+  },
 });

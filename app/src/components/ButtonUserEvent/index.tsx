@@ -1,4 +1,3 @@
-import {Button} from '@react-native-material/core';
 import {observer} from 'mobx-react';
 import React from 'react';
 import {Alert, TouchableOpacity, View} from 'react-native';
@@ -9,6 +8,7 @@ import {friendStore} from '../../store/friendStore';
 import {routerStore} from '../../store/routerStore';
 import {userStore} from '../../store/userStore';
 import {theme} from '../../styles/theme';
+import CustomButton from '../CustomButton';
 import Icon from '../Icon';
 import {styles} from './styles';
 
@@ -25,7 +25,6 @@ const onPressSettings = () => {
 };
 
 const onPressChat = (user: User) => {
-  console.log('USEEEEEEER в ЧАТК ебанноооом', JSON.stringify(user, null, 2));
   routerStore.pushToScene({
     name: routerNames.Chat_Item,
     options: {
@@ -68,11 +67,11 @@ const sendRequest = async (user: User) => {
 };
 
 
-const ButtonUserEvent = ({user, currentUser}: Props) => {
+const ButtonUserEvent = ({currentUser}: Props) => {
   if (currentUser.id === userStore.user?.id) {
     return (
       <>
-        <Button title='Редактировать' color={theme.main} onPress={onPressSettings} titleStyle={styles.writeButtonText} />
+        <CustomButton title='Редактировать' color={theme.main} onPress={onPressSettings} titleStyle={styles.writeButtonText} />
       </>);
   }
 
@@ -81,7 +80,7 @@ const ButtonUserEvent = ({user, currentUser}: Props) => {
   if (friendIfExist) {
     return (
       <View style={styles.wrapper}>
-        <Button title='Написать' color={theme.main} onPress={() => onPressChat(friendIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
+        <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(friendIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
         <TouchableOpacity onPress={() => deleteFriend(friendIfExist)} style={styles.deleteButton}>
           <Icon name='user-minus' size={22} color='#fff'/>
         </TouchableOpacity>
@@ -93,12 +92,12 @@ const ButtonUserEvent = ({user, currentUser}: Props) => {
   if (requstIfExist) {
     return (
       <View style={styles.wrapper}>
-        <Button title='Написать' color={theme.main} onPress={() => onPressChat(requstIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
+        <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(requstIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
         <TouchableOpacity onPress={() => accessRequest(requstIfExist)} style={styles.normalButton}>
           <Icon name='user-plus' size={22} color='#fff'/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => rejectRequest(requstIfExist)} style={styles.deleteButton}>
-          <Icon name='user-minus' size={22} color='#fff'/>
+          <Icon name='blocked' size={22} color='#fff'/>
         </TouchableOpacity>
 
       </View>);
@@ -106,7 +105,7 @@ const ButtonUserEvent = ({user, currentUser}: Props) => {
 
   return (
     <View style={styles.wrapper}>
-      <Button title='Написать' color={theme.main} onPress={() => onPressChat(currentUser)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
+      <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(currentUser)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper}/>
       <TouchableOpacity onPress={() => sendRequest(currentUser)} style={styles.normalButton}>
         <Icon name='user-plus' size={22} color='#fff'/>
       </TouchableOpacity>

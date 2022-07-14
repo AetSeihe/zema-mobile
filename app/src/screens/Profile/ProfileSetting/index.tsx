@@ -1,4 +1,4 @@
-import {Button} from '@react-native-material/core';
+import {Button, Text} from '@react-native-material/core';
 import {Formik} from 'formik';
 import {observer} from 'mobx-react';
 import React, {useState} from 'react';
@@ -23,6 +23,7 @@ import {routerNames} from '../../../constants/routerNames';
 import {Tint} from '../../../components/Tint';
 import {userService} from '../../../services/userService';
 import {FileModule} from '../../../models/FileModule';
+import Icon from '../../../components/Icon';
 
 const fieldLocale = locale.fields;
 
@@ -93,10 +94,10 @@ const ProfileSettingScreen = () => {
 
     const imageAsset = result.assets;
     if (imageAsset && imageAsset[0]) {
-      const updateUser = await userService.update({
+      const updateUser = await userStore.update({
         images: [imageAsset[0]],
       });
-      setImages(updateUser.images);
+      setImages(updateUser.images.reverse());
     }
   };
 
@@ -144,12 +145,21 @@ const ProfileSettingScreen = () => {
   };
 
 
+  const onDeletePhoto = (image: FileModule) => {
+    userStore.deletePhoto(image);
+    setImages((prev) => prev.filter((img) => img.id != image.id));
+  };
+
+
   const renderImages = ({item}: ListRenderItemInfo<FileModule>) => {
     return (
-      <TouchableOpacity onPress={() => setMainPhoto(item)}>
+      <TouchableOpacity onPress={() => setMainPhoto(item)} style={styles.imageWrapper}>
         <Image source={{
           uri: item.url,
         }} style={[styles.userImage, mainPhoto?.id == item.id ? styles.userMainImage: null]}/>
+        <TouchableOpacity onPress={() => onDeletePhoto(item)} style={styles.deleteImage}>
+          <Icon name='cancel-circle' color={'rgba(228, 27, 27, 0.53)'} size={20}/>
+        </TouchableOpacity>
       </TouchableOpacity>
     )
     ;
@@ -160,11 +170,11 @@ const ProfileSettingScreen = () => {
     <ScrollView style={styles.wrapper}>
       <Card style={styles.cart}>
         <Title style={styles.title}>Фотографии</Title>
-        <Tint>Нажмите на фото чтобы сделать его главным</Tint>
+        <Tint style={styles.tint}>Нажмите на фото чтобы сделать его главным</Tint>
         <FlatList
           data={images}
           renderItem={renderImages}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.id.toString()}
           ListFooterComponent={() => <AddPhotoButton onPress={addPhoto}/>}
           horizontal
         />

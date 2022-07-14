@@ -92,6 +92,8 @@ export class User {
     }
 
     if (data.images) {
+      console.log('!!! images ========');
+      console.log(JSON.stringify(data.images, null, 2));
       this.images = data.images.map((file) => new FileModule({
         id: file.id,
         fileName: file.fileName,

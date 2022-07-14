@@ -5,23 +5,19 @@ import {theme} from '../../styles/theme';
 export const styles = StyleSheet.create({
 
   wrapper: {
-    paddingTop: 100,
+    backgroundColor: '#fff',
+    flex: 1,
   },
   title: {
+    color: theme.main,
     alignSelf: 'center',
     fontSize: 32,
     fontWeight: '600',
-    marginBottom: 20,
+    marginBottom: 18,
   },
   content: {
     alignSelf: 'center',
-    backgroundColor: '#fff',
-    width: '90%',
-    borderColor: '#CDCDCD',
-    borderWidth: 2,
-    borderRadius: 20,
-    paddingVertical: 50,
-    paddingHorizontal: 20,
+    width: '85%',
   },
 
   logo: {
@@ -41,6 +37,7 @@ export const styles = StyleSheet.create({
     color: '#fff',
     paddingVertical: 10,
     borderRadius: 10,
+    marginTop: 10,
     marginBottom: 20,
   },
   submitText: {
@@ -50,7 +47,7 @@ export const styles = StyleSheet.create({
 
   registerItem: {
     alignSelf: 'center',
-    marginBottom: 5,
+    justifyContent: 'center',
     color: '#646464',
   },
 
@@ -72,5 +69,13 @@ export const styles = StyleSheet.create({
   userAgreementText: {
     fontSize: 12,
     flex: 1,
+  },
+
+  bgImage: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    borderRadius: 20,
   },
 });

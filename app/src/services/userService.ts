@@ -57,5 +57,12 @@ const update = async (data: UpdateProfileType): Promise<User> => {
   return new User(res.data.user);
 };
 
+const deletePhotoByName = async (photoName: string): Promise<void> => {
+  try {
+    await userApi.deletePhotoByName(photoName);
+  } catch (e) {
+  }
+};
 
-export const userService = {signIn, signUp, getUserById, update, getAllUsersByOptions};
+
+export const userService = {signIn, signUp, getUserById, update, getAllUsersByOptions, deletePhotoByName};

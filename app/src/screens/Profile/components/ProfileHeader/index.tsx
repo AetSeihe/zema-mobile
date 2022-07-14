@@ -19,7 +19,7 @@ type Props = {
     renderPhoto: (image: ListRenderItemInfo<FileModule>) => JSX.Element
 }
 
-export const ProfileHeader = ({user, renderProfileButtons, renderPhoto, posts}: Props) => {
+export const ProfileHeader = ({user, renderProfileButtons, renderPhoto}: Props) => {
   return (
     <View style={styles.wrapper}>
       <Card style={styles.content}>

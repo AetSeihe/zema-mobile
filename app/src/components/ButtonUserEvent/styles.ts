@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   },
   writeButtonWrapper: {
     flex: 1,
-    marginRight: 10,
+    marginRight: 5,
 
   },
   writeButtonText: {
@@ -17,15 +17,15 @@ export const styles = StyleSheet.create({
   deleteButton: {
     backgroundColor: theme.error,
     borderRadius: 5,
-    width: 30,
+    width: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: 5,
   },
   normalButton: {
     backgroundColor: theme.main,
     borderRadius: 5,
-    width: 30,
+    width: 50,
     alignItems: 'center',
     justifyContent: 'center',
   },
