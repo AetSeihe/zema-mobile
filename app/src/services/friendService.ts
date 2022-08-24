@@ -4,9 +4,14 @@ import {RequestType} from '../types/friendType';
 
 
 const getAllRequests = async (userId: number): Promise<Friend[]> => {
-  const data = await friendApi.getAllRequests(userId);
+  try {
+    const data = await friendApi.getAllRequests(userId);
 
-  return data.data.friends.map((req) => new Friend(req));
+    return data.data.requests.map((req) => new Friend(req));
+  } catch (e) {
+    console.log(JSON.stringify(e.message, null, 2));
+    return [];
+  }
 };
 
 const getAllFriends = async (userId: number): Promise<Friend[]> => {

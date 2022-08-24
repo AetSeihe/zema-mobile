@@ -51,7 +51,7 @@ const SignUpScreen = () => {
       return;
     }
     routerStore.pushToScene({
-      name: routerNames.HOME,
+      name: routerNames.ASK_GEO_PERMISSION,
     });
   };
 

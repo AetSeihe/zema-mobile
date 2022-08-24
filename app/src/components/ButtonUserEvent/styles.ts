@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   writeButtonWrapper: {
     flex: 1,
     marginRight: 5,
-
+    width: 10,
   },
   writeButtonText: {
     color: '#fff',

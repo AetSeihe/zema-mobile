@@ -5,6 +5,7 @@ import {chatService} from '../services/chatService';
 import {GetAllMessagesInChat, GetChatsDTO, MessageSocketType} from '../types/chatTypes';
 import io from 'socket.io-client';
 import {socketUrl} from '../constants/root';
+import {userStore} from './userStore';
 
 
 class ChatStore {
@@ -34,6 +35,8 @@ class ChatStore {
         offset: 0,
       },
     });
+
+
     socket.on(`msgToClient ${user.id}`, ({chat, ...data}: MessageSocketType) => {
       if (!chat) {
         return;
@@ -50,12 +53,12 @@ class ChatStore {
           return currentChat;
         });
       });
+
       if (isEmptyChat) {
-        console.log('Откладка пользователя', JSON.stringify(data, null, 2));
         const newChat = new Chat({
           ...chat,
           messages: [data],
-          companion: data.user,
+          companion: data.user.id == userStore.user?.id ? data.companion: data.user,
         });
         runInAction(() => {
           this.chats = [newChat, ...this.chats];

@@ -1,4 +1,4 @@
-import {Button, Text} from '@react-native-material/core';
+import {Button} from '@react-native-material/core';
 import {Formik} from 'formik';
 import {observer} from 'mobx-react';
 import React, {useState} from 'react';
@@ -21,7 +21,6 @@ import {cityServices} from '../../../services/cityServices';
 import {routerStore} from '../../../store/routerStore';
 import {routerNames} from '../../../constants/routerNames';
 import {Tint} from '../../../components/Tint';
-import {userService} from '../../../services/userService';
 import {FileModule} from '../../../models/FileModule';
 import Icon from '../../../components/Icon';
 

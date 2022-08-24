@@ -46,6 +46,8 @@ export type PostType = {
   postFiles: PostFileType[];
   userId: number;
   updatedAt: Date;
+  likeCount: number;
+  isLike: boolean;
 }
 
 

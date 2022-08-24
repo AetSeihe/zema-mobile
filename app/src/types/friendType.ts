@@ -19,8 +19,13 @@ export type FriendWithUserApiType = {
     user: UserType,
 }
 
+export type GetAllFriendsApiType = {
+  message: string,
+  friends: FriendWithUserApiType[]
+};
+
 
 export type GetAllRequestApiType = {
   message: string,
-  friends: FriendWithUserApiType[]
+  requests: FriendWithUserApiType[]
 };

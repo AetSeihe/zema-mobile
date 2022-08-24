@@ -1,5 +1,5 @@
 import {AxiosResponse} from 'axios';
-import {GetAllRequestApiType, RequestType} from '../types/friendType';
+import {GetAllFriendsApiType, GetAllRequestApiType, RequestType} from '../types/friendType';
 import {axiosInstants, getApiConfig} from './axiosInit';
 
 const getAllRequests = (userId: number): Promise<AxiosResponse<GetAllRequestApiType>> => {
@@ -10,7 +10,7 @@ const getAllRequests = (userId: number): Promise<AxiosResponse<GetAllRequestApiT
   });
 };
 
-const getAllFriends = (userId: number): Promise<AxiosResponse<GetAllRequestApiType>> => {
+const getAllFriends = (userId: number): Promise<AxiosResponse<GetAllFriendsApiType>> => {
   return axiosInstants.get(`friend/friends/${userId}`, {
     headers: {
       ...getApiConfig().headers,

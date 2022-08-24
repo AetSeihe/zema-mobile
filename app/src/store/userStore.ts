@@ -36,7 +36,6 @@ class UserStore {
 
       const user = await userService.signIn(data);
       runInAction(() => {
-        console.log('!!!user,', JSON.stringify(user, null, 2));
         this.user = new User(user);
         this.loading = false;
       });
@@ -45,6 +44,7 @@ class UserStore {
         this.authErrors = ['Пользователь не найден'];
         this.loading = false;
       });
+
       return e.message;
     }
   }

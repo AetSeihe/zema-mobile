@@ -88,6 +88,21 @@ export type HomeScreenType = {
     options?: {}
 }
 
+export type MyFriendScreenType = {
+    name: routerNames.MY_FRIENDS,
+    options?: {}
+}
+
+export type MyRequestsScreenType = {
+    name: routerNames.FRIENDS_REQUEST,
+    options?: {}
+}
+
+export type AskGeoPermissionType = {
+    name: routerNames.ASK_GEO_PERMISSION,
+    options?: {}
+}
+
 
 export type RouterTabBarType = ChatScreenType | ChatScreenType | PostsScreenType
 
@@ -102,4 +117,7 @@ export type RouterType = ErrorScreenType |
                         VacancyFormScreenType |
                         HomeScreenType |
                         ResumeFormScreenType |
-                        ChatItemScreenType
+                        ChatItemScreenType |
+                        MyFriendScreenType |
+                        MyRequestsScreenType |
+                        AskGeoPermissionType

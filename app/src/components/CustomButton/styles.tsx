@@ -11,8 +11,9 @@ export const styles = StyleSheet.create({
 
   wrapper: {
     alignItems: 'center',
-    paddingVertical: 21,
     borderRadius: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
   },
 
   title: {

@@ -29,13 +29,15 @@ const schema = yup.object({
 
 const SignInScreen = () => {
   const onSubmit = async (values: typeof initalValues) => {
+    console.log('Presss fuck');
+
     const error = await userStore.signIn(values);
     if (error) {
       Alert.alert(error);
       return;
     }
     routerStore.pushToScene({
-      name: routerNames.HOME,
+      name: routerNames.ASK_GEO_PERMISSION,
     });
   };
 

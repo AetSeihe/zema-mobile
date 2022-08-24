@@ -15,6 +15,8 @@ export class Post {
   userId: number;
   updatedAt: Date;
   createdAt: Date;
+  isLike: boolean;
+  likeCount: number;
 
 
   constructor(data: PostType) {
@@ -30,6 +32,8 @@ export class Post {
     }));
     this.createdAt = new Date(data.createdAt);
     this.updatedAt = data.updatedAt;
+    this.isLike = data.isLike;
+    this.likeCount = data.likeCount;
     try {
       if (data.comments) {
         this.comments = data.comments.map((comment) => new Comment(comment));

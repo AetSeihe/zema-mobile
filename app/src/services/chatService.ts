@@ -23,7 +23,7 @@ const sendMessage = async (user:User, message: string): Promise<MessageType> => 
   formData.append('message', message);
 
   const res = await chatApi.sendMessage(formData);
-
+  console.log(JSON.stringify(res, null, 2));
   return res.data;
 };
 

@@ -18,5 +18,6 @@ export const FriendNavigator = () => {
       <Stack.Screen name={FriendNames.Friends} component={Friends}/>
       <Stack.Screen name={FriendNames.FriendsRequest} component={FriendsRequest}/>
     </Stack.Navigator>
+
   );
 };

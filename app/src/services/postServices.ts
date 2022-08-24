@@ -34,10 +34,8 @@ const likePost = async (post: Post): Promise<LikeType> => {
 const commentPost = async (comment: string, postId: number): Promise<Comment> => {
   try {
     const res = await postApi.commentPostById(comment, postId);
-    console.log('!!! data', JSON.stringify(res.data, null, 2));
     return new Comment(res.data.comment);
   } catch (e: any) {
-    console.log('!!! error', JSON.stringify(e, null, 2));
     throw new Error('Упс... что-то пошло не так');
   }
 };

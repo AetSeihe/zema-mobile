@@ -8,17 +8,18 @@ export enum routerNames {
     Chat = 'HOME_CHAT',
     PROFILE = 'PROFILE',
     FRIENDS = 'FRIENDS',
+    MY_FRIENDS = 'FRIENDS/MY_FRIENDS',
+    FRIENDS_REQUEST = 'FRIENDS/FRIENDS_REQUEST',
     WORK = 'WORK',
     SIGN_IN = 'SIGN_IN',
     SIGN_UP = 'SIGN_UP',
     PROFILE_SETTING = 'PROFILE_SETTING',
-
     FORM_SELECT = 'FORM_SELECT',
     POST_FORM = 'POST_FORM',
     RESUME_FORM = 'RESUME_FORM',
     VACANCY_FORM = 'VACANCY_FORM',
-    Chat_Item = 'Chat_Item'
-
+    Chat_Item = 'Chat_Item',
+    ASK_GEO_PERMISSION = 'ASK_GEO_PERMISSION'
 }
 
 
