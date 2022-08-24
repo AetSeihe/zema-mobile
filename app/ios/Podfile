@@ -19,11 +19,19 @@ target 'app' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
+
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+
+  pod 'RNYamap', :path => '../node_modules/react-native-yamap'
 
   target 'appTests' do
     inherit! :complete

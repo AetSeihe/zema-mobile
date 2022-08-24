@@ -5,6 +5,9 @@ import {userService} from '../services/userService';
 import {SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
 import {chatStore} from './chatStore';
 import {friendStore} from './friendStore';
+import {applicationStore} from './applicationStore';
+import Geolocation from 'react-native-geolocation-service';
+import {Alert} from 'react-native';
 
 
 class UserStore {
@@ -17,6 +20,26 @@ class UserStore {
   constructor() {
     makeAutoObservable(this);
 
+    reaction(() => !!this.user?.id && applicationStore.geoLocationStatus === 'granted', () => {
+      if (applicationStore.geoLocationStatus === 'granted') {
+        Geolocation.getCurrentPosition(
+            (position) => {
+              const cordY = position.coords.longitude;
+              const cordX = position.coords.latitude;
+              if (cordY && cordX) {
+                this.update({
+                  cordY: +cordY,
+                  cordX: +cordX,
+                });
+              }
+            },
+            (error) => {
+              Alert.alert('Призошла ошибка при отправке геолокации');
+            },
+            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      }
+    });
     reaction(() => !!this.user?.id, () => {
       const user = this.user;
       if (user) {

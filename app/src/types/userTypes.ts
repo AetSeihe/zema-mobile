@@ -27,7 +27,7 @@ export type SignUpDataType = {
 }
 
 export type UpdateProfileType = {
-    images: Asset[];
+    images?: Asset[];
     name?: string;
     phone?: string;
     mainPhotoId?: number | null;
@@ -43,6 +43,8 @@ export type UpdateProfileType = {
     surname?: string;
     patronomic?: string;
     interesting?: string;
+    cordX?: number;
+    cordY?: number;
     [x: string]: any;
 }
 

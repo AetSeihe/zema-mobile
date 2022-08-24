@@ -44,7 +44,7 @@ const deletePhotoByName = (photoName: string): Promise<AxiosResponse<void>> => {
   });
 };
 
-const update = ({images, ...data}: UpdateProfileType): Promise<AxiosResponse<OneUserApiType>> => {
+const update = ({images = [], ...data}: UpdateProfileType): Promise<AxiosResponse<OneUserApiType>> => {
   const formData = new FormData();
   Object.keys(data).map((key: string) => {
     if (data[key]) {

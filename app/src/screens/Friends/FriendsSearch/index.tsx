@@ -1,6 +1,7 @@
+import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, FlatList, View} from 'react-native';
+import {Alert, FlatList, Image, TouchableOpacity, View} from 'react-native';
 import ButtonUserEvent from '../../../components/ButtonUserEvent';
 import {CatAlert} from '../../../components/CatAlert';
 import {Tint} from '../../../components/Tint';
@@ -15,6 +16,9 @@ import {FriendHeader} from '../components/FriendHeader';
 import {FriendsSearchForm} from '../components/FriendsSearchForm';
 import {initialValueUsersSearch} from '../constants';
 import {styles} from './styles';
+
+
+const earthIcon = require('../images/earth.png');
 
 type Props = {
   navigation: NavigationProp<any>,
@@ -104,16 +108,30 @@ const FriendsSearch = ({navigation}: Props) => {
     });
   };
 
+  const onPressToEarth = () => {
+    routerStore.pushToScene({
+      name: routerNames.USER_MAP,
+    });
+  };
+
   return (
     <View style={styles.wrapper}>
+
       <FriendHeader
         tabActive={'first'}
         onPressFriends={onPressFriends}
         onPressRequests={onPressRequests}
         onPressSearch={onPressSearch}
       />
+
       <FlatList
-        ListHeaderComponent={<FriendsSearchForm onSubmit={onSubmit}/>}
+        ListHeaderComponent={<>
+          <FriendsSearchForm onSubmit={onSubmit}/>
+          <TouchableOpacity onPress={onPressToEarth} style={styles.earthWrapper}>
+            <Text style={styles.earthText}>Земляки вокруг</Text>
+            <Image source={earthIcon} style={styles.earthIcon}/>
+          </TouchableOpacity>
+        </>}
         onEndReached={handleScrollFlatList}
         ListEmptyComponent={<CatAlert title='Похоже по вашему запросу ничего не найденно'/>}
         ListFooterComponent={<Tint style={styles.tint}>Вы просмотрели всю ленту!</Tint>}

@@ -38,4 +38,24 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
+
+  earthWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: 11,
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginBottom: 10,
+    elevation: 2,
+  },
+  earthText: {
+    fontSize: 19,
+    fontWeight: '500',
+  },
+  earthIcon: {
+    width: 33,
+    height: 33,
+  },
 });

@@ -2,6 +2,9 @@ import {Text} from '@react-native-material/core';
 import React from 'react';
 import {Image, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {routerNames} from '../../constants/routerNames';
+import {applicationStore} from '../../store/applicationStore';
+import {routerStore} from '../../store/routerStore';
 import {styles} from './styles';
 
 const ellipse1 = require('./images/ellipse1.png');
@@ -9,8 +12,13 @@ const ellipse2 = require('./images/ellipse2.png');
 const geoIcon = require('./images/geo.png');
 
 const AskGeoPermission = () => {
-  const onPressAccept = () => {};
-  const onPressReject = () => {};
+  const onPressAccept = async () => {
+    await applicationStore.askPermissionForGeolocation();
+    routerStore.reset(routerNames.HOME);
+  };
+  const onPressReject = () => {
+    routerStore.reset(routerNames.HOME);
+  };
 
   return (
     <>

@@ -17,6 +17,7 @@ import {PostFormScreen} from '../screens/Posts/PostFormScreen';
 import {PostScreen} from '../screens/Posts/PostScreen';
 import {Profile} from '../screens/Profile/ProfileScreen';
 import {ProfileSetting} from '../screens/Profile/ProfileSetting';
+import UsersMapScreen from '../screens/UsersMapScreen';
 import ResumeForm from '../screens/Work/ResumeForm';
 import VacancyForm from '../screens/Work/VacancyForm';
 import {routerStore} from '../store/routerStore';
@@ -28,7 +29,7 @@ const Stack = createNativeStackNavigator();
 const Main = () => {
   const init = async () => {
     const routeName = await onEnterApp();
-    // routerStore.reset(routeName);
+    routerStore.reset(routeName);
 
     SplashScreen.hide();
   };
@@ -84,6 +85,13 @@ const Main = () => {
           headerRight: HeaderProfileIcon,
         }}/>
 
+        <Stack.Screen name={routerNames.USER_MAP} component={UsersMapScreen} options={{
+          title: 'Пользователи по близости',
+          headerShown: true,
+          animation: 'default',
+          headerRight: HeaderProfileIcon,
+        }}/>
+
 
         <Stack.Screen name={routerNames.POST_FORM} component={PostFormScreen} options={{
           title: locale.screensName.postForm,
@@ -100,7 +108,7 @@ const Main = () => {
           headerBackTitle: locale.header.backButtonTitle,
         }}/>
         <Stack.Screen name={routerNames.RESUME_FORM} component={ResumeForm} options={{
-          title: locale.screensName.vacancyForm,
+          title: locale.screensName.resumeForm,
           animation: 'slide_from_bottom',
           headerShown: true,
           headerLeft: () => null,

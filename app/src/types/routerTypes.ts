@@ -103,6 +103,11 @@ export type AskGeoPermissionType = {
     options?: {}
 }
 
+export type UserMapType = {
+    name: routerNames.USER_MAP,
+    options?: {}
+}
+
 
 export type RouterTabBarType = ChatScreenType | ChatScreenType | PostsScreenType
 
@@ -120,4 +125,5 @@ export type RouterType = ErrorScreenType |
                         ChatItemScreenType |
                         MyFriendScreenType |
                         MyRequestsScreenType |
-                        AskGeoPermissionType
+                        AskGeoPermissionType |
+                        UserMapType

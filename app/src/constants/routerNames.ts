@@ -19,7 +19,8 @@ export enum routerNames {
     RESUME_FORM = 'RESUME_FORM',
     VACANCY_FORM = 'VACANCY_FORM',
     Chat_Item = 'Chat_Item',
-    ASK_GEO_PERMISSION = 'ASK_GEO_PERMISSION'
+    ASK_GEO_PERMISSION = 'ASK_GEO_PERMISSION',
+    USER_MAP = 'USER_MAP',
 }
 
 
