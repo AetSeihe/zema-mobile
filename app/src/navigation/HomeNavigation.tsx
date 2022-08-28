@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {observer} from 'mobx-react';
 import React, {useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 import Icon from '../components/Icon';
 import {routerNames} from '../constants/routerNames';
 import {locale} from '../locale';
@@ -23,6 +23,10 @@ import {FriendNavigator} from './FriendNavigator';
 const screensNameLocale = locale.screensName;
 
 const Tab = createBottomTabNavigator();
+const newsIcon = require('./images/news.png');
+const friendsIcon = require('./images/friends.png');
+const workIcon = require('./images/work.png');
+const chatIcon = require('./images/chat.png');
 
 
 type ChatIconProps = {
@@ -32,12 +36,18 @@ type ChatIconProps = {
 const ChatIcon = observer(({color}: ChatIconProps) => {
   return (
     <View>
-      <Icon name='bubbles' color={color}/>
+      <Image source={chatIcon} style={{
+        width: ICON_SIZE,
+        height: ICON_SIZE,
+        opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
+      }} resizeMode='contain'/>
       {!!chatStore.notReadedMessages.length && <View style={styles.dot}/>}
     </View>
   );
 });
 
+const ICON_SIZE = 29;
+const INACTIVE_ICON_OPACITY = 0.5;
 
 export const HeaderProfileIcon = () => {
   const [visible, setVisible] = useState(false);
@@ -101,21 +111,41 @@ export const HomeTabNavigation = observer(() => {
       tabBarActiveTintColor: theme.main,
       tabBarInactiveTintColor: 'gray',
       headerRight: HeaderProfileIcon,
+      tabBarItemStyle: {
+        backgroundColor: 'red',
+      },
+      tabBarShowLabel: false,
     }} tabBar={(props) => <CustomTabBar {...props}/>}>
       <Tab.Screen name={routerNames.Posts} component={PostsListScreen} options={{
-        title: screensNameLocale.posts,
-        tabBarIcon: ({color}) => <Icon name='newspaper' color={color} />,
+        headerTitle: screensNameLocale.posts,
+        title: '',
+        tabBarIcon: ({color}) => <Image source={newsIcon} style={{
+          width: ICON_SIZE,
+          height: ICON_SIZE,
+          opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
+        }} resizeMode='contain'/>,
       }}/>
       <Tab.Screen name={routerNames.FRIENDS} component={FriendNavigator} options={{
-        title: screensNameLocale.friends,
-        tabBarIcon: ({color}) => <Icon name='users' color={color} />,
+        headerTitle: screensNameLocale.friends,
+        title: '',
+        tabBarIcon: ({color}) => <Image source={friendsIcon} style={{
+          width: ICON_SIZE,
+          height: ICON_SIZE,
+          opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
+        }} resizeMode='contain'/>,
       }}/>
       <Tab.Screen name={routerNames.WORK} component={WorkNavigator} options={{
-        title: screensNameLocale.work,
-        tabBarIcon: ({color}) => <Icon name='laptop' color={color} />,
+        headerTitle: screensNameLocale.work,
+        title: '',
+        tabBarIcon: ({color}) => <Image source={workIcon} style={{
+          width: ICON_SIZE,
+          height: ICON_SIZE,
+          opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
+        }} resizeMode='contain'/>,
       }}/>
       <Tab.Screen name={routerNames.Chat} component={ChatList} options={{
-        title: screensNameLocale.chat,
+        headerTitle: screensNameLocale.chat,
+        title: '',
         tabBarIcon: ({color}) => <ChatIcon color={color}/>,
       }}/>
     </Tab.Navigator>

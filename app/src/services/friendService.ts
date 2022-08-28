@@ -1,6 +1,7 @@
 import {friendApi} from '../api/friendApi';
 import {Friend} from '../models/Friend';
-import {RequestType} from '../types/friendType';
+import {User} from '../models/User';
+import {FetchUserNearType, RequestType} from '../types/friendType';
 
 
 const getAllRequests = async (userId: number): Promise<Friend[]> => {
@@ -8,7 +9,7 @@ const getAllRequests = async (userId: number): Promise<Friend[]> => {
     const data = await friendApi.getAllRequests(userId);
 
     return data.data.requests.map((req) => new Friend(req));
-  } catch (e) {
+  } catch (e: any) {
     console.log(JSON.stringify(e.message, null, 2));
     return [];
   }
@@ -43,4 +44,14 @@ const deleteFriend = async (userId: number): Promise<RequestType> => {
   return data.data;
 };
 
-export const friendService = {getAllRequests, getAllFriends, sendRequest, rejectRequests, acceptRequests, deleteFriend};
+const fetchUsersNear = async (options: FetchUserNearType) => {
+  const {data} = await friendApi.fetchUsersNear(options);
+  const users = data.users.map((user) => new User(user));
+
+  return {
+    users,
+    allCount: data.allCount,
+  };
+};
+
+export const friendService = {getAllRequests, getAllFriends, sendRequest, rejectRequests, acceptRequests, deleteFriend, fetchUsersNear};

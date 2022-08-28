@@ -80,7 +80,7 @@ const ButtonUserEvent = ({currentUser}: Props) => {
   if (friendIfExist) {
     return (
       <View style={styles.wrapper}>
-        <CustomButton title='Написать' theme='main' color={theme.main} onPress={() => onPressChat(friendIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
+        <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(friendIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
         <TouchableOpacity onPress={() => deleteFriend(friendIfExist)} style={styles.deleteButton}>
           <Icon name='user-minus' size={22} color='#fff'/>
         </TouchableOpacity>
@@ -92,7 +92,7 @@ const ButtonUserEvent = ({currentUser}: Props) => {
   if (requstIfExist) {
     return (
       <View style={styles.wrapper}>
-        <CustomButton theme='main' title='Написать' color={theme.main} onPress={() => onPressChat(requstIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
+        <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(requstIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
         <TouchableOpacity onPress={() => accessRequest(requstIfExist)} style={styles.normalButton}>
           <Icon name='user-plus' size={22} color='#fff'/>
         </TouchableOpacity>
@@ -105,7 +105,7 @@ const ButtonUserEvent = ({currentUser}: Props) => {
 
   return (
     <View style={styles.wrapper}>
-      <CustomButton title='Написать' theme='main' color={theme.main} onPress={() => onPressChat(currentUser)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
+      <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(currentUser)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
       <TouchableOpacity onPress={() => sendRequest(currentUser)} style={styles.normalButton}>
         <Icon name='user-plus' size={22} color='#fff'/>
       </TouchableOpacity>

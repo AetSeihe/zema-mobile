@@ -29,3 +29,15 @@ export type GetAllRequestApiType = {
   message: string,
   requests: FriendWithUserApiType[]
 };
+
+export type FetchUserNearType = {
+  options: {
+    limit: number;
+  },
+  data: {
+    startCordX: number;
+    finishCordX: number;
+    startCordY: number;
+    finishCordY: number;
+  }
+}

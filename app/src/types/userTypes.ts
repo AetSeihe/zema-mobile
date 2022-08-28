@@ -62,6 +62,7 @@ export type AuthUserApiType = {
 export type GetUsersArray = {
     message: string;
     users: UserType[];
+    allCount?: number
 }
 
 
@@ -115,6 +116,8 @@ export type UserType = {
     birthCity?: CityType;
     currentCity?: CityType;
     images: UserImageType[] | undefined;
+    cordX?: number;
+    cordY?: number;
     mainPhoto?: {
       id: number;
       image: UserImageType;

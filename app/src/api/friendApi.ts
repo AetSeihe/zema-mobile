@@ -1,5 +1,6 @@
 import {AxiosResponse} from 'axios';
-import {GetAllFriendsApiType, GetAllRequestApiType, RequestType} from '../types/friendType';
+import {FetchUserNearType, GetAllFriendsApiType, GetAllRequestApiType, RequestType} from '../types/friendType';
+import {GetUsersArray} from '../types/userTypes';
 import {axiosInstants, getApiConfig} from './axiosInit';
 
 const getAllRequests = (userId: number): Promise<AxiosResponse<GetAllRequestApiType>> => {
@@ -51,4 +52,12 @@ const deleteFriend = (userId: number): Promise<AxiosResponse<RequestType>> => {
   });
 };
 
-export const friendApi = {getAllRequests, sendRequests, rejectRequests, deleteFriend, acceptRequests, getAllFriends};
+const fetchUsersNear = (data: FetchUserNearType): Promise<AxiosResponse<GetUsersArray>> => {
+  return axiosInstants.post(`user/all-by-cords`, data, {
+    headers: {
+      ...getApiConfig().headers,
+    },
+  });
+};
+
+export const friendApi = {getAllRequests, sendRequests, rejectRequests, deleteFriend, acceptRequests, getAllFriends, fetchUsersNear};

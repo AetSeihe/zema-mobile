@@ -50,6 +50,9 @@ export class User {
   updatedAt: Date;
   birthCity?: CityType;
   currentCity?: CityType;
+  cordX?: number;
+  cordY?: number;
+
   images: FileModule[] = [];
   mainPhoto?: {
     id: number;
@@ -78,6 +81,8 @@ export class User {
     this.currentCity = data.currentCity;
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
+    this.cordX = data.cordX;
+    this.cordY = data.cordY;
 
     const mainPhoto = data.mainPhoto;
 

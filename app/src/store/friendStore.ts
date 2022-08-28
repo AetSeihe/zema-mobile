@@ -1,20 +1,34 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import {Alert} from 'react-native';
 import {Friend} from '../models/Friend';
+import {User} from '../models/User';
 import {friendService} from '../services/friendService';
+import {FetchUserNearType} from '../types/friendType';
 
 
 class FriendStore {
   friends: Friend[] = [];
+  requests: Friend[] = [];
+  usersNear: User[] = [];
+  usersNearAllCount: number = 0;
   friendLoading: boolean = false;
   requestLoading: boolean = false;
-  requests: Friend[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-
+  async fetchUsersNear(data: FetchUserNearType) {
+    try {
+      const res = await friendService.fetchUsersNear(data);
+      runInAction(() => {
+        this.usersNear = res.users;
+        this.usersNearAllCount = res.allCount || 0;
+      });
+    } catch (e) {
+      Alert.alert('Ошибка при загрузке пользователей рядом');
+    }
+  }
   async fetchFriendsByUserId(userId:number) {
     try {
       runInAction(() => {
