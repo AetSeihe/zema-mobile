@@ -19,9 +19,8 @@ class UserStore {
 
   constructor() {
     makeAutoObservable(this);
-
-    reaction(() => !!this.user?.id && applicationStore.geoLocationStatus === 'granted', () => {
-      if (applicationStore.geoLocationStatus === 'granted' || applicationStore.geoLocationStatus === 'limited') {
+    reaction(() => !!this.user?.id && applicationStore.canUpdateLocation, () => {
+      if (applicationStore.canUpdateLocation) {
         Geolocation.getCurrentPosition(
             (position) => {
               const cordY = position.coords.longitude;

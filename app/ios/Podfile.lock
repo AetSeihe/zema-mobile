@@ -290,6 +290,8 @@ PODS:
   - React-jsinspector (0.68.2)
   - React-logger (0.68.2):
     - glog
+  - react-native-appearance (0.3.4):
+    - React
   - react-native-geolocation-service (5.3.0):
     - React
   - react-native-image-picker (4.8.3):
@@ -438,6 +440,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-appearance (from `../node_modules/react-native-appearance`)
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-restart (from `../node_modules/react-native-restart`)
@@ -528,6 +531,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-appearance:
+    :path: "../node_modules/react-native-appearance"
   react-native-geolocation-service:
     :path: "../node_modules/react-native-geolocation-service"
   react-native-image-picker:
@@ -615,6 +620,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b7b553412f2ec768fe6c8f27cd6bafdb9d8719e6
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
+  react-native-appearance: 0f0e5fc2fcef70e03d48c8fe6b00b9158c2ba8aa
   react-native-geolocation-service: f32ef48fa665bd710207a3ac39bc127cac9cb993
   react-native-image-picker: e95b4785b685cfc06609bc50ed6fb55b59990c99
   react-native-restart: 45c8dca02491980f2958595333cbccd6877cb57e
@@ -646,4 +652,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cbfd330c9f276e6e6bda867d940d0b06a6edb281
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

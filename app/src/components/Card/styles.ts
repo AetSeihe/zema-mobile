@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: '#fff',
     padding: 13,
-    borderRadius: 20,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

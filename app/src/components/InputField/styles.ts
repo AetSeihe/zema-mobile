@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {globalBorderRadius} from '../../styles/styles';
 import {theme} from '../../styles/theme';
 
 
@@ -8,13 +7,18 @@ export const styles = StyleSheet.create({
     color: theme.error,
     fontSize: 12,
   },
+
   input: {
-    backgroundColor: 'transparent',
-    borderRadius: globalBorderRadius,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 12,
+    borderColor: '#087BFF',
+    color: '#000',
+    fontSize: 14,
   },
-
-
-  inputStyle: {
-    textAlign: 'center',
+  disabled: {
+    opacity: 0.7,
+    borderColor: 'transparent',
   },
 });

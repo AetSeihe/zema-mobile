@@ -33,6 +33,8 @@ target 'app' do
 
   pod 'RNYamap', :path => '../node_modules/react-native-yamap'
 
+  pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
+
   target 'appTests' do
     inherit! :complete
     # Pods for testing

@@ -36,5 +36,33 @@ export const userProfileStyles = StyleSheet.create({
 });
 
 export const styles = StyleSheet.create({
-
+  mapIconWrapper: {
+    position: 'absolute',
+    right: 12,
+    backgroundColor: '#fff',
+    width: 52,
+    height: 52,
+    borderRadius: 100,
+    padding: 6,
+  },
+  mapIcon: {
+    width: '100%',
+    height: '100%',
+    elevation: 3,
+  },
+  mapToUserIconWrapper: {
+    bottom: '20%',
+  },
+  mapPlusIconWrapper: {
+    bottom: '40%',
+  },
+  mapMinusIconWrapper: {
+    bottom: '50%',
+  },
+  ellipseIcon: {
+    position: 'absolute',
+    bottom: -150,
+    right: -150,
+    zIndex: -1,
+  },
 });

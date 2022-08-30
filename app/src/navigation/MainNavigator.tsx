@@ -17,6 +17,9 @@ import {PostFormScreen} from '../screens/Posts/PostFormScreen';
 import {PostScreen} from '../screens/Posts/PostScreen';
 import {Profile} from '../screens/Profile/ProfileScreen';
 import {ProfileSetting} from '../screens/Profile/ProfileSetting';
+import Settings from '../screens/Profile/Settings';
+import SettingsLocation from '../screens/Profile/SettingsLocation';
+import SettingsSecurity from '../screens/Profile/SettingsSecurity';
 import UsersMapScreen from '../screens/UsersMapScreen';
 import ResumeForm from '../screens/Work/ResumeForm';
 import VacancyForm from '../screens/Work/VacancyForm';
@@ -41,7 +44,7 @@ const Main = () => {
 
   return (
     <NavigationContainer ref={(ref) => routerStore.setNavigatorRef(ref)} independent={true}>
-      <Stack.Navigator initialRouteName={routerNames.ASK_GEO_PERMISSION} screenOptions={{
+      <Stack.Navigator initialRouteName={routerNames.SIGN_IN} screenOptions={{
         headerShown: false,
         gestureEnabled: false,
         animation: 'fade',
@@ -58,12 +61,30 @@ const Main = () => {
           headerShown: true,
 
         }}/>
-        <Stack.Screen name={routerNames.PROFILE_SETTING} component={ProfileSetting} options={{
+        <Stack.Screen name={routerNames.SETTING} component={Settings} options={{
           title: locale.screensName.settings,
           animation: 'default',
           gestureEnabled: true,
           headerShown: true,
 
+        }}/>
+        <Stack.Screen name={routerNames.SETTING_ACCOUNT} component={ProfileSetting} options={{
+          title: locale.screensName.settings,
+          animation: 'default',
+          gestureEnabled: true,
+          headerShown: true,
+        }}/>
+        <Stack.Screen name={routerNames.SETTING_SECURITY} component={SettingsSecurity} options={{
+          title: locale.screensName.settings,
+          animation: 'default',
+          gestureEnabled: true,
+          headerShown: true,
+        }}/>
+        <Stack.Screen name={routerNames.SETTING_LOCATION} component={SettingsLocation} options={{
+          title: locale.screensName.settings,
+          animation: 'default',
+          gestureEnabled: true,
+          headerShown: true,
         }}/>
         <Stack.Screen name={routerNames.Post} component={PostScreen} options={{
           animation: 'default',

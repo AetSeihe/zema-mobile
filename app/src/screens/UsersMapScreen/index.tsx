@@ -1,18 +1,26 @@
 import {Text} from '@react-native-material/core';
 import {observer} from 'mobx-react';
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, NativeSyntheticEvent, View} from 'react-native';
+import {Animated, Image, NativeSyntheticEvent, TouchableOpacity, View} from 'react-native';
 import YaMap, {CameraPosition, Marker} from 'react-native-yamap';
 import {Avatar} from '../../components/Avatar';
 import ButtonUserEvent from '../../components/ButtonUserEvent';
 import {User} from '../../models/User';
 import {applicationStore} from '../../store/applicationStore';
 import {friendStore} from '../../store/friendStore';
-import {userProfileStyles} from './styles';
+import {userStore} from '../../store/userStore';
+import {styles, userProfileStyles} from './styles';
 
 type Props = {
   user: User,
 }
+
+
+const mapToUserIcon = require('./images/user-point.png');
+const mapPlusIcon = require('./images/plus.png');
+const mapMinusIcon = require('./images/minus.png');
+
+
 const UserProfile = ({user}: Props) => {
   return (
     <View style={userProfileStyles.wrapper}>
@@ -35,14 +43,16 @@ const markerIcon = require('./images/marker.png');
 
 const UsersMapScreen = () => {
   const [loading, setLoading] = useState(true);
+  // const [mapZoom, setMapZoom] = useState(12);
+  const mapZoom = useRef(12);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const map = useRef<YaMap>(null);
   const currentUserAnimation = useRef(new Animated.Value(0)).current;
 
   const init = async () => {
-    await applicationStore.fetchLocation();
     setLoading(false);
   };
+
   useEffect(() => {
     init();
   }, []);
@@ -69,10 +79,8 @@ const UsersMapScreen = () => {
           duration: 100,
           useNativeDriver: true,
         },
-    ).start(() => {
-      return () => {
-        setCurrentUser(null);
-      };
+    ).start(({finished}) => {
+      setCurrentUser(null);
     });
   };
 
@@ -97,6 +105,24 @@ const UsersMapScreen = () => {
     showUserProfile();
   };
 
+  const onPressUserToButton = () => {
+    map.current?.setCenter({
+      lat: userStore.user?.cordX || 0,
+      lon: userStore.user?.cordY|| 0,
+      zoom: mapZoom.current,
+    });
+  };
+
+  const onPressPlusUserZoom = () => {
+    mapZoom.current += 0.5;
+    map.current?.setZoom(mapZoom.current);
+  };
+
+  const onPressMinusUserZoom = () => {
+    mapZoom.current -= 0.5;
+    map.current?.setZoom(mapZoom.current);
+  };
+
 
   if (loading) {
     return <Text>Loading....</Text>;
@@ -108,9 +134,9 @@ const UsersMapScreen = () => {
         showUserPosition={false}
         rotateGesturesEnabled={false}
         initialRegion={{
-          lat: applicationStore.cordX || 0,
-          lon: applicationStore.cordY|| 0,
-          zoom: 12,
+          lat: userStore.user?.cordX || 0,
+          lon: userStore.user?.cordY|| 0,
+          zoom: mapZoom.current,
         }}
         onCameraPositionChange={hideUserProfile}
         onCameraPositionChangeEnd={handleMapMove}
@@ -120,6 +146,17 @@ const UsersMapScreen = () => {
           <Marker key={user.id} point={{lon: user.cordY|| 0, lat: user.cordX || 0}} scale={1} source={markerIcon} onPress={() => handlePressMarker(user)}/>
         ))}
       </YaMap>
+      {applicationStore.canShowLocation && (
+        <TouchableOpacity onPress={onPressUserToButton} style={[styles.mapIconWrapper, styles.mapToUserIconWrapper]}>
+          <Image source={mapToUserIcon} style={[styles.mapIcon]}/>
+        </TouchableOpacity>
+      )}
+      <TouchableOpacity onPress={onPressMinusUserZoom} style={[styles.mapIconWrapper, styles.mapPlusIconWrapper]}>
+        <Image source={mapMinusIcon} style={[styles.mapIcon]} resizeMode='contain' />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onPressPlusUserZoom} style={[styles.mapIconWrapper, styles.mapMinusIconWrapper]}>
+        <Image source={mapPlusIcon} style={[styles.mapIcon]}/>
+      </TouchableOpacity>
       {currentUser && <Animated.View style={{
         position: 'absolute',
         opacity: currentUserAnimation,

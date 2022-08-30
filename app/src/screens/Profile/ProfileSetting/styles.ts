@@ -5,16 +5,21 @@ import {theme} from '../../../styles/theme';
 
 export const styles = StyleSheet.create({
   wrapper: {
-    marginHorizontal: BASE_MARGIN_SCREEN,
-    marginVertical: BASE_MARGIN_SCREEN * 2,
 
     backgroundColor: theme.gray,
   },
+  content: {
+    marginHorizontal: BASE_MARGIN_SCREEN,
+    paddingVertical: BASE_MARGIN_SCREEN * 2,
+
+  },
+
   cart: {
-    marginVertical: 10,
+    marginVertical: 7,
   },
   tint: {
-    marginBottom: 10,
+    marginTop: 16,
+    fontSize: 10,
   },
 
   field: {
@@ -26,7 +31,6 @@ export const styles = StyleSheet.create({
   },
   submitText: {
     color: '#fff',
-
   },
   submitContainer: {
     paddingVertical: 10,
@@ -36,8 +40,8 @@ export const styles = StyleSheet.create({
   },
 
   userImage: {
-    width: 120,
-    height: 120,
+    width: 133,
+    height: 133,
     backgroundColor: theme.gray,
     borderRadius: 15,
     marginRight: 10,
@@ -56,6 +60,22 @@ export const styles = StyleSheet.create({
     borderColor: theme.main,
   },
   title: {
-    marginBottom: 15,
+    marginBottom: 20,
+    color: '#1E205A',
+  },
+
+  userDate: {
+    borderColor: '#087BFF',
+    paddingVertical: 15,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+
+  ellipseIcon: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    zIndex: -1,
   },
 });

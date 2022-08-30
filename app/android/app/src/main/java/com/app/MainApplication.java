@@ -6,6 +6,7 @@ import android.content.Context;
 import com.app.newarchitecture.MainApplicationReactNativeHost;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.expo.appearance.RNCAppearancePackage;
 import ru.vvdev.yamap.RNYamapPackage;
 import ru.vvdev.yamap.RNYamapPackage;
 import com.rnfs.RNFSPackage;

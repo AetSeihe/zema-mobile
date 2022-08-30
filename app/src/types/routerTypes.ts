@@ -34,9 +34,24 @@ export type ProfileScreenType = {
     options: ProfileScreenOptionsType
 }
 
-export type ProfileSettingsScreenType = {
-    name: routerNames.PROFILE_SETTING,
-    options: {}
+export type SettingsScreenType = {
+    name: routerNames.SETTING,
+    options?: {}
+}
+
+export type SettingsAccountScreenType = {
+    name: routerNames.SETTING_ACCOUNT,
+    options?: {}
+}
+
+export type SettingsSecurityScreenType = {
+    name: routerNames.SETTING_SECURITY,
+    options?: {}
+}
+
+export type SettingsLocationScreenType = {
+    name: routerNames.SETTING_LOCATION,
+    options?: {}
 }
 
 export type PostScreenOptionsType = {
@@ -117,7 +132,7 @@ export type RouterType = ErrorScreenType |
                         PostScreenType |
                         SignUpScreenType |
                         ProfileScreenType |
-                        ProfileSettingsScreenType |
+                        SettingsScreenType |
                         PostFormScreenType |
                         VacancyFormScreenType |
                         HomeScreenType |
@@ -126,4 +141,8 @@ export type RouterType = ErrorScreenType |
                         MyFriendScreenType |
                         MyRequestsScreenType |
                         AskGeoPermissionType |
-                        UserMapType
+                        UserMapType |
+                        SettingsAccountScreenType |
+                        SettingsSecurityScreenType |
+                        SettingsLocationScreenType
+

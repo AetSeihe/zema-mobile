@@ -44,7 +44,7 @@ export class User {
   needHelp?: string;
   gender: GenderType;
   interesting?: string;
-  age?: number;
+  birthday?: Date;
   education: EducationType;
   createdAt: Date;
   updatedAt: Date;
@@ -74,7 +74,7 @@ export class User {
     this.email = data.email;
     this.interesting = data.interesting;
     this.patronomic = data.patronomic;
-    this.age = data.age;
+    this.birthday = new Date(data.birthday || 0);
     this.education = data.education;
     this.createdAt = data.createdAt;
     this.birthCity = data.birthCity;
@@ -115,5 +115,25 @@ export class User {
 
   get nameOfEducation() {
     return EDUCATION_LITERAL[this.education] || EDUCATION_LITERAL.null;
+  }
+
+
+  get age() {
+    if (!this.birthday) {
+      return '';
+    }
+
+    if (this.birthday.getMonth() > new Date().getMonth()) {
+      return new Date().getFullYear() - this.birthday.getFullYear() - 1;
+    }
+
+    return new Date().getFullYear() - this.birthday.getFullYear();
+  }
+
+  get currentBirthDay() {
+    if (!this.birthday) {
+      return '';
+    }
+    return `${this.birthday.getDate()}.${this.birthday.getMonth()}.${this.birthday.getFullYear()}`;
   }
 }

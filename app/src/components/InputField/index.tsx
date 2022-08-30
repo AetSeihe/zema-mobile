@@ -1,6 +1,6 @@
-import {Text, TextInput, TextInputProps} from '@react-native-material/core';
+import {Text, TextInputProps} from '@react-native-material/core';
 import React from 'react';
-import {View} from 'react-native';
+import {TextInput, View} from 'react-native';
 import {ViewStyle} from 'react-native-material-ui';
 import {theme} from '../../styles/theme';
 import {styles} from './styles';
@@ -10,16 +10,16 @@ export type InputFieldProps = {
     error?: string;
 }
 
-export const InputField = ({wrapperStyle, error, style, ...props}: InputFieldProps & TextInputProps) => {
+export const InputField = ({wrapperStyle, error, style, label, ...props}: InputFieldProps & TextInputProps) => {
   return (
     <View style={wrapperStyle}>
       <TextInput
         color={error ? theme.error : theme.main}
-        inputContainerStyle={[styles.input, style]}
-        inputStyle={styles.input}
+        style={[styles.input, style, props.editable === false ? styles.disabled: {}]}
         textAlignVertical={props.multiline ? 'top': 'bottom'}
+        placeholder={label}
+        placeholderTextColor={'#087BFF'}
         {...props}
-
       />
       {!!error && <Text style={styles.error}>{error}</Text>}
     </View>

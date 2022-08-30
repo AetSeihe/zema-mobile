@@ -70,7 +70,7 @@ export const HeaderProfileIcon = () => {
   const onPressSettings = () => {
     setVisible(false);
     routerStore.pushToScene({
-      name: routerNames.PROFILE_SETTING,
+      name: routerNames.SETTING,
       options: {},
     });
   };

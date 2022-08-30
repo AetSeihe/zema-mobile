@@ -4,8 +4,8 @@ import {theme} from '../../../../../styles/theme';
 
 export const styles = StyleSheet.create({
   wrapper: {
-    width: 130,
-    height: 130,
+    width: 133,
+    height: 133,
     padding: 10,
     backgroundColor: theme.gray,
     borderRadius: 15,

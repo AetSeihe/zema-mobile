@@ -37,7 +37,7 @@ const CustomButton = ({theme: buttonTheme = 'default', titleStyle, style, title,
       {...props}
       color={theme.main}
       titleStyle={[styles.textColor, titleStyle]}
-      style={[styles.wrapperStyle, style]}
+      style={[styles.normalButtonStyle, style]}
     />
   );
 };

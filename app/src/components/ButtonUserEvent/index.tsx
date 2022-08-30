@@ -19,7 +19,7 @@ type Props = {
 
 const onPressSettings = () => {
   routerStore.pushToScene({
-    name: routerNames.PROFILE_SETTING,
+    name: routerNames.SETTING,
     options: {},
   });
 };

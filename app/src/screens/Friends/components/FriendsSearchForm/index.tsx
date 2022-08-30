@@ -102,7 +102,7 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
                 return handleChange('cityTo')(text);
               }}
             />
-            <View style={[styles.row, styles.field]}>
+            {/* <View style={[styles.row, styles.field]}>
               <InputField label='возраст от' keyboardType='numeric' wrapperStyle={styles.age}
                 value={values.minAge}
                 onChangeText={handleChange('minAge')}
@@ -113,7 +113,7 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
                 onChangeText={handleChange('maxAge')}
                 error={errors.maxAge}
               />
-            </View>
+            </View> */}
             <View style={styles.field}>
               <CheckBoxWithLabel title={GENDER_LITERAL.null}
                 value={values.gender === ''}

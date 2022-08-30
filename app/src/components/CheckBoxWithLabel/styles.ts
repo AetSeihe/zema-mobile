@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
 
   userAgreementText: {
-    fontSize: 17,
+    fontSize: 14,
     alignSelf: 'center',
     marginBottom: 7,
   },

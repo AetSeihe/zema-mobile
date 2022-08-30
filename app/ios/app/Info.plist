@@ -37,6 +37,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>true</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>true</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your location is required for use geolocation in app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

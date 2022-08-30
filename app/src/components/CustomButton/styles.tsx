@@ -3,6 +3,11 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   wrapperStyle: {
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+  },
+  normalButtonStyle: {
     paddingVertical: 8,
   },
   textColor: {
@@ -10,10 +15,7 @@ export const styles = StyleSheet.create({
   },
 
   wrapper: {
-    alignItems: 'center',
     borderRadius: 5,
-    paddingVertical: 8,
-    paddingHorizontal: 8,
   },
 
   title: {

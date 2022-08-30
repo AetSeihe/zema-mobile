@@ -43,8 +43,9 @@ export type UpdateProfileType = {
     surname?: string;
     patronomic?: string;
     interesting?: string;
-    cordX?: number;
-    cordY?: number;
+    cordX?: number | null;
+    cordY?: number | null;
+    birthday?: string;
     [x: string]: any;
 }
 
@@ -109,7 +110,7 @@ export type UserType = {
     need_help?: string;
     gender: GenderType;
     interesting?: string;
-    age?: number;
+    birthday?: string;
     education: EducationType;
     createdAt: Date;
     updatedAt: Date;
