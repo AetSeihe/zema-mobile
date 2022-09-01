@@ -1,4 +1,4 @@
-import {Button} from '@react-native-material/core';
+import {Button, Text} from '@react-native-material/core';
 import {Formik} from 'formik';
 import {observer} from 'mobx-react';
 import React, {useState} from 'react';
@@ -23,7 +23,10 @@ import {routerNames} from '../../../constants/routerNames';
 import {Tint} from '../../../components/Tint';
 import {FileModule} from '../../../models/FileModule';
 import Icon from '../../../components/Icon';
-import {DateInput} from 'react-native-date-input';
+// import DatePicker from 'react-native-datepicker';
+import RNDateTimePicker, {DateTimePickerAndroid, DateTimePickerEvent} from '@react-native-community/datetimepicker';
+import {dateToString} from '../../../utils/dateToString';
+
 
 const ellipseIcon = require('../images/ellipse.png');
 
@@ -78,9 +81,10 @@ const ProfileSettingScreen = () => {
   const [images, setImages] = useState<FileModule[]>(user.images);
   const [cities, setCities] = useState<CityType[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+  const [birthdayDate, setbirthdayDate] = useState<Date>(user.birthday || new Date());
+
   const [mainPhoto, setMainPhoto] = useState<FileModule | undefined>(user.mainPhoto?.image);
-
-
   const [birthCity, setBirthCity] = useState<CityType | undefined>(user.birthCity);
   const [сurrentCity, setCurrentCity] = useState<CityType | undefined>(user.currentCity);
 
@@ -111,7 +115,7 @@ const ProfileSettingScreen = () => {
         name: values.name,
         surname: values.surname,
         patronomic: values.patronomic,
-        birthday: values.birthday.toString(),
+        birthday: birthdayDate.toString(),
         gender: values.gender,
         birthCityId: birthCity?.id,
         currentCityId: сurrentCity?.id,
@@ -167,6 +171,13 @@ const ProfileSettingScreen = () => {
     ;
   };
 
+  const handleChangeDate = (date: DateTimePickerEvent) => {
+    setShowDatePicker(false);
+    if (date.nativeEvent.timestamp) {
+      setbirthdayDate(new Date(date.nativeEvent.timestamp));
+    }
+  };
+
 
   return (
     <ScrollView style={styles.wrapper}>
@@ -201,16 +212,22 @@ const ProfileSettingScreen = () => {
                 <CheckBoxWithLabel title={GENDER_LITERAL.male} value={values.gender === 'male'} onPress={() => handleChange('gender')('male')}/>
                 <CheckBoxWithLabel title={GENDER_LITERAL.female} value={values.gender === 'female'} onPress={() => handleChange('gender')('female')}/>
               </View>
-              <DateInput
-                inputProps={{
-                  style: [styles.userDate, styles.field],
-                  placeholder: 'Возраст',
-                  placeholderColor: '#087BFF',
-                }}
-                maximumDate={new Date()}
-                defaultValue={user.currentBirthDay || new Date()}
-                handleChange={handleChange('birthday')}
+              <InputField wrapperStyle={styles.field}
+                label='День рождения'
+                onPressIn={() => setShowDatePicker(true)}
+                value={dateToString(birthdayDate)}
               />
+              {showDatePicker && (
+                <RNDateTimePicker
+                  style={{
+                    height: 200,
+                    width: 200,
+                    backgroundColor: 'blue',
+                  }}
+                  mode='datetime'
+                  value={birthdayDate}
+                  onChange={handleChangeDate}
+                />)}
               <InputSelect
                 options={cities.map((city) => city.title)}
                 wrapperStyle={styles.field}

@@ -1,4 +1,5 @@
 import {CityType, EducationType, GenderType, UserType} from '../types/userTypes';
+import {dateToString} from '../utils/dateToString';
 import {FileModule} from './FileModule';
 
 type GendersLiteralType = {
@@ -134,6 +135,6 @@ export class User {
     if (!this.birthday) {
       return '';
     }
-    return `${this.birthday.getDate()}.${this.birthday.getMonth()}.${this.birthday.getFullYear()}`;
+    return dateToString(this.birthday);
   }
 }

@@ -23,12 +23,12 @@ class UserStore {
       if (applicationStore.canUpdateLocation) {
         Geolocation.getCurrentPosition(
             (position) => {
-              const cordY = position.coords.longitude;
-              const cordX = position.coords.latitude;
+              const cordY = +position.coords.longitude;
+              const cordX = +position.coords.latitude;
               if (cordY && cordX) {
                 this.update({
-                  cordY: +cordY,
-                  cordX: +cordX,
+                  cordX: cordX,
+                  cordY: cordY,
                 });
               }
             },

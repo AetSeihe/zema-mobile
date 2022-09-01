@@ -45,12 +45,5 @@ protected void onCreate(Bundle savedInstanceState) {
       return reactRootView;
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-      super.onConfigurationChanged(newConfig);
-      Intent intent = new Intent("onConfigurationChanged");
-      intent.putExtra("newConfig", newConfig);
-      sendBroadcast(intent);
-    }
   }
 }

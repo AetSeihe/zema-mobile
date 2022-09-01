@@ -1,5 +1,5 @@
 import {autorun, makeAutoObservable, runInAction} from 'mobx';
-import {Platform} from 'react-native';
+import {Alert, Linking, Platform} from 'react-native';
 import * as permissions from 'react-native-permissions';
 import {request, check, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
@@ -45,6 +45,18 @@ class ApplicationStore {
   }
 
   async askPermissionForGeolocation() {
+    if (this.geoLocationStatus === 'blocked') {
+      Alert.alert('Доступ к геопозиции', 'Нужно разрешить доступ к геолокаци в приложении', [
+        {
+          text: 'Позже',
+          onPress: () => console.log('Ask me later pressed'),
+        },
+        {
+          text: 'Перейти',
+          onPress: () => Linking.openSettings(),
+        },
+      ]);
+    }
     runInAction(() => {
       this.isGeolocationLoading = true;
     });
@@ -59,6 +71,13 @@ class ApplicationStore {
       this.geoLocationStatus = res;
       this.isGeolocationLoading = false;
     });
+
+    return res === 'granted' || res === 'limited';
+  }
+
+
+  canFetchLocation() {
+    return this.geoLocationStatus === 'granted' || this.geoLocationStatus == 'limited';
   }
 }
 

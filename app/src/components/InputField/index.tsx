@@ -16,7 +16,7 @@ export const InputField = ({wrapperStyle, error, style, label, ...props}: InputF
       <TextInput
         color={error ? theme.error : theme.main}
         style={[styles.input, style, props.editable === false ? styles.disabled: {}]}
-        textAlignVertical={props.multiline ? 'top': 'bottom'}
+        textAlignVertical={props.multiline ? 'top': 'center'}
         placeholder={label}
         placeholderTextColor={'#087BFF'}
         {...props}

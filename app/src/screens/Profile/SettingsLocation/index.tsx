@@ -1,7 +1,7 @@
 import {Text} from '@react-native-material/core';
 import {runInAction} from 'mobx';
 import React, {useEffect, useState} from 'react';
-import {Image, View} from 'react-native';
+import {Alert, Image, View} from 'react-native';
 import {ViewStyle} from 'react-native-material-ui';
 import {Card} from '../../../components/Card';
 import ToogleButton from '../../../components/ToogleButton';
@@ -37,11 +37,14 @@ const SettingsLocation = () => {
   const [accessLocation, setAccessLocation] = useState(applicationStore.canShowLocation);
   const [allowPermanentDetection, setAllowPermanentDetection] = useState(applicationStore.canUpdateLocation);
 
+  const init = async () => {
+    // if (applicationStore.geoLocationStatus != 'granted') {
+    //   await applicationStore.askPermissionForGeolocation();
+    // }
+  };
 
   useEffect(() => {
-    if (applicationStore.geoLocationStatus === 'unavailable') {
-      applicationStore.askPermissionForGeolocation();
-    }
+    init();
   }, [accessLocation, allowPermanentDetection]);
 
   const handleAccessLocation =() => {
@@ -53,8 +56,13 @@ const SettingsLocation = () => {
       canUpdateLocation: allowPermanentDetection ? false: allowPermanentDetection,
     });
     if (!accessLocation == true) {
-      if (applicationStore.geoLocationStatus === 'unavailable') {
-        applicationStore.askPermissionForGeolocation();
+      Alert.alert(applicationStore.geoLocationStatus);
+      if (!applicationStore.canFetchLocation()) {
+        const res = applicationStore.askPermissionForGeolocation();
+        if (!res) {
+          Alert.alert('Не удалось получить доступ к геолокации');
+          return;
+        }
       }
       applicationStore.fetchLocation();
       runInAction(() =>{

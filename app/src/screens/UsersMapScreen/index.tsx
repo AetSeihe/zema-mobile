@@ -131,7 +131,7 @@ const UsersMapScreen = () => {
     <>
       <YaMap
         ref={(ref) => map.current = ref}
-        showUserPosition={false}
+        // showUserPosition={false}
         rotateGesturesEnabled={false}
         initialRegion={{
           lat: userStore.user?.cordX || 0,

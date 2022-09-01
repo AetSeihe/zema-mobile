@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     borderColor: '#087BFF',
     color: '#000',
     fontSize: 14,
+    textAlignVertical: 'center',
   },
   disabled: {
     opacity: 0.7,
