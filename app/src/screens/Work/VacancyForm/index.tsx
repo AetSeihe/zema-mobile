@@ -57,7 +57,7 @@ const VacancyForm = () => {
 
   const handleSubmit = async (data: typeof initialValue) => {
     if (!city) {
-      Alert.alert('Ошибка... не удалось найти город');
+      Alert.alert('Ошибка... не удалось найти регион');
       return;
     }
 
@@ -68,14 +68,13 @@ const VacancyForm = () => {
       salary: +data.salary,
       workExperience: +data.workExperience,
       description: data.description,
-      experience: data.experience,
       cityId: city.id,
       phone: data.phone,
       email: data.email,
     });
 
     if (isSuccess) {
-      Alert.alert('Новая вакансия успешно добавленна!');
+      Alert.alert('Новая вакансия успешно добавлена!');
     } else {
       Alert.alert('Упс... что-то пошло не так');
     }
@@ -110,7 +109,7 @@ const VacancyForm = () => {
               />
               <InputSelect
                 options={cityes.map((city) => city.title)}
-                label='Город'
+                label='Регион'
                 wrapperStyle={styles.field}
                 onChangeText={(text) => {
                   handleChangeCity(text);
@@ -120,17 +119,21 @@ const VacancyForm = () => {
                 value={values.city}
                 error={errors.city}
               />
-              <InputField label='Опыт работы от' keyboardType='numeric' wrapperStyle={styles.field}
+              <InputField label='Опыт работы' keyboardType='numeric' wrapperStyle={styles.field}
                 value={values.workExperience}
                 error={errors.workExperience}
                 onChangeText={handleChange('workExperience')}
               />
-              <InputField label='Описание*' keyboardType='numeric' multiline inputStyle={styles.inputMuilty} wrapperStyle={styles.field}
+              <InputField label='Описание*' multiline style={styles.inputMuilty} wrapperStyle={styles.field}
                 value={values.description}
                 error={errors.description}
                 onChangeText={handleChange('description')}
               />
-              <InputField label='Нужные навыки*' wrapperStyle={styles.field} helperText='Перечислите навыки которые должны быть у кандидата'
+              <InputField
+                multiline style={styles.inputMuilty}
+                label='Необходимые навыки*'
+                wrapperStyle={styles.field}
+                helperText='Перечислите навыки которые должны быть у кандидата'
                 value={values.experience}
                 error={errors.experience}
                 onChangeText={handleChange('experience')}

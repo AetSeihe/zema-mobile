@@ -74,14 +74,16 @@ const VacancyFilter = ({onSubmit, title}: Props) => {
       >
         {({values, errors, handleChange, handleSubmit}) => (
           <>
-            <InputField label='Описание вакансии' wrapperStyle={styles.field}
+            <InputField
+              label='Описание вакансии'
+              wrapperStyle={styles.field}
               onChangeText={handleChange('text')}
               value={values.text}
               error={errors.text}
             />
             <InputSelect
               options={cityes.map((city) => city.title)}
-              label='Город'
+              label='Регион'
               wrapperStyle={styles.field}
               onChangeText={(text) => {
                 handleChangeCity(text);

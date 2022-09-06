@@ -46,6 +46,16 @@ export type GetAllVacancyDTO = {
     options: GetAllVacancyOptionsType;
 }
 
+export type CreateVacancyDTO = {
+  title: string;
+  salary: number;
+  workExperience: number;
+  description: string;
+  cityId: number;
+  phone?: string;
+  email?: string;
+}
+
 export type CreateResumeDTO = {
     title: string;
     salary: number;

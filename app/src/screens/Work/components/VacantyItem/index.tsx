@@ -26,8 +26,8 @@ type OptionRowType = {
 const OptionRow = ({title, description}: OptionRowType) => {
   return (
     <View style={optionRowStyles.wrapper}>
-      <Text style={optionRowStyles.title}>{title}</Text>
-      <Text>{description}</Text>
+      <Text style={optionRowStyles.title} >{title}</Text>
+      <Text style={optionRowStyles.text} numberOfLines={1}>{description}</Text>
     </View>
   );
 };

@@ -36,8 +36,8 @@ export const locale = {
     },
   },
   fields: {
-    required: 'Это обязатаельное поле',
-    invalidTypeNumber: 'Это поле должно быть числом',
+    required: 'Обязательное поле',
+    invalidTypeNumber: 'Поле должно быть числом',
     invalidEmail: 'Введите валидный email',
     invalidNumberPhone: 'Формат номера телефона должен быть: 89999999999',
     invalidPassword: 'Пароль должен содержать минимум 5 символов',
@@ -59,7 +59,7 @@ export const locale = {
     settings: 'Настройки',
   },
   network: {
-    title: 'Ошиба соеденения',
+    title: 'Ошибка соединения',
     description: 'Попробуйте перезагрузить приложение',
     button: 'Перегразузить ',
   },

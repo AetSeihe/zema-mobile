@@ -2,7 +2,7 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {Vacancy} from '../models/Vacancy';
 import {resumeService} from '../services/resumeService';
 import {vacancyService} from '../services/vacancyService';
-import {CreateResumeDTO, GetAllVacancyDTO} from '../types/workTypes';
+import {CreateResumeDTO, CreateVacancyDTO, GetAllVacancyDTO} from '../types/workTypes';
 
 
 class WorkStore {
@@ -32,7 +32,7 @@ class WorkStore {
   }
 
 
-  async createVacancy(data: CreateResumeDTO) {
+  async createVacancy(data: CreateVacancyDTO) {
     try {
       const vacancy = await vacancyService.createVacancy(data);
       runInAction(() => {

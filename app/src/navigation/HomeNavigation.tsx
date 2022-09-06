@@ -28,6 +28,7 @@ const friendsIcon = require('./images/friends.png');
 const workIcon = require('./images/work.png');
 const chatIcon = require('./images/chat.png');
 
+const ICON_BOTTOM_OFFSET = -8;
 
 type ChatIconProps = {
   color: string
@@ -35,7 +36,9 @@ type ChatIconProps = {
 
 const ChatIcon = observer(({color}: ChatIconProps) => {
   return (
-    <View>
+    <View style={{
+      bottom: ICON_BOTTOM_OFFSET,
+    }}>
       <Image source={chatIcon} style={{
         width: ICON_SIZE,
         height: ICON_SIZE,
@@ -123,6 +126,7 @@ export const HomeTabNavigation = observer(() => {
           width: ICON_SIZE,
           height: ICON_SIZE,
           opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
+          bottom: ICON_BOTTOM_OFFSET,
         }} resizeMode='contain'/>,
       }}/>
       <Tab.Screen name={routerNames.FRIENDS} component={FriendNavigator} options={{
@@ -131,7 +135,9 @@ export const HomeTabNavigation = observer(() => {
         tabBarIcon: ({color}) => <Image source={friendsIcon} style={{
           width: ICON_SIZE,
           height: ICON_SIZE,
+          bottom: ICON_BOTTOM_OFFSET,
           opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
+
         }} resizeMode='contain'/>,
       }}/>
       <Tab.Screen name={routerNames.WORK} component={WorkNavigator} options={{
@@ -140,7 +146,9 @@ export const HomeTabNavigation = observer(() => {
         tabBarIcon: ({color}) => <Image source={workIcon} style={{
           width: ICON_SIZE,
           height: ICON_SIZE,
+          bottom: ICON_BOTTOM_OFFSET,
           opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
+
         }} resizeMode='contain'/>,
       }}/>
       <Tab.Screen name={routerNames.Chat} component={ChatList} options={{

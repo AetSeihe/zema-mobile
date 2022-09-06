@@ -11,7 +11,7 @@ const getCityByName = async (name: string): Promise<CityType[]> => {
     const data = await cityApi.getCitiesByName(name);
     return data.data.cities;
   } catch (e) {
-    Alert.alert('Ошибка соеденения');
+    Alert.alert('Ошибка соединения');
     throw new Error('Упс... что-то пошло не так');
   }
 };

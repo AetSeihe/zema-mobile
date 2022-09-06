@@ -1,15 +1,17 @@
 import {Text} from '@react-native-material/core';
 import {observer} from 'mobx-react';
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Image, NativeSyntheticEvent, TouchableOpacity, View} from 'react-native';
+import {Alert, Animated, Image, NativeSyntheticEvent, TouchableOpacity, View} from 'react-native';
 import YaMap, {CameraPosition, Marker} from 'react-native-yamap';
 import {Avatar} from '../../components/Avatar';
 import ButtonUserEvent from '../../components/ButtonUserEvent';
+import {routerNames} from '../../constants/routerNames';
 import {User} from '../../models/User';
 import {applicationStore} from '../../store/applicationStore';
 import {friendStore} from '../../store/friendStore';
-import {userStore} from '../../store/userStore';
+import {routerStore} from '../../store/routerStore';
 import {styles, userProfileStyles} from './styles';
+import {useIsFocused} from '@react-navigation/native';
 
 type Props = {
   user: User,
@@ -19,15 +21,25 @@ type Props = {
 const mapToUserIcon = require('./images/user-point.png');
 const mapPlusIcon = require('./images/plus.png');
 const mapMinusIcon = require('./images/minus.png');
-
+const userMarkerIcon = require('./images/user-marker.png');
 
 const UserProfile = ({user}: Props) => {
+  const routeToProfile = () => {
+    routerStore.pushToScene({
+      name: routerNames.PROFILE,
+      options: {
+        user,
+      },
+    });
+  };
   return (
     <View style={userProfileStyles.wrapper}>
       <View style={userProfileStyles.content}>
         <Avatar image={user.mainPhoto?.image} style={userProfileStyles.image}/>
         <View>
-          <Text style={userProfileStyles.fullname}>{user.fullName}</Text>
+          <TouchableOpacity onPress={routeToProfile}>
+            <Text style={userProfileStyles.fullname}>{user.fullName}</Text>
+          </TouchableOpacity>
           <Text style={userProfileStyles.gender}>{user.nameOfGender}.</Text>
           <Text style={userProfileStyles.education}>{user.nameOfEducation}</Text>
         </View>
@@ -40,22 +52,52 @@ const UserProfile = ({user}: Props) => {
 
 const markerIcon = require('./images/marker.png');
 
+const goBackRouter = () => {
+  if (routerStore.navigator?.canGoBack()) {
+    routerStore.navigator.goBack();
+    return;
+  }
+
+  routerStore.pushToScene({
+    name: routerNames.HOME,
+  });
+};
+
+const goSettingsRouter = () => {
+  routerStore.pushToScene({
+    name: routerNames.SETTING_LOCATION,
+  });
+};
+
 
 const UsersMapScreen = () => {
-  const [loading, setLoading] = useState(true);
-  // const [mapZoom, setMapZoom] = useState(12);
   const mapZoom = useRef(12);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const map = useRef<YaMap>(null);
   const currentUserAnimation = useRef(new Animated.Value(0)).current;
+  const isFocused = useIsFocused();
 
   const init = async () => {
-    setLoading(false);
+    if (applicationStore.canShowLocation) {
+      applicationStore.fetchLocation();
+      return;
+    }
+    Alert.alert('Нужен доступ к геолокации', 'Разрешите доступ в настройках', [{
+      text: 'Отмена',
+      onPress: goBackRouter,
+      style: 'cancel',
+    }, {
+      text: 'Перейти',
+      onPress: goSettingsRouter,
+      style: 'destructive',
+    }]);
   };
 
   useEffect(() => {
-    init();
-  }, []);
+    if (isFocused) {
+      init();
+    }
+  }, [isFocused]);
 
   const showUserProfile = () => {
     Animated.timing(
@@ -91,10 +133,10 @@ const UsersMapScreen = () => {
           limit: 30,
         },
         data: {
-          startCordX: region.topRight.lon,
-          finishCordX: region.topRight.lat,
-          startCordY: region.bottomLeft.lon,
-          finishCordY: region.bottomLeft.lat,
+          startCordX: region.topLeft.lat,
+          finishCordX: region.topLeft.lon,
+          startCordY: region.bottomRight.lat,
+          finishCordY: region.bottomRight.lon,
         },
       });
     });
@@ -105,10 +147,11 @@ const UsersMapScreen = () => {
     showUserProfile();
   };
 
-  const onPressUserToButton = () => {
+  const onPressUserToButton = async () => {
+    await applicationStore.fetchLocation();
     map.current?.setCenter({
-      lat: userStore.user?.cordX || 0,
-      lon: userStore.user?.cordY|| 0,
+      lat: applicationStore.cordX || 0,
+      lon: applicationStore.cordY|| 0,
       zoom: mapZoom.current,
     });
   };
@@ -123,19 +166,16 @@ const UsersMapScreen = () => {
     map.current?.setZoom(mapZoom.current);
   };
 
-
-  if (loading) {
-    return <Text>Loading....</Text>;
-  }
   return (
     <>
       <YaMap
+        userLocationIcon={userMarkerIcon}
         ref={(ref) => map.current = ref}
         // showUserPosition={false}
         rotateGesturesEnabled={false}
         initialRegion={{
-          lat: userStore.user?.cordX || 0,
-          lon: userStore.user?.cordY|| 0,
+          lat: applicationStore.cordX || 0,
+          lon: applicationStore.cordY|| 0,
           zoom: mapZoom.current,
         }}
         onCameraPositionChange={hideUserProfile}
@@ -143,7 +183,12 @@ const UsersMapScreen = () => {
         style={{flex: 1}}
       >
         {friendStore.usersNear.map((user) =>(
-          <Marker key={user.id} point={{lon: user.cordY|| 0, lat: user.cordX || 0}} scale={1} source={markerIcon} onPress={() => handlePressMarker(user)}/>
+          <Marker
+            key={user.id}
+            point={{lon: user.cordY|| 0, lat: user.cordX || 0}}
+            scale={0.5} source={markerIcon}
+            onPress={() => handlePressMarker(user)}
+          />
         ))}
       </YaMap>
       {applicationStore.canShowLocation && (

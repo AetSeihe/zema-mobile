@@ -9,12 +9,15 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    marginHorizontal: -5,
+
   },
   field: {
     marginBottom: 10,
   },
   inputRow: {
     flex: 1,
+    margin: 5,
   },
 
 

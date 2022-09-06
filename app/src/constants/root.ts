@@ -1,6 +1,6 @@
 
 
-export const serverUrl = 'https://81b6-93-177-174-71.eu.ngrok.io';
+export const serverUrl = 'https://3b6e-93-177-174-71.eu.ngrok.io';
 export const socketUrl = 'ws://localhost:305';
 // export const socketUrl = 'ws://194.67.74.122:305';
 // export const serverUrl = 'http://194.67.74.122:3000';

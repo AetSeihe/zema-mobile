@@ -1,6 +1,6 @@
 import {vacancyApi} from '../api/vacancyApi';
 import {Vacancy} from '../models/Vacancy';
-import {CreateResumeDTO, GetAllVacancyDTO} from '../types/workTypes';
+import {CreateVacancyDTO, GetAllVacancyDTO} from '../types/workTypes';
 
 
 const getAllVacancy = async (data: GetAllVacancyDTO): Promise<Vacancy[]> => {
@@ -17,9 +17,8 @@ const getVacancyById = async (vacancyId: number): Promise<Vacancy> => {
 };
 
 
-const createVacancy = async (data: CreateResumeDTO): Promise<Vacancy> => {
+const createVacancy = async (data: CreateVacancyDTO): Promise<Vacancy> => {
   const res = await vacancyApi.createVacancy(data);
-
   return new Vacancy(res.data.vacancy);
 };
 

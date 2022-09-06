@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     elevation: 2,
     zIndex: 5,
+    overflow: 'hidden',
   },
   option: {
 

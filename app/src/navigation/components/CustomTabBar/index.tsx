@@ -1,7 +1,7 @@
 import {Text} from '@react-native-material/core';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import React, {useState} from 'react';
-import {SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {Image, SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {Menu, MenuItem} from 'react-native-material-menu';
 import Icon from '../../../components/Icon';
 import {routerNames} from '../../../constants/routerNames';
@@ -9,6 +9,8 @@ import {routerStore} from '../../../store/routerStore';
 import {theme} from '../../../styles/theme';
 import {styles} from './styles';
 
+
+const plusIcon = require('./images/plus.png');
 
 const PlusButton = () => {
   const [visible, setVisible] = useState(false);
@@ -36,7 +38,8 @@ const PlusButton = () => {
 
   return ( <>
     <TouchableOpacity style={styles.plusWrapper} onPress={() => setVisible(true)}>
-      <Icon name={'plus'} color={'gray'}/>
+      <Image source={plusIcon} style={styles.iconImage}/>
+      {/* <Icon name={'plus'} color={'gray'}/> */}
     </TouchableOpacity>
     <Menu visible={visible} onRequestClose={() => setVisible(false)} >
       <MenuItem onPress={onPressToPost}>

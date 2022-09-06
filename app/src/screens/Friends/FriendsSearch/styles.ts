@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
   cardWrapper: {
     paddingTop: BASE_MARGIN_SCREEN,
     marginHorizontal: BASE_MARGIN_SCREEN,
-
   },
   card: {
     flex: 1,

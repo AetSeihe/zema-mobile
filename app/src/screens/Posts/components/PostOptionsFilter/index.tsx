@@ -64,43 +64,45 @@ export const PostOptionsFilter = ({onSubmit, loading}: Props) => {
       visible={visible}
       wrapperStyle={styles.wrapper}
       onPressClose={() => setVisible(!visible)}>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit} style>
         {({values, handleSubmit, handleChange}) => <>
-          <InputField
-            wrapperStyle={styles.input}
-            label='Поиск по постам'
-            placeholder='Куда лучше эмигрировать'
-            color={theme.main}
-            value={values.text}
-            onChangeText={handleChange('text')}
-          />
-          <View style={styles.citiesWrapper}>
-            <InputSelect label='Город откуда'
-              options={getCitiesName(cities)}
-              wrapperStyle={[styles.input, styles.inputCity]}
-              value={values.cityFrom}
-              onChangeText={(text) => {
-                getCitiesByName(text);
-                const candidate = getCityByName(text);
-                if (candidate) {
-                  setBirthCity(candidate);
-                }
-                return handleChange('cityFrom')(text);
-              }}
+          <View style={styles.inputsWrapper}>
+            <InputField
+              wrapperStyle={styles.input}
+              label='Поиск по постам'
+              placeholder='Куда лучше эмигрировать'
+              color={theme.main}
+              value={values.text}
+              onChangeText={handleChange('text')}
             />
-            <InputSelect label='Нынешний город'
-              options={getCitiesName(cities)}
-              wrapperStyle={[styles.input, styles.inputCity]}
-              value={values.cityTo}
-              onChangeText={(text) => {
-                getCitiesByName(text);
-                const candidate = getCityByName(text);
-                if (candidate) {
-                  setCurrentCity(candidate);
-                }
-                return handleChange('cityTo')(text);
-              }}
-            />
+            <View style={styles.citiesWrapper}>
+              <InputSelect label='Регион откуда'
+                options={getCitiesName(cities)}
+                wrapperStyle={[styles.input, styles.inputCity]}
+                value={values.cityFrom}
+                onChangeText={(text) => {
+                  getCitiesByName(text);
+                  const candidate = getCityByName(text);
+                  if (candidate) {
+                    setBirthCity(candidate);
+                  }
+                  return handleChange('cityFrom')(text);
+                }}
+              />
+              <InputSelect label='Нынешний регион'
+                options={getCitiesName(cities)}
+                wrapperStyle={[styles.input, styles.inputCity]}
+                value={values.cityTo}
+                onChangeText={(text) => {
+                  getCitiesByName(text);
+                  const candidate = getCityByName(text);
+                  if (candidate) {
+                    setCurrentCity(candidate);
+                  }
+                  return handleChange('cityTo')(text);
+                }}
+              />
+            </View>
           </View>
           <Text style={styles.sort}>Сортировать: <Text style={styles.sortSelected}>C начала новые</Text></Text>
           <Button

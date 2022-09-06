@@ -92,11 +92,11 @@ const PostS = ({navigation, route}: Props) => {
         <TouchableOpacity onPress={goToProfile}>
           <Avatar image={user.mainPhoto?.image} style={commentStyles.avatar}/>
         </TouchableOpacity>
-        <View>
+        <View style={commentStyles.content}>
           <TouchableOpacity onPress={goToProfile}>
             <Text style={commentStyles.title}>{user.fullName}</Text>
           </TouchableOpacity>
-          <Text>{item.text}</Text>
+          <Text style={commentStyles.text}>{item.text}</Text>
           {canDeleteComment && (
             <TouchableOpacity onPress={deleteComment}>
               <Text style={commentStyles.delete}>Удалить</Text>
@@ -106,7 +106,7 @@ const PostS = ({navigation, route}: Props) => {
   };
 
   return (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView style={styles.scrollView} keyboardShouldPersistTaps={'always'}>
       <View style={styles.wrapper}>
         <PostUserHeader user={post.user} post={post} onPress={onPressProfile} />
         <Text style={styles.title}>{post.title}</Text>
@@ -119,6 +119,7 @@ const PostS = ({navigation, route}: Props) => {
           data={comments}
           renderItem={renderComment}
           keyExtractor={(item) => item.id.toString()}
+          keyboardShouldPersistTaps={'always'}
         />
       </SafeAreaView>
     </ScrollView>

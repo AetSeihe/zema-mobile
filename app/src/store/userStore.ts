@@ -23,8 +23,8 @@ class UserStore {
       if (applicationStore.canUpdateLocation) {
         Geolocation.getCurrentPosition(
             (position) => {
-              const cordY = +position.coords.longitude;
               const cordX = +position.coords.latitude;
+              const cordY = +position.coords.longitude;
               if (cordY && cordX) {
                 this.update({
                   cordX: cordX,

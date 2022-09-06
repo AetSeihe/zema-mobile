@@ -129,7 +129,10 @@ const ProfileSettingScreen = () => {
       });
 
       routerStore.pushToScene({
-        name: routerNames.HOME,
+        name: routerNames.PROFILE,
+        options: {
+          user: user,
+        },
       });
     } catch (e) {
 
@@ -231,7 +234,7 @@ const ProfileSettingScreen = () => {
               <InputSelect
                 options={cities.map((city) => city.title)}
                 wrapperStyle={styles.field}
-                label='Город откуда вы'
+                label='Регион откуда вы'
                 value={values.cityFromName}
                 onChangeText={(text) => {
                   getCitiesByName(text);
@@ -245,7 +248,7 @@ const ProfileSettingScreen = () => {
               />
               <InputSelect
                 options={cities.map((city) => city.title)}
-                label='Город где вы сейчас'
+                label='Регион, где вы сейчас'
                 wrapperStyle={styles.field}
                 value={values.cityToName}
                 onChangeText={(text) => {

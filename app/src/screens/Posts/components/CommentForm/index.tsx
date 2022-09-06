@@ -1,4 +1,3 @@
-import {Text, TextInput} from '@react-native-material/core';
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {Avatar} from '../../../../components/Avatar';

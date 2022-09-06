@@ -27,7 +27,6 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
   };
 
   const onChange = (text: string) => {
-    console.log('fucking presss!!!');
     onChangeText && onChangeText(text);
     setNeedShowOptions(true);
   };
@@ -55,6 +54,7 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
       />
       {needShowOptions && !!options.length && <FlatList
         nestedScrollEnabled
+        keyboardShouldPersistTaps='always'
         style={styles.optionsWrapper}
         data={options}
         renderItem={renderOption}

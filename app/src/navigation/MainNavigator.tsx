@@ -138,7 +138,6 @@ const Main = () => {
         <Stack.Screen name={routerNames.Chat_Item} component={Chat} options={{
           title: locale.screensName.chatItem,
           animation: 'default',
-
           headerShown: true,
           headerBackTitle: locale.header.backButtonTitle,
         }}/>

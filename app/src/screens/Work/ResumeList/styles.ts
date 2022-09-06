@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-
+import {BASE_MARGIN_SCREEN} from '../../../constants/styles';
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -8,8 +8,11 @@ export const styles = StyleSheet.create({
   },
   listWrapper: {
     paddingTop: 20,
+
   },
   cardItem: {
     marginBottom: 15,
+    marginHorizontal: BASE_MARGIN_SCREEN,
+
   },
 });

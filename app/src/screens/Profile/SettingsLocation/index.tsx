@@ -1,5 +1,6 @@
 import {Text} from '@react-native-material/core';
 import {runInAction} from 'mobx';
+import {observer} from 'mobx-react';
 import React, {useEffect, useState} from 'react';
 import {Alert, Image, View} from 'react-native';
 import {ViewStyle} from 'react-native-material-ui';
@@ -21,6 +22,16 @@ type Props = {
 const ellipseIcon = require('../images/ellipse.png');
 
 
+const askLocationPermissionIfNeeded = async (): Promise<boolean> => {
+  if (!applicationStore.canFetchLocation()) {
+    const res = applicationStore.askPermissionForGeolocation();
+    return res;
+  }
+
+  return true;
+};
+
+
 const ToogleButtonWithDescription = ({title, tint, ...props}:Props) => {
   return (
     <View style={toobleBtnStyles.wrapper}>
@@ -34,61 +45,51 @@ const ToogleButtonWithDescription = ({title, tint, ...props}:Props) => {
 };
 
 const SettingsLocation = () => {
-  const [accessLocation, setAccessLocation] = useState(applicationStore.canShowLocation);
-  const [allowPermanentDetection, setAllowPermanentDetection] = useState(applicationStore.canUpdateLocation);
+  // const [accessLocation, setAccessLocation] = useState(applicationStore.canShowLocation);
+  // const [allowPermanentDetection, setAllowPermanentDetection] = useState(applicationStore.canUpdateLocation);
 
-  const init = async () => {
-    // if (applicationStore.geoLocationStatus != 'granted') {
-    //   await applicationStore.askPermissionForGeolocation();
-    // }
-  };
 
-  useEffect(() => {
-    init();
-  }, [accessLocation, allowPermanentDetection]);
+  const handleAccessLocation = async () => {
+    const canUseLocation = await askLocationPermissionIfNeeded();
 
-  const handleAccessLocation =() => {
-    setAccessLocation(!accessLocation);
-    setAllowPermanentDetection(allowPermanentDetection ? false: allowPermanentDetection);
-
-    setUserLocationRules({
-      canShowLocation: !accessLocation,
-      canUpdateLocation: allowPermanentDetection ? false: allowPermanentDetection,
-    });
-    if (!accessLocation == true) {
-      Alert.alert(applicationStore.geoLocationStatus);
-      if (!applicationStore.canFetchLocation()) {
-        const res = applicationStore.askPermissionForGeolocation();
-        if (!res) {
-          Alert.alert('Не удалось получить доступ к геолокации');
-          return;
-        }
-      }
-      applicationStore.fetchLocation();
-      runInAction(() =>{
-        applicationStore.canShowLocation = !accessLocation,
-        applicationStore.canUpdateLocation = allowPermanentDetection ? false: allowPermanentDetection;
-      });
+    if (!canUseLocation) {
+      return;
     }
 
-    if (!accessLocation == false) {
+    runInAction(() => {
+      applicationStore.canShowLocation = !applicationStore.canShowLocation;
+      applicationStore.canUpdateLocation = applicationStore.canUpdateLocation ? false: applicationStore.canUpdateLocation;
+    });
+    setUserLocationRules({
+      canShowLocation: !applicationStore.canShowLocation,
+      canUpdateLocation: applicationStore.canUpdateLocation,
+    });
+
+    if (applicationStore.canShowLocation == false) {
       userStore.update({
         cordX: '0',
         cordY: '0',
       });
+      return;
     }
+
+    applicationStore.fetchLocation();
   };
 
-  const handleAccessUpdateLocation = () => {
-    setAllowPermanentDetection(!allowPermanentDetection);
-    setAccessLocation(!allowPermanentDetection ?true: accessLocation);
-    setUserLocationRules({
-      canShowLocation: !allowPermanentDetection ? true : accessLocation,
-      canUpdateLocation: !allowPermanentDetection,
+  const handleAccessUpdateLocation = async () => {
+    const newUpdateValue = !applicationStore.canUpdateLocation;
+    const canUseLocation = await askLocationPermissionIfNeeded();
+    if (!canUseLocation) {
+      return;
+    }
+
+    runInAction(() => {
+      applicationStore.canShowLocation = newUpdateValue ? true : applicationStore.canShowLocation;
+      applicationStore.canUpdateLocation = newUpdateValue;
     });
-    runInAction(() =>{
-      applicationStore.canShowLocation = !allowPermanentDetection ? true : accessLocation,
-      applicationStore.canUpdateLocation = !allowPermanentDetection;
+    setUserLocationRules({
+      canShowLocation: applicationStore.canShowLocation,
+      canUpdateLocation: applicationStore.canUpdateLocation,
     });
   };
 
@@ -98,13 +99,13 @@ const SettingsLocation = () => {
         <Text style={styles.title}>Геолокация</Text>
         <ToogleButtonWithDescription
           title='Доступ к местоположению'
-          value={accessLocation}
+          value={applicationStore.canShowLocation}
           onPress={handleAccessLocation}
         />
         <ToogleButtonWithDescription
           title='Обновление'
           tint={'Продолжать обновлять геопозицию при перемещении'}
-          value={allowPermanentDetection}
+          value={applicationStore.canUpdateLocation}
           onPress={handleAccessUpdateLocation}
         />
 
@@ -115,4 +116,4 @@ const SettingsLocation = () => {
   );
 };
 
-export default SettingsLocation;
+export default observer(SettingsLocation);

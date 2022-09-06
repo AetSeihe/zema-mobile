@@ -4,7 +4,6 @@ import * as permissions from 'react-native-permissions';
 import {request, check, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 import {getUserLocationRules, setUserLocationRules} from '../utils/userLocationRools';
-import {userStore} from './userStore';
 class ApplicationStore {
   appIsLoading: boolean = false;
   geoLocationStatus: permissions.PermissionStatus = 'unavailable';
@@ -27,15 +26,13 @@ class ApplicationStore {
   }
 
   async fetchLocation() {
-    if (this.geoLocationStatus === 'granted') {
+    if (this.canFetchLocation()) {
       Geolocation.getCurrentPosition(
           (position) => {
-            userStore.update({
-              cordY: position.coords.longitude,
-              cordX: position.coords.latitude,
+            runInAction(() => {
+              this.cordY = position.coords.longitude;
+              this.cordX = position.coords.latitude;
             });
-            this.cordY = position.coords.longitude;
-            this.cordX = position.coords.latitude;
           },
           (error) => {
             console.log(error.code, error.message);

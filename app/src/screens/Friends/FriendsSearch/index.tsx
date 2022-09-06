@@ -1,7 +1,7 @@
 import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, FlatList, Image, TouchableOpacity, View} from 'react-native';
+import {Alert, FlatList, Image, ScrollView, TouchableOpacity, View} from 'react-native';
 import ButtonUserEvent from '../../../components/ButtonUserEvent';
 import {CatAlert} from '../../../components/CatAlert';
 import {Tint} from '../../../components/Tint';
@@ -77,6 +77,7 @@ const FriendsSearch = ({navigation}: Props) => {
   };
 
   const handleScrollFlatList = async () => {
+    // Alert.alert('i work');
     const newUsers = await userService.getAllUsersByOptions({
       name: options.name.toLowerCase(),
       minAge: +options.minAge,
@@ -88,6 +89,7 @@ const FriendsSearch = ({navigation}: Props) => {
       limit: LIMIT_TO_SEARCH_FRIEND,
       offset: offsetSearch.current,
     });
+
 
     offsetSearch.current += LIMIT_TO_SEARCH_FRIEND;
 
@@ -116,7 +118,6 @@ const FriendsSearch = ({navigation}: Props) => {
 
   return (
     <View style={styles.wrapper}>
-
       <FriendHeader
         tabActive={'first'}
         onPressFriends={onPressFriends}
@@ -124,25 +125,25 @@ const FriendsSearch = ({navigation}: Props) => {
         onPressSearch={onPressSearch}
       />
 
-      <FlatList
-        ListHeaderComponent={<>
-          <FriendsSearchForm onSubmit={onSubmit}/>
-          <TouchableOpacity onPress={onPressToEarth} style={styles.earthWrapper}>
-            <Text style={styles.earthText}>Земляки вокруг</Text>
-            <Image source={earthIcon} style={styles.earthIcon}/>
-          </TouchableOpacity>
-        </>}
-        onEndReached={handleScrollFlatList}
-        ListEmptyComponent={<CatAlert title='Похоже по вашему запросу ничего не найденно'/>}
-        ListFooterComponent={<Tint style={styles.tint}>Вы просмотрели всю ленту!</Tint>}
-        onEndReachedThreshold={0.2}
-        style={styles.cardWrapper}
-        data={users}
-        renderItem={({item}) => (
-          <View style={styles.card}>
-            <UserCard friend={item} onPress={onPressCard} renderButtons={renderButtons}/>
-          </View>)}
-      />
+      <ScrollView style={styles.cardWrapper} nestedScrollEnabled keyboardShouldPersistTaps='always'>
+        <FriendsSearchForm onSubmit={onSubmit}/>
+        <TouchableOpacity onPress={onPressToEarth} style={styles.earthWrapper}>
+          <Text style={styles.earthText}>Земляки вокруг</Text>
+          <Image source={earthIcon} style={styles.earthIcon}/>
+        </TouchableOpacity>
+        <FlatList
+          onEndReached={handleScrollFlatList}
+          ListEmptyComponent={<CatAlert title='Похоже по вашему запросу ничего не найденно'/>}
+          ListFooterComponent={<Tint style={styles.tint}>Вы просмотрели всю ленту!</Tint>}
+          onEndReachedThreshold={0.2}
+          data={users}
+          renderItem={({item}) => (
+            <View style={styles.card}>
+              <UserCard friend={item} onPress={onPressCard} renderButtons={renderButtons}/>
+            </View>)}
+        />
+      </ScrollView>
+
     </View>
   );
 };

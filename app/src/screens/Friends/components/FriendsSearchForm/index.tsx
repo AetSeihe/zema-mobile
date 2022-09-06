@@ -64,7 +64,7 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
 
   return (
     <Dropdown title='Фильтры' visible={isShown} onPressClose={() => setIsShown(!isShown)} wrapperStyle={styles.wrapper}>
-      <ScrollView>
+      <ScrollView nestedScrollEnabled keyboardShouldPersistTaps='always'>
         <Formik
           initialValues={initialValueUsersSearch}
           validationSchema={schema}
@@ -90,7 +90,7 @@ export const FriendsSearchForm = ({onSubmit}: Props) => {
               }}
               error={errors.cityFrom}
             />
-            <InputSelect label='Город проживания' options={getCitiesName(cities)} style={styles.field}
+            <InputSelect label='Регион проживания' options={getCitiesName(cities)} style={styles.field}
               value={values.cityTo}
               error={errors.cityTo}
               onChangeText={(text) => {

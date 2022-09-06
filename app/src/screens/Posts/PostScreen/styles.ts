@@ -10,24 +10,31 @@ export const commentStyles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 12,
   },
+
   avatar: {
     marginRight: 12,
     width: 41,
     height: 41,
   },
 
+  content: {
+    flex: 1,
+    maxWidth: '100%',
+  },
+
   title: {
     fontWeight: '500',
     color: '#1E205A',
     marginBottom: 7,
-    maxWidth: '100%',
+    maxWidth: '90%',
 
   },
 
+
   text: {
+    flex: 1,
     fontWeight: '300',
     color: '#1E205A',
-    maxWidth: '100%',
   },
 
   delete: {

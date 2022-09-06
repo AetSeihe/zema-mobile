@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
+    marginBottom: 10,
   },
   multiInputWrapper: {
     flex: 1,

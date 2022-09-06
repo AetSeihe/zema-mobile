@@ -12,7 +12,12 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
   },
-  input: {},
+  inputsWrapper: {
+    marginHorizontal: -5,
+  },
+  input: {
+    margin: 5,
+  },
   citiesWrapper: {
     flexDirection: 'row',
   },

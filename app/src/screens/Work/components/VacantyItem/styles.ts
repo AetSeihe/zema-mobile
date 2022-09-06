@@ -9,6 +9,10 @@ export const optionRowStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginRight: 10,
   },
+  text: {
+    width: '50%',
+
+  },
 });
 
 export const styles = StyleSheet.create({

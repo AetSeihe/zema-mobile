@@ -34,4 +34,9 @@ export const styles = StyleSheet.create({
   menuItem: {
     fontWeight: '500',
   },
+  iconImage: {
+    // position: 'absolute',
+    width: 35,
+    height: 35,
+  },
 });

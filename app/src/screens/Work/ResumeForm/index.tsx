@@ -59,7 +59,7 @@ const ResumeForm = () => {
 
   const handleSubmit = async (data: typeof initialValue) => {
     if (!city) {
-      Alert.alert('Ошибка... не удалось найти город');
+      Alert.alert('Ошибка... не удалось найти регион');
       return;
     }
 
@@ -77,17 +77,14 @@ const ResumeForm = () => {
     });
 
     if (isSuccess) {
-      Alert.alert('Новое резюме успешно добавленно!');
+      Alert.alert('Новое резюме успешно добавлено!');
     } else {
       Alert.alert('Упс... что-то пошло не так');
     }
 
-
-    routerStore.pushToScene({
-      name: routerNames.HOME,
-    });
-
-
+    // routerStore.pushToScene({
+    //   name: routerNames.HOME,
+    // });
     setLoading(false);
   };
 
@@ -114,7 +111,7 @@ const ResumeForm = () => {
               />
               <InputSelect
                 options={cityes.map((city) => city.title)}
-                label='Город'
+                label='Регион'
                 wrapperStyle={styles.field}
                 onChangeText={(text) => {
                   handleChangeCity(text);
@@ -129,12 +126,20 @@ const ResumeForm = () => {
                 error={errors.workExperience}
                 onChangeText={handleChange('workExperience')}
               />
-              <InputField label='Описание*' keyboardType='numeric' multiline inputStyle={styles.inputMuilty} wrapperStyle={styles.field}
+              <InputField label='Описание*'
+                multiline
+                style={styles.inputMuilty}
+                wrapperStyle={styles.field}
                 value={values.description}
                 error={errors.description}
                 onChangeText={handleChange('description')}
               />
-              <InputField label='Ваши навыки' wrapperStyle={styles.field} helperText='Перечислите навыки которые должны быть у кандидата'
+              <InputField
+                multiline
+                style={styles.inputMuilty}
+                label='Ваши навыки'
+                wrapperStyle={styles.field}
+                helperText='Перечислите навыки которые должны быть у кандидата'
                 value={values.experience}
                 error={errors.experience}
                 onChangeText={handleChange('experience')}

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {BASE_MARGIN_SCREEN} from '../../../constants/styles';
 
 
 export const styles = StyleSheet.create({
@@ -11,5 +12,7 @@ export const styles = StyleSheet.create({
   },
   cardItem: {
     marginBottom: 15,
+    marginHorizontal: BASE_MARGIN_SCREEN,
+
   },
 });

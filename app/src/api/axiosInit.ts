@@ -47,7 +47,7 @@ axiosInstants.interceptors.response.use(function(response) {
       },
     });
     if (error.response?.data.message) {
-      error.response.data.message= 'Ошибка соеденения с сервером';
+      error.response.data.message= 'Ошибка соединения с сервером';
     }
   }
   if (error.response?.data.statusCode == '401') {

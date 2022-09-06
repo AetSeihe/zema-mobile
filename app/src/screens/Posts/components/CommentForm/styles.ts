@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    marginRight: 5,
   },
   submit: {
   },
