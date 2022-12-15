@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, ScrollView, View} from 'react-native';
+import {Alert, KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
 import CustomButton from '../../../components/CustomButton';
 import {InputField} from '../../../components/InputField';
 import {Title} from '../../../components/Title';
@@ -8,8 +8,6 @@ import * as yup from 'yup';
 import {locale} from '../../../locale';
 import {Formik} from 'formik';
 import {workStore} from '../../../store/workStore';
-import {routerStore} from '../../../store/routerStore';
-import {routerNames} from '../../../constants/routerNames';
 import {phoneRegExp} from '../../../constants/root';
 import {CityType} from '../../../types/userTypes';
 import {cityServices} from '../../../services/cityServices';
@@ -90,7 +88,10 @@ const ResumeForm = () => {
 
   return (
     <ScrollView >
-      <View style={styles.wrapper}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={10}
+        style={styles.wrapper}>
         <Title style={styles.title}>Добавление резюме</Title>
         <Formik
           initialValues={initialValue}
@@ -162,7 +163,7 @@ const ResumeForm = () => {
               />
             </>)}
         </Formik>
-      </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };

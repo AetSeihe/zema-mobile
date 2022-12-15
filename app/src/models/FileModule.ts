@@ -1,3 +1,4 @@
+import {Asset} from 'react-native-image-picker';
 import {serverUrl} from '../constants/root';
 
 type FileModuleType = {
@@ -25,10 +26,10 @@ export class FileModule {
   type: string;
 
 
-  constructor(data: FileModuleType) {
-    this.id = data.id,
-    this.name = data.fileName;
-    this.url = `${serverUrl}/file/${data.fileName}`;
-    this.type = getFileType(data.fileName.split('.')[1]);
+  constructor(data: FileModuleType | Asset) {
+    this.id = +(data.id || Math.random()),
+    this.name = data.fileName || Math.random().toString();
+    this.url = data.uri ||`${serverUrl}/file/${data.fileName}`;
+    this.type = !data.fileName ? '' : getFileType(data.fileName.split('.')[1]);
   }
 }

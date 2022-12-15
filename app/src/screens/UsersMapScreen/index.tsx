@@ -17,11 +17,14 @@ type Props = {
   user: User,
 }
 
+const MAP_ANIMATION_DURATION = 0.2;
+const ZOOM_STEP = 1;
 
 const mapToUserIcon = require('./images/user-point.png');
 const mapPlusIcon = require('./images/plus.png');
 const mapMinusIcon = require('./images/minus.png');
 const userMarkerIcon = require('./images/user-marker.png');
+const markerIcon = require('./images/marker.png');
 
 const UserProfile = ({user}: Props) => {
   const routeToProfile = () => {
@@ -50,7 +53,6 @@ const UserProfile = ({user}: Props) => {
   );
 };
 
-const markerIcon = require('./images/marker.png');
 
 const goBackRouter = () => {
   if (routerStore.navigator?.canGoBack()) {
@@ -73,7 +75,7 @@ const goSettingsRouter = () => {
 const UsersMapScreen = () => {
   const mapZoom = useRef(12);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const map = useRef<YaMap>(null);
+  const map = useRef<YaMap | null>(null);
   const currentUserAnimation = useRef(new Animated.Value(0)).current;
   const isFocused = useIsFocused();
 
@@ -157,21 +159,23 @@ const UsersMapScreen = () => {
   };
 
   const onPressPlusUserZoom = () => {
-    mapZoom.current += 0.5;
-    map.current?.setZoom(mapZoom.current);
+    map.current?.getCameraPosition((options) => {
+      map.current?.setZoom(options.zoom);
+    });
   };
 
   const onPressMinusUserZoom = () => {
-    mapZoom.current -= 0.5;
-    map.current?.setZoom(mapZoom.current);
+    map.current?.getCameraPosition((options) => {
+      Alert.alert(`${JSON.stringify(options.point, null, 2)}`);
+      // map.current?.setZoom(options.zoom );
+    });
   };
 
   return (
     <>
       <YaMap
         userLocationIcon={userMarkerIcon}
-        ref={(ref) => map.current = ref}
-        // showUserPosition={false}
+        ref={(ref) => (map.current = ref)}
         rotateGesturesEnabled={false}
         initialRegion={{
           lat: applicationStore.cordX || 0,
@@ -193,7 +197,7 @@ const UsersMapScreen = () => {
       </YaMap>
       {applicationStore.canShowLocation && (
         <TouchableOpacity onPress={onPressUserToButton} style={[styles.mapIconWrapper, styles.mapToUserIconWrapper]}>
-          <Image source={mapToUserIcon} style={[styles.mapIcon]}/>
+          <Image onMagicTap={onPressUserToButton} source={mapToUserIcon} style={[styles.mapIcon]}/>
         </TouchableOpacity>
       )}
       <TouchableOpacity onPress={onPressMinusUserZoom} style={[styles.mapIconWrapper, styles.mapPlusIconWrapper]}>

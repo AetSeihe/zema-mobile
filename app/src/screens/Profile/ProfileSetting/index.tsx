@@ -95,7 +95,7 @@ const ProfileSettingScreen = () => {
       return;
     }
     const result = await launchImageLibrary({
-      mediaType: 'mixed',
+      mediaType: 'photo',
     });
 
     const imageAsset = result.assets;

@@ -5,7 +5,6 @@ import {Image, TouchableOpacity, View} from 'react-native';
 import Icon from '../components/Icon';
 import {routerNames} from '../constants/routerNames';
 import {locale} from '../locale';
-import {chatStore} from '../store/chatStore';
 import {routerStore} from '../store/routerStore';
 import {userStore} from '../store/userStore';
 import {theme} from '../styles/theme';
@@ -16,9 +15,9 @@ import {Menu, MenuItem} from 'react-native-material-menu';
 import {Text} from '@react-native-material/core';
 import {clearAuthUserData} from '../utils/userAuthToken';
 import RNRestart from 'react-native-restart';
-import {ChatList} from '../screens/Chats/ChatList';
 import PostsListScreen from '../screens/Posts/PostsListScreen';
 import {FriendNavigator} from './FriendNavigator';
+import ChatList from '../screens/Chat/ChatList';
 
 const screensNameLocale = locale.screensName;
 
@@ -44,7 +43,6 @@ const ChatIcon = observer(({color}: ChatIconProps) => {
         height: ICON_SIZE,
         opacity: color === 'gray' ? INACTIVE_ICON_OPACITY : 1,
       }} resizeMode='contain'/>
-      {!!chatStore.notReadedMessages.length && <View style={styles.dot}/>}
     </View>
   );
 });

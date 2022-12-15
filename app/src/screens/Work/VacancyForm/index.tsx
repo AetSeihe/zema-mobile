@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, ScrollView, View} from 'react-native';
+import {Alert, KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
 import CustomButton from '../../../components/CustomButton';
 import {InputField} from '../../../components/InputField';
 import {Title} from '../../../components/Title';
@@ -87,8 +87,11 @@ const VacancyForm = () => {
 
 
   return (
-    <ScrollView >
-      <View style={styles.wrapper}>
+    <ScrollView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={10}
+        style={styles.wrapper}>
         <Title style={styles.title}>Добавление вакансии</Title>
         <Formik
           initialValues={initialValue}
@@ -156,7 +159,7 @@ const VacancyForm = () => {
               />
             </>)}
         </Formik>
-      </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };

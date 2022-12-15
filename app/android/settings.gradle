@@ -1,6 +1,8 @@
 rootProject.name = 'app'
 include ':react-native-appearance'
 project(':react-native-appearance').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-appearance/android')
+include ':react-native-appearance'
+project(':react-native-appearance').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-appearance/android')
 include ':react-native-yamap'
 project(':react-native-yamap').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-yamap/android')
 include ':react-native-yamap'

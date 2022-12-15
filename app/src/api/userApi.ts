@@ -52,7 +52,7 @@ const update = ({images = [], ...data}: UpdateProfileType): Promise<AxiosRespons
     }
   });
   images.forEach((photo: Asset) => {
-    formData.append('images', {uri: photo.uri, name: 'sadds', type: 'image/png'});
+    formData.append('preview', {uri: photo.uri, name: 'sadds', type: 'image/png'});
   });
 
 

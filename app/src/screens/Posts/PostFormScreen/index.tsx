@@ -66,7 +66,7 @@ export const PostFormScreen = ({navigation}: Props) => {
       return;
     }
     const result = await launchImageLibrary({
-      mediaType: 'mixed',
+      mediaType: 'photo',
     });
 
     const imageAsset = result.assets;

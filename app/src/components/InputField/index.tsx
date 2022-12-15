@@ -19,6 +19,7 @@ export const InputField = ({wrapperStyle, error, style, label, ...props}: InputF
         textAlignVertical={props.multiline ? 'top': 'center'}
         placeholder={label}
         placeholderTextColor={'#087BFF'}
+        caretHidden={false}
         {...props}
       />
       {!!error && <Text style={styles.error}>{error}</Text>}

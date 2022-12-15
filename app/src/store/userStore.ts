@@ -3,7 +3,6 @@ import {FileModule} from '../models/FileModule';
 import {User} from '../models/User';
 import {userService} from '../services/userService';
 import {SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
-import {chatStore} from './chatStore';
 import {friendStore} from './friendStore';
 import {applicationStore} from './applicationStore';
 import Geolocation from 'react-native-geolocation-service';
@@ -42,7 +41,6 @@ class UserStore {
     reaction(() => !!this.user?.id, () => {
       const user = this.user;
       if (user) {
-        chatStore.init(user);
         friendStore.fetchFriendsByUserId(user.id);
         friendStore.fetchRequestsByUserId(user.id);
       }

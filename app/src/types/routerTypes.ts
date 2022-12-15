@@ -73,7 +73,7 @@ export type ChatScreenType = {
 }
 
 export type ChatItemOptionsScreenType = {
-    user: User
+    userId: number,
 }
 
 export type ChatItemScreenType = {

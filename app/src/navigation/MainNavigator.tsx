@@ -8,7 +8,7 @@ import {onEnterApp} from '../global/onEnterApp';
 import {locale} from '../locale';
 import SignInScreen from '../screens/AuthScreens/SignInScreen';
 import SignUpScreen from '../screens/AuthScreens/SignUpScreen';
-import {Chat} from '../screens/Chats/Chat';
+import Chat from '../screens/Chat/Chat';
 import {ErrorScreen} from '../screens/ErrorScreen';
 import Friends from '../screens/Friends/Friends';
 import FriendsRequest from '../screens/Friends/FriendsRequest';
@@ -23,7 +23,9 @@ import SettingsSecurity from '../screens/Profile/SettingsSecurity';
 import UsersMapScreen from '../screens/UsersMapScreen';
 import ResumeForm from '../screens/Work/ResumeForm';
 import VacancyForm from '../screens/Work/VacancyForm';
+import {chatStore} from '../store/chatStore';
 import {routerStore} from '../store/routerStore';
+import {userStore} from '../store/userStore';
 import {HeaderProfileIcon, HomeTabNavigation} from './HomeNavigation';
 
 
@@ -40,6 +42,12 @@ const Main = () => {
   useEffect(() => {
     init();
   }, []);
+
+  useEffect(() => {
+    if (userStore.user) {
+      chatStore.init(userStore.user.id);
+    }
+  }, [userStore.user]);
 
 
   return (
@@ -107,10 +115,7 @@ const Main = () => {
         }}/>
 
         <Stack.Screen name={routerNames.USER_MAP} component={UsersMapScreen} options={{
-          title: 'Пользователи по близости',
-          headerShown: true,
           animation: 'default',
-          headerRight: HeaderProfileIcon,
         }}/>
 
 
@@ -138,7 +143,7 @@ const Main = () => {
         <Stack.Screen name={routerNames.Chat_Item} component={Chat} options={{
           title: locale.screensName.chatItem,
           animation: 'default',
-          headerShown: true,
+          headerShown: false,
           headerBackTitle: locale.header.backButtonTitle,
         }}/>
 

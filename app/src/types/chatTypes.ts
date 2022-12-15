@@ -1,102 +1,83 @@
 import {UserType} from './userTypes';
 
 
+export type GetAllChatOptionsType = {
+    limit: number,
+    offset: number
+}
+
+export type GetChatByUserType = {
+    userOneId: number,
+    userTwoId: number
+}
+
+export type GetUsersInChatsByName = {
+    name: string,
+}
+
+export type GetChatsByMsgText = {
+    text: string,
+}
+
+export type GetMessagesInChatType = {
+    chatId: string,
+    offset: number,
+    limit: number;
+}
+
+export type ResponseGetMessagesInChatType = {
+    messages: MessageType[]
+}
+
+
+export type GetAllChatsResponseType = {
+    chats: ChatType[]
+}
+
 export type ChatType = {
     id: number;
+    userOneId: number;
+    userTwoId: number;
     createdAt: string;
     updatedAt: string;
-    userOneId: number,
-    userTwoId: number,
     messages: MessageType[];
     companion: UserType;
 }
 
-export type PinnedMessagePinnedMessage = {
+export type SendMessageType = {
+    message: string,
+    userTo: number,
+    replyMessageId?: number,
+}
+export interface ReplyMessageType {
     id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    messageId: number;
+    replyMessageId: number;
+    reply: MessageType;
+}
+
+export type MessageFileType = {
+    id: number;
+    chatID: number;
     messageID: number;
-    messageAndPintedMessageID: number;
-    createdAt: Date;
-    updatedAt: Date;
-    message: MessageType;
-}
-
-export type MessagePinnedMessage = {
-    id: number;
-    rootMessageID: number;
-    createdAt: Date;
-    updatedAt: Date;
-    pinnedMessage: PinnedMessagePinnedMessage[];
-}
-
-export interface MessageSocketType {
-    id: number;
-    chatId: number;
-    userId: number;
-    message: string;
-    readed: boolean;
+    fileName: string;
+    fileType: string;
     createdAt: string;
     updatedAt: string;
-    files: string[];
-    chat: ChatSocket;
-    user: UserType;
-    companion: UserType;
-    pinnedMessage: MessagePinnedMessage[];
 }
-
-export interface ChatSocket {
-    id: number;
-    userOneID: number;
-    userTwoID: number;
-    createdAt: string;
-    updatedAt: string;
-    userOneId: number,
-    userTwoId: number,
-}
-
 
 export type MessageType = {
-    id: number;
-    chatId: number;
-    userId: number;
+    id: number | string;
     message: string;
     readed: boolean;
-    files: string[];
+    chatId: number;
+    userId: number;
     createdAt: string;
     updatedAt: string;
-    pinnedMessage?: MessagePinnedMessage[];
+    sending?: boolean;
+    isNewMessage?: boolean;
+    replies?: ReplyMessageType[];
+    files?: MessageFileType[];
 }
-
-
-// API
-
-export type GetAllChatsResponse = {
-    message: string,
-    chats: ChatType[],
-}
-
-export type GetAllMessagesResponse = {
-    message: string,
-    messages: MessageType[],
-}
-
-export type GetAllChatDataDTO = {
-    userName?: string;
-  }
-
-export type GetAllChatOptionsDTO = {
-      limit: number;
-      offset: number;
-    }
-
-export type GetChatsDTO = {
-    data: GetAllChatDataDTO,
-    options: GetAllChatOptionsDTO
-}
-
-
-export type GetAllMessagesInChat = {
-  chatId: number;
-  limit: number;
-  offset: number;
-}
-

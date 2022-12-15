@@ -1,27 +1,23 @@
 import {ChatType, MessageType} from '../types/chatTypes';
 import {getNameDayByNumber, getNameMonthByNumber} from '../utils/getNameMonthByNumber';
+import {Message} from './Message';
 import {User} from './User';
 
 
 export class Chat {
   id: number;
-  userOneId: number;
-  userTwoId: number;
   createdAt: Date;
   updatedAt: Date;
-  messages: MessageType[];
+  messages?: Message[];
   companion: User;
 
   constructor(data: ChatType) {
     this.id = data.id;
-    this.messages = data.messages;
-    this.userOneId = data.userOneId;
-    this.userTwoId = data.userTwoId;
+    this.messages = data.messages?.map((msg) => new Message(msg)) || [];
     this.companion = new User(data.companion);
     this.createdAt = new Date(data.createdAt);
     this.updatedAt = new Date(data.updatedAt);
   }
-
 
   static getMessageSendTime(message: MessageType) {
     const date = new Date(message.createdAt);

@@ -48,7 +48,6 @@ export const styles = StyleSheet.create({
   mapIcon: {
     width: '100%',
     height: '100%',
-    elevation: 3,
   },
   mapToUserIconWrapper: {
     bottom: '20%',

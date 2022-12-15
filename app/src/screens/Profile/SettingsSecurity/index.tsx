@@ -97,6 +97,7 @@ const SettingsSecurity = () => {
             <>
               <InputField
                 wrapperStyle={styles.field}
+                keyboardType='email-address'
                 placeholder={'e-mail'}
                 value={values.oldEmail}
                 editable={false}
@@ -104,6 +105,7 @@ const SettingsSecurity = () => {
               />
               <InputField
                 wrapperStyle={styles.field}
+                keyboardType='email-address'
                 placeholder={'Введите новый  e-mail'}
                 value={values.newEmail}
                 onChangeText={handleChange('newEmail')}
