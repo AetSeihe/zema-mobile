@@ -4,12 +4,28 @@ import {theme} from '../../../styles/theme';
 
 
 export const styles = StyleSheet.create({
+  leftAcctionWrapper: {
+    height: '100%',
+    width: 200,
+    marginRight: -10,
+    backgroundColor: '#087BFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  leftActionBlock: {
+    backgroundColor: '#838383b3',
+  },
+  leftAcctionText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#fff',
+  },
   wrapper: {
     flex: 1,
+    marginHorizontal: BASE_MARGIN_SCREEN,
   },
   cardWrapper: {
-    paddingTop: BASE_MARGIN_SCREEN,
-    marginHorizontal: BASE_MARGIN_SCREEN,
+    marginTop: 5,
   },
   card: {
     flex: 1,

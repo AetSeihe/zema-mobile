@@ -11,6 +11,7 @@ import {NavigationProp} from '@react-navigation/core';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import Icon from '../../../components/Icon';
 import {InputField} from '../../../components/InputField';
+import Animated, {FadeIn, FadeOut, Layout} from 'react-native-reanimated';
 
 const formLocale = locale.postForm;
 const MAX_POST_TEXT_COUNT = 5000;
@@ -80,16 +81,23 @@ export const PostFormScreen = ({navigation}: Props) => {
   };
 
   const renderIcon = (image: Asset, i: number) => {
-    return <View key={i} style={styles.imageWrapper}>
-      <Image source={{
-        uri: image.uri,
-      }}
-      style={styles.image}
-      />
-      <TouchableOpacity style={styles.imageDelete} onPress={() => deleteIcon(i)}>
-        <Icon name='cancel-circle'color={theme.error} size={20}/>
-      </TouchableOpacity>
-    </View>;
+    return (
+      <Animated.View
+        key={image.id || '' + image.fileName}
+        entering={FadeIn}
+        exiting={FadeOut}
+        layout={Layout.springify()}
+        style={styles.imageWrapper}
+      >
+        <Image source={{
+          uri: image.uri,
+        }}
+        style={styles.image}
+        />
+        <TouchableOpacity style={styles.imageDelete} onPress={() => deleteIcon(i)}>
+          <Icon name='cancel-circle'color={theme.error} size={20}/>
+        </TouchableOpacity>
+      </Animated.View>);
   };
 
 

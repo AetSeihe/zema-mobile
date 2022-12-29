@@ -7,10 +7,8 @@ import {routerNames} from '../constants/routerNames';
 import {locale} from '../locale';
 import {routerStore} from '../store/routerStore';
 import {userStore} from '../store/userStore';
-import {theme} from '../styles/theme';
 import {CustomTabBar} from './components/CustomTabBar';
 import {styles} from './styles';
-import WorkNavigator from './WorkNavigator';
 import {Menu, MenuItem} from 'react-native-material-menu';
 import {Text} from '@react-native-material/core';
 import {clearAuthUserData} from '../utils/userAuthToken';
@@ -18,6 +16,7 @@ import RNRestart from 'react-native-restart';
 import PostsListScreen from '../screens/Posts/PostsListScreen';
 import {FriendNavigator} from './FriendNavigator';
 import ChatList from '../screens/Chat/ChatList';
+import WorkMain from '../screens/Work/WorkMain';
 
 const screensNameLocale = locale.screensName;
 
@@ -27,7 +26,7 @@ const friendsIcon = require('./images/friends.png');
 const workIcon = require('./images/work.png');
 const chatIcon = require('./images/chat.png');
 
-const ICON_BOTTOM_OFFSET = -8;
+const ICON_BOTTOM_OFFSET = 0;
 
 type ChatIconProps = {
   color: string
@@ -53,6 +52,7 @@ const INACTIVE_ICON_OPACITY = 0.5;
 export const HeaderProfileIcon = () => {
   const [visible, setVisible] = useState(false);
   const user = userStore.user;
+
   if (!user) {
     return null;
   }
@@ -83,6 +83,7 @@ export const HeaderProfileIcon = () => {
     RNRestart.Restart();
   };
 
+
   return (
     <>
       <TouchableOpacity style={styles.headerIcon} onPress={() => setVisible(true)}>
@@ -109,17 +110,16 @@ export const HeaderProfileIcon = () => {
 export const HomeTabNavigation = observer(() => {
   return (
     <Tab.Navigator initialRouteName={routerNames.HOME} screenOptions={{
-      tabBarActiveTintColor: theme.main,
+      tabBarActiveTintColor: '#273B4A',
       tabBarInactiveTintColor: 'gray',
       headerRight: HeaderProfileIcon,
       tabBarItemStyle: {
         backgroundColor: 'red',
       },
-      tabBarShowLabel: false,
     }} tabBar={(props) => <CustomTabBar {...props}/>}>
       <Tab.Screen name={routerNames.Posts} component={PostsListScreen} options={{
         headerTitle: screensNameLocale.posts,
-        title: '',
+        title: 'Посты',
         tabBarIcon: ({color}) => <Image source={newsIcon} style={{
           width: ICON_SIZE,
           height: ICON_SIZE,
@@ -129,7 +129,7 @@ export const HomeTabNavigation = observer(() => {
       }}/>
       <Tab.Screen name={routerNames.FRIENDS} component={FriendNavigator} options={{
         headerTitle: screensNameLocale.friends,
-        title: '',
+        title: 'Друзья',
         tabBarIcon: ({color}) => <Image source={friendsIcon} style={{
           width: ICON_SIZE,
           height: ICON_SIZE,
@@ -138,9 +138,9 @@ export const HomeTabNavigation = observer(() => {
 
         }} resizeMode='contain'/>,
       }}/>
-      <Tab.Screen name={routerNames.WORK} component={WorkNavigator} options={{
+      <Tab.Screen name={routerNames.WORK} component={WorkMain} options={{
         headerTitle: screensNameLocale.work,
-        title: '',
+        title: 'Работа',
         tabBarIcon: ({color}) => <Image source={workIcon} style={{
           width: ICON_SIZE,
           height: ICON_SIZE,
@@ -151,7 +151,7 @@ export const HomeTabNavigation = observer(() => {
       }}/>
       <Tab.Screen name={routerNames.Chat} component={ChatList} options={{
         headerTitle: screensNameLocale.chat,
-        title: '',
+        title: 'Чаты',
         tabBarIcon: ({color}) => <ChatIcon color={color}/>,
       }}/>
     </Tab.Navigator>

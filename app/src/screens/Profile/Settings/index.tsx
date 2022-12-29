@@ -10,6 +10,7 @@ const accountIcon = require('./images/account.png');
 const geoIcon = require('./images/geo.png');
 const securityIcon = require('./images/security.png');
 const ellipseIcon = require('../images/ellipse.png');
+const blockUserIcon = require('../images/block-user.png');
 
 
 type SettingsItemProps = {
@@ -34,6 +35,12 @@ const onPressGeo = () => {
   });
 };
 
+const onPressBlockUserList = () => {
+  routerStore.pushToScene({
+    name: routerNames.BLOCK_USERS,
+  });
+};
+
 
 const SettingsItem = ({title, icon, onPress}:SettingsItemProps) => {
   return (
@@ -49,9 +56,11 @@ const Settings = () => {
       <SettingsItem title='Аккаунт' icon={accountIcon} onPress={onPressAccount}/>
       <SettingsItem title='Безопасность' icon={securityIcon} onPress={onPressSecurity}/>
       <SettingsItem title='Геопозиция' icon={geoIcon} onPress={onPressGeo}/>
+      <SettingsItem title='Заблокированные пользователи' icon={blockUserIcon} onPress={onPressBlockUserList}/>
       <Image source={ellipseIcon} style={styles.ellipseIcon}/>
     </View>
   );
 };
 
 export default Settings;
+

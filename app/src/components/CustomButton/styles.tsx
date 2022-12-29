@@ -23,4 +23,11 @@ export const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 17,
   },
+
+  gray: {
+    backgroundColor: 'gray',
+  },
+  grayText: {
+    color: '#000',
+  },
 });

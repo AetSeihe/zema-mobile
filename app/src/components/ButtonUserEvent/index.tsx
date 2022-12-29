@@ -1,6 +1,6 @@
 import {observer} from 'mobx-react';
 import React from 'react';
-import {Alert, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, TouchableOpacity, View} from 'react-native';
 import {routerNames} from '../../constants/routerNames';
 import {Friend} from '../../models/Friend';
 import {User} from '../../models/User';
@@ -11,6 +11,9 @@ import {theme} from '../../styles/theme';
 import CustomButton from '../CustomButton';
 import Icon from '../Icon';
 import {styles} from './styles';
+
+
+const blockIcon = require('./blockIcon.png');
 
 type Props = {
     user?: Friend,
@@ -28,7 +31,7 @@ const onPressChat = (user: User) => {
   routerStore.pushToScene({
     name: routerNames.Chat_Item,
     options: {
-      user: user,
+      userId: user.id,
     },
   });
 };
@@ -40,16 +43,48 @@ const accessRequest = async (user: Friend) => {
   }
 };
 
-const deleteFriend = async (user: Friend) => {
-  Alert.alert(`Удаление из друзей`, `Вы уверенны что хотите удалить пользователя ${user.user.fullName} из друзей?`, [
+const banUser = (user: User) => {
+  Alert.alert(`Заблокировать пользователя`, `Вы уверены что хотите заблокировать пользователя ${user.fullName} ?`, [
     {
       text: 'Отмена',
       style: 'default',
     },
     {
-      text: 'Удалить',
+      text: 'Да',
       style: 'cancel',
+      onPress: () => friendStore.banUser(user),
+    },
+  ]);
+};
+
+
+const unbanUser = (user: User) => {
+  Alert.alert(`Разблокировать пользователя`, `Вы уверенны что хотите разблокировать пользователя ${user.fullName}?`, [
+    {
+      text: 'Отмена',
+      style: 'default',
+    },
+    {
+      text: 'Да',
+      style: 'cancel',
+      onPress: () => friendStore.unBanUser(user),
+    },
+  ]);
+};
+
+const deleteFriend = async (user: Friend) => {
+  Alert.alert(`Действие`, `Вы хотите заблокировать пользователя ${user.user.fullName} или удалить его из друзей ?`, [
+    {
+      text: 'Удалить',
       onPress: () => friendStore.deleteFriend(user.id),
+    },
+    {
+      text: 'Заблокировать',
+      onPress: () => banUser(user.user),
+    },
+    {
+      text: 'Отмена',
+      style: 'cancel',
     },
   ]);
 };
@@ -75,6 +110,16 @@ const ButtonUserEvent = ({currentUser}: Props) => {
       </>);
   }
 
+  const userIsBlock = friendStore.blockUsers.find((user) => user.id === currentUser.id);
+
+  if (userIsBlock) {
+    return (
+      <View style={styles.wrapper}>
+        <CustomButton title='Разблокировать' color={theme.main} onPress={() => unbanUser(userIsBlock)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
+      </View>
+    );
+  }
+
   const friendIfExist = friendStore.friends.find((friend) => friend.user.id === currentUser.id);
 
   if (friendIfExist) {
@@ -82,7 +127,7 @@ const ButtonUserEvent = ({currentUser}: Props) => {
       <View style={styles.wrapper}>
         <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(friendIfExist.user)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
         <TouchableOpacity onPress={() => deleteFriend(friendIfExist)} style={styles.deleteButton}>
-          <Icon name='user-minus' size={22} color='#fff'/>
+          <Image style={styles.iconBlocked} source={blockIcon}/>
         </TouchableOpacity>
       </View>);
   }
@@ -97,7 +142,7 @@ const ButtonUserEvent = ({currentUser}: Props) => {
           <Icon name='user-plus' size={22} color='#fff'/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => rejectRequest(requstIfExist)} style={styles.deleteButton}>
-          <Icon name='blocked' size={22} color='#fff'/>
+          <Image style={styles.iconBlocked} source={blockIcon}/>
         </TouchableOpacity>
 
       </View>);
@@ -108,6 +153,9 @@ const ButtonUserEvent = ({currentUser}: Props) => {
       <CustomButton title='Написать' color={theme.main} onPress={() => onPressChat(currentUser)} titleStyle={styles.writeButtonText} style={styles.writeButtonWrapper} adjustsFontSizeToFit={true}/>
       <TouchableOpacity onPress={() => sendRequest(currentUser)} style={styles.normalButton}>
         <Icon name='user-plus' size={22} color='#fff'/>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => banUser(currentUser)} style={styles.deleteButton}>
+        <Image style={styles.iconBlocked} source={blockIcon}/>
       </TouchableOpacity>
     </View>
   );

@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {FetchUserNearType, GetAllFriendsApiType, GetAllRequestApiType, RequestType} from '../types/friendType';
-import {GetUsersArray} from '../types/userTypes';
+import {GetUsersArray, UserType} from '../types/userTypes';
 import {axiosInstants, getApiConfig} from './axiosInit';
 
 const getAllRequests = (userId: number): Promise<AxiosResponse<GetAllRequestApiType>> => {
@@ -60,4 +60,28 @@ const fetchUsersNear = (data: FetchUserNearType): Promise<AxiosResponse<GetUsers
   });
 };
 
-export const friendApi = {getAllRequests, sendRequests, rejectRequests, deleteFriend, acceptRequests, getAllFriends, fetchUsersNear};
+const fetchBlockedUsers = (): Promise<AxiosResponse<UserType[]>> => {
+  return axiosInstants.get(`user/all-bans`, {
+    headers: {
+      ...getApiConfig().headers,
+    },
+  });
+};
+
+const blockUser = (userId: number): Promise<AxiosResponse<boolean>> => {
+  return axiosInstants.post(`user/ban/${userId}`, {}, {
+    headers: {
+      ...getApiConfig().headers,
+    },
+  });
+};
+
+const unblockUser = (userId: number): Promise<AxiosResponse<boolean>> => {
+  return axiosInstants.delete(`user/ban/${userId}`, {
+    headers: {
+      ...getApiConfig().headers,
+    },
+  });
+};
+
+export const friendApi = {getAllRequests, sendRequests, rejectRequests, deleteFriend, acceptRequests, getAllFriends, fetchUsersNear, fetchBlockedUsers, blockUser, unblockUser};

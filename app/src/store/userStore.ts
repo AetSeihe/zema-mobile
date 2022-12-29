@@ -43,6 +43,7 @@ class UserStore {
       if (user) {
         friendStore.fetchFriendsByUserId(user.id);
         friendStore.fetchRequestsByUserId(user.id);
+        friendStore.fetchBlockedUsers();
       }
     });
   }
@@ -101,16 +102,12 @@ class UserStore {
     } catch (e) {}
   }
 
-  async update(data: UpdateProfileType) {
-    try {
-      const currentUser = await userService.update(data);
-      runInAction(() => {
-        this.user = currentUser;
-      });
-      return currentUser;
-    } catch (e: any) {
-      return e.message || 'Упс... что-то пошло не так';
-    }
+  async update(data: UpdateProfileType): Promise<User> {
+    const currentUser = await userService.update(data);
+    runInAction(() => {
+      this.user = currentUser;
+    });
+    return currentUser;
   }
 
   async deletePhoto(photo: FileModule) {

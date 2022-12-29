@@ -26,7 +26,7 @@ const signUp = (data: SignUpDataType): Promise<AxiosResponse<AuthUserApiType>> =
 };
 
 const getUserById = (id:number): Promise<AxiosResponse<OneUserApiType>> => {
-  return axiosInstants.get(`user/${id}`, {
+  return axiosInstants.get(`user/current-user/${id}`, {
     headers: {
       ...getApiConfig().headers,
     },
@@ -52,7 +52,7 @@ const update = ({images = [], ...data}: UpdateProfileType): Promise<AxiosRespons
     }
   });
   images.forEach((photo: Asset) => {
-    formData.append('preview', {uri: photo.uri, name: 'sadds', type: 'image/png'});
+    formData.append('images', {uri: photo.uri, name: 'sadds', type: 'image/png'});
   });
 
 

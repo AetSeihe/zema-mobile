@@ -8,6 +8,7 @@ import {onEnterApp} from '../global/onEnterApp';
 import {locale} from '../locale';
 import SignInScreen from '../screens/AuthScreens/SignInScreen';
 import SignUpScreen from '../screens/AuthScreens/SignUpScreen';
+import BlockUsersList from '../screens/BlockUsersList';
 import Chat from '../screens/Chat/Chat';
 import {ErrorScreen} from '../screens/ErrorScreen';
 import Friends from '../screens/Friends/Friends';
@@ -21,8 +22,7 @@ import Settings from '../screens/Profile/Settings';
 import SettingsLocation from '../screens/Profile/SettingsLocation';
 import SettingsSecurity from '../screens/Profile/SettingsSecurity';
 import UsersMapScreen from '../screens/UsersMapScreen';
-import ResumeForm from '../screens/Work/ResumeForm';
-import VacancyForm from '../screens/Work/VacancyForm';
+import Vacancy from '../screens/Work/Vacancy';
 import {chatStore} from '../store/chatStore';
 import {routerStore} from '../store/routerStore';
 import {userStore} from '../store/userStore';
@@ -126,24 +126,21 @@ const Main = () => {
           headerLeft: () => null,
           headerBackTitle: locale.header.backButtonTitle,
         }}/>
-        <Stack.Screen name={routerNames.VACANCY_FORM} component={VacancyForm} options={{
-          title: locale.screensName.vacancyForm,
-          animation: 'slide_from_bottom',
-          headerShown: true,
-          headerLeft: () => null,
-          headerBackTitle: locale.header.backButtonTitle,
-        }}/>
-        <Stack.Screen name={routerNames.RESUME_FORM} component={ResumeForm} options={{
-          title: locale.screensName.resumeForm,
-          animation: 'slide_from_bottom',
-          headerShown: true,
-          headerLeft: () => null,
-          headerBackTitle: locale.header.backButtonTitle,
-        }}/>
         <Stack.Screen name={routerNames.Chat_Item} component={Chat} options={{
           title: locale.screensName.chatItem,
           animation: 'default',
-          headerShown: false,
+          headerBackTitle: locale.header.backButtonTitle,
+        }}/>
+        <Stack.Screen name={routerNames.VACANCY} component={Vacancy} options={{
+          title: 'Вакансия',
+          animation: 'default',
+          headerShown: true,
+          headerBackTitle: locale.header.backButtonTitle,
+        }}/>
+        <Stack.Screen name={routerNames.BLOCK_USERS} component={BlockUsersList} options={{
+          title: 'Заблокированные пользователи',
+          animation: 'default',
+          headerShown: true,
           headerBackTitle: locale.header.backButtonTitle,
         }}/>
 

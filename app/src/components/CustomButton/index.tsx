@@ -6,14 +6,22 @@ import {ViewStyle} from 'react-native-material-ui';
 import {theme} from '../../styles/theme';
 import {styles} from './styles';
 
-
+export type ButtonThemeType = 'default' | 'main' | 'error' | 'gray';
 type Props = {
-  theme?: 'default' | 'main' | 'error',
+  theme?: ButtonThemeType,
   adjustsFontSizeToFit?: boolean,
   onPress?: () => void;
   title?: string;
   style?: ViewStyle,
 }
+
+const getStyleExtendsTheme = (type: ButtonThemeType) => {
+  if (type === 'gray') {
+    return '#c2c3c4';
+  }
+
+  return theme.main;
+};
 
 const CustomButton = ({theme: buttonTheme = 'default', titleStyle, style, title, adjustsFontSizeToFit, ...props}: Props & ButtonProps) => {
   if (buttonTheme === 'main') {
@@ -35,7 +43,7 @@ const CustomButton = ({theme: buttonTheme = 'default', titleStyle, style, title,
     <Button
       title={title}
       {...props}
-      color={theme.main}
+      color={getStyleExtendsTheme(buttonTheme)}
       titleStyle={[styles.textColor, titleStyle]}
       style={[styles.normalButtonStyle, style]}
     />

@@ -51,6 +51,10 @@ export const styles = StyleSheet.create({
   wrapper: {
     paddingTop: 20,
     paddingHorizontal: 10,
+    borderBottomWidth: 2,
+    borderColor: 'gray',
+    marginBottom: 5,
+    paddingBottom: 5,
   },
   title: {
     fontSize: 17,

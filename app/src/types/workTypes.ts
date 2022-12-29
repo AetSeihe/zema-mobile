@@ -11,6 +11,14 @@ export type GetManyVacancyByApi = {
     vacancies: VacancyType[]
 }
 
+export type EmploymentType = 'fulltime' | 'partTime';
+export type WorkFormatType = 'office' | 'remote' | 'hybrid';
+export type SkillsType ={
+  id: number;
+  title: string
+};
+
+
 export interface VacancyType {
         id: number;
         userId: number;
@@ -20,11 +28,21 @@ export interface VacancyType {
         cityId: number;
         phone: string;
         email: string;
-        salary: number;
+        minSalary: number;
+        maxSalary: number;
+        employment: EmploymentType;
+        workFormat: WorkFormatType;
+        companyName: string;
+        descriptionCompany: string;
+        companyUrl: string;
+        requirement: string;
+        responsibilities: string;
+        skills: SkillsType[];
         user: UserType;
         city: CityType;
         updatedAt: string;
         createdAt: string;
+
     }
 
 

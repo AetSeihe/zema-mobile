@@ -23,9 +23,9 @@ export const locale = {
   },
   postForm: {
     labelTitle: 'Заголовок',
-    labelPlaceholder: 'Моя история переезда на Кубань',
+    labelPlaceholder: 'Заголовок поста',
     text: 'Текст поста',
-    textPlaceholder: 'Все началось с того что...',
+    textPlaceholder: 'Тест поста',
     submit: 'Добавить пост',
   },
   errors: {

@@ -54,4 +54,22 @@ const fetchUsersNear = async (options: FetchUserNearType) => {
   };
 };
 
-export const friendService = {getAllRequests, getAllFriends, sendRequest, rejectRequests, acceptRequests, deleteFriend, fetchUsersNear};
+const fetchBlockedUsers = async (): Promise<User[]> => {
+  const res = await friendApi.fetchBlockedUsers();
+
+  return res.data.map((user) => new User(user));
+};
+
+const blockUser = async (userId: number): Promise<boolean> => {
+  const res = await friendApi.blockUser(userId);
+
+  return res.data;
+};
+
+const unBlockUser = async (userId: number): Promise<boolean> => {
+  const res = await friendApi.unblockUser(userId);
+
+  return res.data;
+};
+
+export const friendService = {getAllRequests, getAllFriends, sendRequest, rejectRequests, acceptRequests, deleteFriend, fetchUsersNear, fetchBlockedUsers, blockUser, unBlockUser};

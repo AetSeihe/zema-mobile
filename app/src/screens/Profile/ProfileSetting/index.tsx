@@ -1,8 +1,8 @@
-import {Button, Text} from '@react-native-material/core';
+import {Button} from '@react-native-material/core';
 import {Formik} from 'formik';
 import {observer} from 'mobx-react';
 import React, {useState} from 'react';
-import {Alert, FlatList, Image, ListRenderItemInfo, ScrollView, TouchableOpacity, View} from 'react-native';
+import {Alert, Image, ScrollView, TouchableOpacity, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Card} from '../../../components/Card';
 import {CheckBoxWithLabel} from '../../../components/CheckBoxWithLabel';
@@ -23,9 +23,9 @@ import {routerNames} from '../../../constants/routerNames';
 import {Tint} from '../../../components/Tint';
 import {FileModule} from '../../../models/FileModule';
 import Icon from '../../../components/Icon';
-// import DatePicker from 'react-native-datepicker';
-import RNDateTimePicker, {DateTimePickerAndroid, DateTimePickerEvent} from '@react-native-community/datetimepicker';
+import RNDateTimePicker, {DateTimePickerEvent} from '@react-native-community/datetimepicker';
 import {dateToString} from '../../../utils/dateToString';
+import Animated, {FadeInLeft, FadeOut, Layout} from 'react-native-reanimated';
 
 
 const ellipseIcon = require('../images/ellipse.png');
@@ -160,20 +160,6 @@ const ProfileSettingScreen = () => {
   };
 
 
-  const renderImages = ({item}: ListRenderItemInfo<FileModule>) => {
-    return (
-      <TouchableOpacity onPress={() => setMainPhoto(item)} style={styles.imageWrapper}>
-        <Image source={{
-          uri: item.url,
-        }} style={[styles.userImage, mainPhoto?.id == item.id ? styles.userMainImage: null]}/>
-        <TouchableOpacity onPress={() => onDeletePhoto(item)} style={styles.deleteImage}>
-          <Icon name='cancel-circle' color={'rgba(228, 27, 27, 0.53)'} size={20}/>
-        </TouchableOpacity>
-      </TouchableOpacity>
-    )
-    ;
-  };
-
   const handleChangeDate = (date: DateTimePickerEvent) => {
     setShowDatePicker(false);
     if (date.nativeEvent.timestamp) {
@@ -187,13 +173,30 @@ const ProfileSettingScreen = () => {
       <View style={styles.content}>
         <Card style={styles.cart}>
           <Title style={styles.title}>Фотографии</Title>
-          <FlatList
+          <ScrollView horizontal style={styles.imagesRow}>
+            {images.map((item) => (
+              <Animated.View key={item.id} entering={FadeInLeft} exiting={FadeOut} layout={Layout.springify()}>
+                <TouchableOpacity key={item.id} onPress={() => setMainPhoto(item)} style={styles.imageWrapper}>
+                  <Image source={{
+                    uri: item.url,
+                  }} style={[styles.userImage, mainPhoto?.id == item.id ? styles.userMainImage: null]}/>
+                  <TouchableOpacity onPress={() => onDeletePhoto(item)} style={styles.deleteImage}>
+                    <Icon name='cancel-circle' color={'rgba(228, 27, 27, 0.53)'} size={20}/>
+                  </TouchableOpacity>
+                </TouchableOpacity>
+              </Animated.View>
+            ))}
+            <Animated.View entering={FadeInLeft} exiting={FadeOut} layout={Layout.springify()}>
+              <AddPhotoButton onPress={addPhoto}/>
+            </Animated.View>
+          </ScrollView>
+          {/* <FlatList
             data={images}
             renderItem={renderImages}
             keyExtractor={(item) => item.id.toString()}
             ListFooterComponent={() => <AddPhotoButton onPress={addPhoto}/>}
             horizontal
-          />
+          /> */}
           <Tint style={styles.tint}>Нажмите на фото чтобы сделать его главным</Tint>
         </Card>
         <Formik

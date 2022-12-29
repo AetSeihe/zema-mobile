@@ -4,12 +4,14 @@ import * as permissions from 'react-native-permissions';
 import {request, check, PERMISSIONS} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 import {getUserLocationRules, setUserLocationRules} from '../utils/userLocationRools';
+import {FileModule} from '../models/FileModule';
 class ApplicationStore {
   appIsLoading: boolean = false;
   geoLocationStatus: permissions.PermissionStatus = 'unavailable';
   isGeolocationLoading: boolean = true;
   canUpdateLocation: boolean = false;
   canShowLocation: boolean = false;
+  fullScreenImage: FileModule | null = null;
   cordX: number | null = null;
   cordY: number | null = null;
 
@@ -23,6 +25,14 @@ class ApplicationStore {
       this.canUpdateLocation = rules.canUpdateLocation;
       this.canShowLocation = rules.canShowLocation;
     });
+  }
+
+  setFullScreenImage(img: FileModule) {
+    this.fullScreenImage = img;
+  }
+
+  clearFullScreenImage() {
+    this.fullScreenImage = null;
   }
 
   async fetchLocation() {

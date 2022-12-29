@@ -78,4 +78,8 @@ export const styles = StyleSheet.create({
     right: 0,
     zIndex: -1,
   },
+
+  imagesRow: {
+    flexDirection: 'row',
+  },
 });

@@ -1,8 +1,7 @@
 package com.app;
-
+import com.christopherdro.htmltopdf.RNHTMLtoPDFPackage;
 import android.app.Application;
 import android.content.Context;
-
 import com.app.newarchitecture.MainApplicationReactNativeHost;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -34,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           new AsyncStoragePackage();
+          new MainReactPackage();
+          new RNHTMLtoPDFPackage();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;
@@ -44,6 +45,7 @@ public class MainApplication extends Application implements ReactApplication {
           return "index";
         }
       };
+      
 
   private final ReactNativeHost mNewArchitectureNativeHost =
       new MainApplicationReactNativeHost(this);

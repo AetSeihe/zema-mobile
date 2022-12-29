@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction} from 'mobx';
+import {computed, makeAutoObservable, runInAction} from 'mobx';
 import {Alert} from 'react-native';
 import {Friend} from '../models/Friend';
 import {User} from '../models/User';
@@ -10,12 +10,98 @@ class FriendStore {
   friends: Friend[] = [];
   requests: Friend[] = [];
   usersNear: User[] = [];
+  blockUsers: User[] = [];
+  usersInSearch: User[] = [];
   usersNearAllCount: number = 0;
   friendLoading: boolean = false;
   requestLoading: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setUsersInSearch(users: User[]) {
+    this.usersInSearch = users;
+  }
+
+  clearUsersInSearch(users: User[]) {
+    this.usersInSearch = [];
+  }
+
+  @computed
+  get currentUsersInSearch() {
+    return this.usersInSearch.filter((user) => {
+      // if (user.id === userStore.user?.id) {
+      //   return false;
+      // }
+      if (friendStore.friends.find((friend) => friend.user.id === user.id)) {
+        return false;
+      }
+      if (friendStore.requests.find((friend) => friend.user.id === user.id)) {
+        return false;
+      }
+      if (friendStore.blockUsers.find((blockUser) => blockUser.id === user.id)) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  async fetchBlockedUsers() {
+    try {
+      const users = await friendService.fetchBlockedUsers();
+      runInAction(() => {
+        this.blockUsers = users;
+      });
+    } catch (e) {
+      Alert.alert('Не получилось загрузить заблокированных пользователей');
+    }
+  }
+
+  async fetchBlockUsers() {
+    try {
+      const users = await friendService.fetchBlockedUsers();
+      runInAction(() => {
+        this.blockUsers = users;
+      });
+    } catch (e) {
+      Alert.alert('Не получилось загрузить заблокированных пользователей');
+    }
+  }
+
+  async banUser(user: User) {
+    try {
+      const isBannet = await friendService.blockUser(user.id);
+
+      if (isBannet) {
+        runInAction(() => {
+          this.blockUsers.unshift(user);
+        });
+        Alert.alert('Пользователь заблокирован');
+      }
+      if (!isBannet) {
+        Alert.alert('Ошибка, не удалось заблокировать пользователя');
+      }
+    } catch (e) {
+      Alert.alert('Ошибка, не получилось заблокировать пользователя');
+    }
+  }
+
+  async unBanUser(user: User) {
+    try {
+      const isBannet = await friendService.unBlockUser(user.id);
+
+      if (isBannet) {
+        runInAction(() => {
+          this.blockUsers = this.blockUsers.filter((blockUser) => blockUser.id != user.id);
+        });
+      }
+      if (!isBannet) {
+        Alert.alert('Ошибка, не удалось разблокировать пользователя');
+      }
+    } catch (e) {
+      Alert.alert('Ошибка, не получилось разблокировать пользователя');
+    }
   }
 
   async fetchUsersNear(data: FetchUserNearType) {

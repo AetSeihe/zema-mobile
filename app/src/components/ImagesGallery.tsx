@@ -1,8 +1,11 @@
 import React from 'react';
 import {Image, StyleSheet, View, ViewStyle} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {FileModule} from '../models/FileModule';
+import {applicationStore} from '../store/applicationStore';
+
 type Props = {
-    wrapperStyle: ViewStyle,
+    wrapperStyle?: ViewStyle,
     images: FileModule[],
 }
 
@@ -11,9 +14,13 @@ const ImagesGallery = ({wrapperStyle, images}:Props) => {
   return (
     <View style={[styles.wrapper, wrapperStyle]}>
       {images.map((image, i) => (
-        <Image resizeMode='cover' style={styles.image} source={{
-          uri: image.url,
-        }}/>
+        <View style={styles.imageWrapper}>
+          <TouchableOpacity onPress={() => applicationStore.setFullScreenImage(image)}>
+            <Image style={styles.image} resizeMode='cover' source={{
+              uri: image.url,
+            }}/>
+          </TouchableOpacity>
+        </View>
       ))}
     </View>
 
@@ -24,19 +31,21 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     flexWrap: 'wrap-reverse',
-    marginHorizontal: -3,
+    marginHorizontal: -2,
   },
 
   imageWrapper: {
     flex: 1,
-    padding: 5,
+    width: '100%',
+    minWidth: '33%',
+    borderRadius: 5,
+    padding: 2,
+
   },
   image: {
-    flex: 1,
-    minWidth: '32%',
-    paddingBottom: '56%',
-    margin: 2,
     borderRadius: 5,
+    paddingBottom: '100%',
+
   },
 });
 

@@ -23,13 +23,13 @@ export class FileModule {
   id: number;
   url: string;
   name: string;
-  type: string;
+  type: FileType;
 
 
   constructor(data: FileModuleType | Asset) {
     this.id = +(data.id || Math.random()),
     this.name = data.fileName || Math.random().toString();
     this.url = data.uri ||`${serverUrl}/file/${data.fileName}`;
-    this.type = !data.fileName ? '' : getFileType(data.fileName.split('.')[1]);
+    this.type = !data.fileName ? 'any' : getFileType(data.fileName.split('.')[1]);
   }
 }

@@ -1,19 +1,21 @@
 import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
+import {observer} from 'mobx-react';
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, FlatList, Image, ScrollView, TouchableOpacity, View} from 'react-native';
-import ButtonUserEvent from '../../../components/ButtonUserEvent';
+import {Alert, FlatList, Image, ScrollView, TouchableOpacity} from 'react-native';
+import Animated, {FadeIn, FadeOut, Layout} from 'react-native-reanimated';
 import {CatAlert} from '../../../components/CatAlert';
 import {Tint} from '../../../components/Tint';
-import {UserCard} from '../../../components/UserCard';
 import {FriendNames, routerNames} from '../../../constants/routerNames';
 import {EDUCATION_LITERAL, User} from '../../../models/User';
 import {cityServices} from '../../../services/cityServices';
 import {userService} from '../../../services/userService';
+import {friendStore} from '../../../store/friendStore';
 import {routerStore} from '../../../store/routerStore';
 import {CityType} from '../../../types/userTypes';
 import {FriendHeader} from '../components/FriendHeader';
 import {FriendsSearchForm} from '../components/FriendsSearchForm';
+import UserCard from '../components/UserCard';
 import {initialValueUsersSearch} from '../constants';
 import {styles} from './styles';
 
@@ -27,7 +29,6 @@ type Props = {
 const LIMIT_TO_SEARCH_FRIEND = 15;
 
 const FriendsSearch = ({navigation}: Props) => {
-  const [users, setUsers] = useState<User[]>([]);
   const [options, setOptions] = useState<typeof initialValueUsersSearch>(initialValueUsersSearch);
   const offsetSearch = useRef<number>(0);
   const cityFromRef = useRef<CityType | null>(null);
@@ -70,14 +71,14 @@ const FriendsSearch = ({navigation}: Props) => {
       cityToRef.current = cityTo[0];
       offsetSearch.current = 0;
       offsetSearch.current += LIMIT_TO_SEARCH_FRIEND;
-      setUsers(currentUsers);
+
+      friendStore.setUsersInSearch(currentUsers);
     } catch (e: any) {
       Alert.alert('Упс... что-то пошло не так', e.message);
     }
   };
 
   const handleScrollFlatList = async () => {
-    // Alert.alert('i work');
     const newUsers = await userService.getAllUsersByOptions({
       name: options.name.toLowerCase(),
       minAge: +options.minAge,
@@ -92,14 +93,9 @@ const FriendsSearch = ({navigation}: Props) => {
 
 
     offsetSearch.current += LIMIT_TO_SEARCH_FRIEND;
-
-    setUsers((prev) => [...prev, ...newUsers]);
+    friendStore.setUsersInSearch([...friendStore.usersInSearch, ...newUsers]);
   };
 
-
-  const renderButtons = (user: User) => {
-    return <ButtonUserEvent currentUser={user}/>;
-  };
 
   const onPressCard = (user: User) => {
     routerStore.pushToScene({
@@ -116,8 +112,33 @@ const FriendsSearch = ({navigation}: Props) => {
     });
   };
 
+  const goToChatByUserId = (user: User) => {
+    routerStore.pushToScene({
+      name: routerNames.Chat_Item,
+      options: {
+        userId: user.id,
+      },
+    });
+  };
+
+  const renderLeftComponent = (user: User) => {
+    return (
+      <TouchableOpacity onPress={() => goToChatByUserId(user)} style={styles.leftAcctionWrapper}>
+        <Text style={styles.leftAcctionText}>Написать</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderRightComponent = (user: User) => {
+    return (
+      <TouchableOpacity onPress={() => friendStore.banUser(user)} style={[styles.leftAcctionWrapper, styles.leftActionBlock]}>
+        <Text style={styles.leftAcctionText}>Заблокировать</Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <View style={styles.wrapper}>
+    <ScrollView style={styles.wrapper}>
       <FriendHeader
         tabActive={'first'}
         onPressFriends={onPressFriends}
@@ -125,27 +146,35 @@ const FriendsSearch = ({navigation}: Props) => {
         onPressSearch={onPressSearch}
       />
 
-      <ScrollView style={styles.cardWrapper} nestedScrollEnabled keyboardShouldPersistTaps='always'>
-        <FriendsSearchForm onSubmit={onSubmit}/>
-        <TouchableOpacity onPress={onPressToEarth} style={styles.earthWrapper}>
-          <Text style={styles.earthText}>Земляки вокруг</Text>
-          <Image source={earthIcon} style={styles.earthIcon}/>
-        </TouchableOpacity>
-        <FlatList
-          onEndReached={handleScrollFlatList}
-          ListEmptyComponent={<CatAlert title='Похоже по вашему запросу ничего не найденно'/>}
-          ListFooterComponent={<Tint style={styles.tint}>Вы просмотрели всю ленту!</Tint>}
-          onEndReachedThreshold={0.2}
-          data={users}
-          renderItem={({item}) => (
-            <View style={styles.card}>
-              <UserCard friend={item} onPress={onPressCard} renderButtons={renderButtons}/>
-            </View>)}
-        />
-      </ScrollView>
+      <FriendsSearchForm onSubmit={onSubmit}/>
+      <TouchableOpacity onPress={onPressToEarth} style={styles.earthWrapper}>
+        <Text style={styles.earthText}>Земляки вокруг</Text>
+        <Image source={earthIcon} style={styles.earthIcon}/>
+      </TouchableOpacity>
+      <FlatList
+        onEndReached={handleScrollFlatList}
+        ListEmptyComponent={<CatAlert title='Похоже по вашему запросу ничего не найденно'/>}
+        ListFooterComponent={<Tint style={styles.tint}>Вы просмотрели всю ленту!</Tint>}
+        onEndReachedThreshold={0.2}
+        data={friendStore.currentUsersInSearch}
+        renderItem={({item}) => (
+          <Animated.View key={item.id} entering={FadeIn} exiting={FadeOut} layout={Layout.springify()} style={styles.card}>
+            <UserCard
+              renderLeftComponent={() => renderLeftComponent(item)}
+              renderRightComponent={() => renderRightComponent(item)}
+              onPressCard={() => onPressCard(item)}
+              photo={item.mainPhoto?.image}
+              title={item.fullName}
+              age={item.age}
+              dateOfBirth={item.currentBirthDay}
+              gender={item.nameOfGender}
+              education={item.nameOfEducation}
+            />
+          </Animated.View>)}
+      />
 
-    </View>
+    </ScrollView>
   );
 };
 
-export default FriendsSearch;
+export default observer(FriendsSearch);

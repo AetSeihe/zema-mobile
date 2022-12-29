@@ -3,7 +3,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Animated, {FadeOut, Layout, SlideInLeft, SlideInRight, SlideOutLeft, SlideOutRight} from 'react-native-reanimated';
-import {CatAlert} from '../../components/CatAlert';
 import {routerNames} from '../../constants/routerNames';
 import {BASE_LIMIT_TO_FETCH_CHATS, chatStore} from '../../store/chatStore';
 import {routerStore} from '../../store/routerStore';
@@ -84,7 +83,7 @@ const ChatList = () => {
 
   return (
     <View style={styles.wrapper}>
-      <ChatListHeader placeholder='🔎 поиск по чатам' placeholderTextColor={'#5c5c5c'} value={searchValue} onChangeText={setSearchValue}/>
+      <ChatListHeader placeholder={`🔎 поиск по чатам ${userStore.user?.id}`} placeholderTextColor={'#5c5c5c'} value={searchValue} onChangeText={setSearchValue}/>
       {!!searchValue && (
         <Animated.View style={styles.content} entering={SlideInRight} exiting={SlideOutRight}>
           <ListHeader text='Чаты и контакты' />

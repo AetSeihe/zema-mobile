@@ -1,6 +1,7 @@
 import {observer} from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import {FlatList, ListRenderItemInfo, View} from 'react-native';
+import Animated, {FadeInLeft, FadeOut, Layout} from 'react-native-reanimated';
 import {CatAlert} from '../../../components/CatAlert';
 import {Tint} from '../../../components/Tint';
 import {routerNames} from '../../../constants/routerNames';
@@ -103,14 +104,19 @@ const PostsScreen = () => {
 
   const renderPosts = ({item}: ListRenderItemInfo<PostModel>) => {
     return (
-      <View style={styles.postWrapper}>
+      <Animated.View
+        key={item.id}
+        entering={FadeInLeft.delay(Math.random())}
+        exiting={FadeOut}
+        layout={Layout.springify()}
+        style={styles.postWrapper}>
         <View style={styles.post}>
           <Post post={item}
             onPressProfile={onPressProfile}
             onPressLearnMore={onPressLearnMore}
             onPressLike={onPressLike}/>
         </View>
-      </View>);
+      </Animated.View>);
   };
 
 

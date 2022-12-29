@@ -3,7 +3,6 @@ import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import React, {useState} from 'react';
 import {Image, SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {Menu, MenuItem} from 'react-native-material-menu';
-import Icon from '../../../components/Icon';
 import {routerNames} from '../../../constants/routerNames';
 import {routerStore} from '../../../store/routerStore';
 import {theme} from '../../../styles/theme';
@@ -22,34 +21,13 @@ const PlusButton = () => {
     });
   };
 
-  const onPressToVacancy = () => {
-    setVisible(false);
-    routerStore.pushToScene({
-      name: routerNames.VACANCY_FORM,
-    });
-  };
-
-  const onPressToResume = () => {
-    setVisible(false);
-    routerStore.pushToScene({
-      name: routerNames.RESUME_FORM,
-    });
-  };
-
   return ( <>
     <TouchableOpacity style={styles.plusWrapper} onPress={() => setVisible(true)}>
       <Image source={plusIcon} style={styles.iconImage}/>
-      {/* <Icon name={'plus'} color={'gray'}/> */}
     </TouchableOpacity>
     <Menu visible={visible} onRequestClose={() => setVisible(false)} >
       <MenuItem onPress={onPressToPost}>
         <Text style={styles.menuItem}>Добавить Пост</Text>
-      </MenuItem>
-      <MenuItem onPress={onPressToVacancy}>
-        <Text style={styles.menuItem}>Добавить Вакансию</Text>
-      </MenuItem>
-      <MenuItem onPress={onPressToResume}>
-        <Text style={styles.menuItem}>Добавить Резюме</Text>
       </MenuItem>
     </Menu>
   </>);

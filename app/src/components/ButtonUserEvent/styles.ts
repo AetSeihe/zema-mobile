@@ -29,4 +29,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  iconBlocked: {
+    width: 28,
+    height: 28,
+  },
 });

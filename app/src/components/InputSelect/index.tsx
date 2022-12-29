@@ -17,8 +17,6 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
   const [needShowOptions, setNeedShowOptions] = useState(false);
 
   const onPress = (option: string) => {
-    console.log('fucking presss!!!');
-
     if (onChangeText) {
       onChangeText(option);
       onPressOption && onPressOption(option);

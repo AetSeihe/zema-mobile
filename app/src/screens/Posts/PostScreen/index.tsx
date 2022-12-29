@@ -1,13 +1,15 @@
 import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import {observer} from 'mobx-react';
-import React, {useEffect, useState} from 'react';
-import {FlatList, Image, InteractionManager, ListRenderItemInfo, ScrollView, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Alert, InteractionManager, Linking, ScrollView, TouchableOpacity, View} from 'react-native';
+import Animated, {Layout, SlideInLeft, SlideOutRight} from 'react-native-reanimated';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import Markdown from 'react-native-markdown-package';
 import {Avatar} from '../../../components/Avatar';
+import ImagesGallery from '../../../components/ImagesGallery';
 import {routerNames} from '../../../constants/routerNames';
 import {Comment} from '../../../models/Comment';
-import {FileModule} from '../../../models/FileModule';
 import {Post} from '../../../models/Post';
 import {User} from '../../../models/User';
 import {postService} from '../../../services/postServices';
@@ -27,16 +29,8 @@ type Props = {
   }
 }
 
-const renderImages = (images: FileModule[]) => {
-  return images.map((image) => (
-    <Image resizeMode='cover' style={styles.image} source={{
-      uri: image.url,
-    }}/>
-  ));
-};
-
-
 const PostS = ({navigation, route}: Props) => {
+  const scrollViewRef = useRef<ScrollView | null>(null);
   const [post, setPost] = useState<Post>(route.params.post);
   const [comments, setComments] = useState<Comment[]>(route.params.post.comments);
 
@@ -67,11 +61,14 @@ const PostS = ({navigation, route}: Props) => {
   const handleSubmitComment = async (comment: string) => {
     const newComment = await postStore.commentPost(comment, post.id);
     setComments((comments) => [...comments, newComment]);
+    setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd();
+    }, 20);
   };
 
-  const renderComment = ({item}: ListRenderItemInfo<Comment>) => {
-    const user = item.user;
-    const canDeleteComment = item.userId === userStore.user?.id || post.userId == userStore.user?.id;
+  const renderComment = (comment: Comment) => {
+    const user = comment.user;
+    const canDeleteComment = comment.userId === userStore.user?.id || post.userId == userStore.user?.id;
     const goToProfile = () => {
       routerStore.pushToScene({
         name: routerNames.PROFILE,
@@ -83,12 +80,18 @@ const PostS = ({navigation, route}: Props) => {
 
 
     const deleteComment = () => {
-      postStore.deleteComment(item);
-      setComments((prev) => prev.filter((comment) => comment.id !== item.id));
+      postStore.deleteComment(comment);
+      setComments((prev) => prev.filter((com) => com.id !== comment.id));
     };
 
     return (
-      <View style={commentStyles.wrapper}>
+      <Animated.View
+        key={comment.id}
+        layout={Layout.springify()}
+        entering={SlideInLeft}
+        exiting={SlideOutRight}
+        style={commentStyles.wrapper}
+      >
         <TouchableOpacity onPress={goToProfile}>
           <Avatar image={user.mainPhoto?.image} style={commentStyles.avatar}/>
         </TouchableOpacity>
@@ -96,33 +99,44 @@ const PostS = ({navigation, route}: Props) => {
           <TouchableOpacity onPress={goToProfile}>
             <Text style={commentStyles.title}>{user.fullName}</Text>
           </TouchableOpacity>
-          <Text style={commentStyles.text}>{item.text}</Text>
+          <Text style={commentStyles.text}>{comment.text}</Text>
           {canDeleteComment && (
             <TouchableOpacity onPress={deleteComment}>
               <Text style={commentStyles.delete}>Удалить</Text>
             </TouchableOpacity>)}
         </View>
-      </View>);
+      </Animated.View>);
+  };
+
+  const onPressLink = async (url: string) => {
+    Linking.openURL(url).catch(() => {
+      Alert.alert('Ошибка при переходе');
+    });
   };
 
   return (
-    <ScrollView style={styles.scrollView} keyboardShouldPersistTaps={'always'}>
-      <View style={styles.wrapper}>
-        <PostUserHeader user={post.user} post={post} onPress={onPressProfile} />
-        <Text style={styles.title}>{post.title}</Text>
-        <Text style={styles.text}>{post.text}</Text>
-        {renderImages(post.images)}
-      </View>
+    <>
+      <ScrollView
+        ref={(ref) => (scrollViewRef.current = ref)}
+        style={styles.scrollView}
+        keyboardShouldPersistTaps={'always'}>
+        <View style={styles.wrapper}>
+          <PostUserHeader user={post.user} post={post} onPress={onPressProfile} />
+          <Text style={styles.title}>{post.title}</Text>
+          <Markdown styles={{
+            flex: 1,
+          }}
+          onLink={onPressLink}
+          >{post.text}</Markdown>
+          <ImagesGallery images={post.images}/>
+        </View>
+        {comments.map(renderComment)}
+      </ScrollView>
       <SafeAreaView edges={['bottom']} style={styles.commentForm}>
-        <FlatList
-          ListHeaderComponent={() => <CommentForm onSubmit={handleSubmitComment} user={userStore.user}/>}
-          data={comments}
-          renderItem={renderComment}
-          keyExtractor={(item) => item.id.toString()}
-          keyboardShouldPersistTaps={'always'}
-        />
+        <CommentForm onSubmit={handleSubmitComment} user={userStore.user}/>
       </SafeAreaView>
-    </ScrollView>
+
+    </>
   );
 };
 

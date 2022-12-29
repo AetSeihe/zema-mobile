@@ -1,11 +1,12 @@
 #import "AppDelegate.h"
+#import <YandexMapsMobile/YMKMapKitFactory.h>
+
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
 #import <React/RCTAppSetupUtils.h>
-#import <YandexMapsMobile/YMKMapKitFactory.h>
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -31,9 +32,7 @@
 {
   RCTAppSetupPrepareApp(application);
 
-  [YMKMapKit setLocale:@"ru_RU"];
-  [YMKMapKit setApiKey:@"API_KEY"];
-  
+
  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 
@@ -60,6 +59,9 @@
   [self.window makeKeyAndVisible];
   [RNSplashScreen show];
 
+  [YMKMapKit setLocale:@"ru_RU"];
+  [YMKMapKit setApiKey:@"9a008c7f-40ab-4197-b24f-ee3e92b8faa2"];
+  [YMKMapKit mapKit];
 
   return YES;
 }

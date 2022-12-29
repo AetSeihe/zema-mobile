@@ -1,7 +1,9 @@
 import React from 'react';
 import {Image, ImageStyle} from 'react-native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {NoPhotoImage} from '../../assets/images';
 import {FileModule} from '../../models/FileModule';
+import {applicationStore} from '../../store/applicationStore';
 import {styles} from './styles';
 
 
@@ -11,10 +13,17 @@ type Props = {
 }
 
 export const Avatar = ({image, style}: Props) => {
+  const onPressAvatar = () => {
+    if (image) {
+      applicationStore.setFullScreenImage(image);
+    }
+  };
   if (image) {
-    return <Image style={[styles.image, style]} source={{
-      uri: image.url,
-    }} resizeMode={'cover'}/>;
+    return <TouchableWithoutFeedback onPress={onPressAvatar}>
+      <Image style={[styles.image, style]} source={{
+        uri: image.url,
+      }} resizeMode={'cover'}/>
+    </TouchableWithoutFeedback>;
   }
   return <Image style={[styles.image, style]} source={NoPhotoImage} resizeMode={'cover'}/>;
 };

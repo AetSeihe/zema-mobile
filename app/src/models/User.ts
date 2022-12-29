@@ -8,7 +8,7 @@ type GendersLiteralType = {
 };
 
 export const GENDER_LITERAL: GendersLiteralType = {
-  null: 'Не указан',
+  null: '',
   male: 'муж',
   female: 'жен',
 };
@@ -55,10 +55,10 @@ export class User {
   cordY?: number;
 
   images: FileModule[] = [];
-  mainPhoto?: {
+  mainPhoto: {
     id: number;
     image: FileModule;
-  };
+  } | null;
 
   constructor(data: UserType) {
     this.id = data.id;
@@ -95,6 +95,8 @@ export class User {
           fileName: mainPhoto.image.fileName,
         }),
       };
+    } else {
+      this.mainPhoto = null;
     }
 
     if (data.images) {
@@ -119,9 +121,9 @@ export class User {
   }
 
 
-  get age() {
+  get age(): number {
     if (!this.birthday) {
-      return '';
+      return 0;
     }
 
     if (this.birthday.getMonth() > new Date().getMonth()) {

@@ -1,6 +1,7 @@
 import {routerNames} from '../constants/routerNames';
 import {Post} from '../models/Post';
 import {User} from '../models/User';
+import {Vacancy} from '../models/Vacancy';
 
 
 export type ErrorScreenOptionsType = {
@@ -87,16 +88,6 @@ export type PostsScreenType = {
 
 }
 
-export type VacancyFormScreenType = {
-    name: routerNames.VACANCY_FORM,
-    options?: {}
-}
-
-export type ResumeFormScreenType = {
-    name: routerNames.RESUME_FORM,
-    options?: {}
-}
-
 
 export type HomeScreenType = {
     name: routerNames.HOME,
@@ -123,6 +114,21 @@ export type UserMapType = {
     options?: {}
 }
 
+export type BlockUsersType = {
+    name: routerNames.BLOCK_USERS,
+    options?: {}
+}
+
+
+export type VacancyOptionsType = {
+    vacancy: Vacancy
+}
+
+export type VacancyType = {
+    name: routerNames.VACANCY,
+    options: VacancyOptionsType
+}
+
 
 export type RouterTabBarType = ChatScreenType | ChatScreenType | PostsScreenType
 
@@ -134,9 +140,7 @@ export type RouterType = ErrorScreenType |
                         ProfileScreenType |
                         SettingsScreenType |
                         PostFormScreenType |
-                        VacancyFormScreenType |
                         HomeScreenType |
-                        ResumeFormScreenType |
                         ChatItemScreenType |
                         MyFriendScreenType |
                         MyRequestsScreenType |
@@ -144,5 +148,7 @@ export type RouterType = ErrorScreenType |
                         UserMapType |
                         SettingsAccountScreenType |
                         SettingsSecurityScreenType |
-                        SettingsLocationScreenType
+                        SettingsLocationScreenType |
+                        BlockUsersType |
+                        VacancyType
 
