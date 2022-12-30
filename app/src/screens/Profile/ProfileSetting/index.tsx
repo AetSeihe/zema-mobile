@@ -71,7 +71,7 @@ const ProfileSettingScreen = () => {
     cityToName: user.currentCity?.title || '',
     work: user.work || '',
     gender: user.gender || '',
-    educacation: user.nameOfEducation || '',
+    educacation: user.education || '',
     interesting: user.interesting || '',
     howCanHelp: user.howCanHelp || '',
     needHelp: user.needHelp || '',
@@ -148,6 +148,7 @@ const ProfileSettingScreen = () => {
     const citiesData = await cityServices.getCityByName(name);
     setCities(citiesData);
   };
+
   const getCityByName = (name: string) => {
     const candidate = cities.find((city) => city.title.toLowerCase() === name.toLowerCase());
     return candidate;
@@ -218,19 +219,14 @@ const ProfileSettingScreen = () => {
                 <CheckBoxWithLabel title={GENDER_LITERAL.male} value={values.gender === 'male'} onPress={() => handleChange('gender')('male')}/>
                 <CheckBoxWithLabel title={GENDER_LITERAL.female} value={values.gender === 'female'} onPress={() => handleChange('gender')('female')}/>
               </View>
-              <InputField wrapperStyle={styles.field}
-                label='День рождения'
-                onPressIn={() => setShowDatePicker(true)}
-                value={dateToString(birthdayDate)}
-              />
               {showDatePicker && (
                 <RNDateTimePicker
                   style={{
-                    height: 200,
-                    width: 200,
-                    backgroundColor: 'blue',
+                    width: 150,
+                    marginBottom: 10,
+                    alignSelf: 'flex-start',
                   }}
-                  mode='datetime'
+                  mode='date'
                   value={birthdayDate}
                   onChange={handleChangeDate}
                 />)}

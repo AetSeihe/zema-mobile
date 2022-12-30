@@ -11,6 +11,17 @@ export type GetManyVacancyByApi = {
     vacancies: VacancyType[]
 }
 
+export type GetAllResumeType = {
+  message: string;
+  vacancies: ResumeType[],
+}
+
+export type GetResumeById = {
+  message: string;
+  vacancy: ResumeType
+}
+
+
 export type EmploymentType = 'fulltime' | 'partTime';
 export type WorkFormatType = 'office' | 'remote' | 'hybrid';
 export type SkillsType ={
@@ -66,12 +77,19 @@ export type GetAllVacancyDTO = {
 
 export type CreateVacancyDTO = {
   title: string;
-  salary: number;
+  minSalary: number;
+  maxSalary: number;
   workExperience: number;
   description: string;
-  cityId: number;
-  phone?: string;
-  email?: string;
+  cityId?: number | null;
+  skills: string[];
+  employment: EmploymentType;
+  workFormat: WorkFormatType;
+  requirement: string;
+  responsibilities: string;
+  companyName: string;
+  descriptionCompany: string;
+  companyUrl: string;
 }
 
 export type CreateResumeDTO = {
@@ -79,8 +97,34 @@ export type CreateResumeDTO = {
     salary: number;
     workExperience: number;
     description: string;
-    experience: string;
-    cityId: number;
-    phone?: string;
-    email?: string;
+    cityId?: number;
+    skills: string[],
   }
+
+
+export type ResumeSkill = {
+    id: number;
+    title: string;
+    resumeId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export type ResumeType = {
+    id: number;
+    title: string;
+    salary: number;
+    workExperience: number;
+    description: string;
+    employment: EmploymentType;
+    workFormat: WorkFormatType;
+    cityId: number;
+    phone: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    userId: number;
+    city: CityType;
+    resumeSkills: ResumeSkill[];
+    user: UserType;
+}

@@ -26,7 +26,7 @@ const UserCard = ({photo, title, gender, education, dateOfBirth, age, onPressCar
           <Text style={styles.title}>{title}</Text>
           {!!age && <Text style={styles.text}>{dateOfBirth} <Text style={styles.gray}>({age} {getPrefixToYears(age)})</Text></Text>}
           {!!gender && <Text style={styles.text}>{gender}</Text>}
-          {!!education && <Text style={styles.text}>{education}</Text>}
+          {!!education && <Text style={styles.text}>{education || ''}</Text>}
         </View>
       </TouchableWithoutFeedback>
     </Swipeable>

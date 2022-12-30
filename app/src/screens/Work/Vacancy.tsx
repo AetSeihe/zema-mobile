@@ -1,7 +1,7 @@
 import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import React, {useEffect} from 'react';
-import {Alert, Linking, StyleSheet, View} from 'react-native';
+import {Alert, Linking, Share, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import CustomButton from '../../components/CustomButton';
 import Skill from '../../components/Skill';
@@ -9,6 +9,11 @@ import {VacancyOptionsType} from '../../types/routerTypes';
 import {getPrefixToYears} from '../../utils/getPrefixToYears';
 import {getNameByEmploymentType, getNameByWorkFormatType} from '../../utils/getTextByEnums';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import {workToPdfString} from '../../utils/workToHtmlString';
+import {routerStore} from '../../store/routerStore';
+import {routerNames} from '../../constants/routerNames';
+import {styles} from './styles';
+
 
 type Props = {
   navigation: NavigationProp<any>,
@@ -18,21 +23,41 @@ type Props = {
 }
 
 
+const goToChat = (userId: number) => {
+  routerStore.pushToScene({
+    name: routerNames.Chat_Item,
+    options: {
+      userId: userId,
+    },
+  });
+};
+
 const Vacancy = ({route, navigation}: Props) => {
   const vacancy = route.params.vacancy;
 
 
   const downloadPdf = async () => {
-    console.log('скачиваем блять');
-    const options = {
-      html: '<h1>PDF TEST</h1>',
-      fileName: 'test',
-      directory: 'Documents',
-    };
-
-    const file = await RNHTMLtoPDF.convert(options);
-    if (file.filePath) {
-      Linking.openURL(file.filePath);
+    try {
+      const file = await RNHTMLtoPDF.convert({
+        html: workToPdfString({
+          mainTitile: vacancy.title,
+          salary: `${vacancy.minSalary} - ${vacancy.maxSalary} рублей.`,
+          description: vacancy.description,
+          city: vacancy.city.title,
+          workExpirience: vacancy.workExperience === 0 ? 'не требутеся': `${vacancy.workExperience} ${getPrefixToYears(vacancy.workExperience)}`,
+          workFormat: getNameByWorkFormatType(vacancy.workFormat),
+          requirement: vacancy.requirement,
+          responsibilities: vacancy.responsibilities,
+        }),
+        fileName: vacancy.title,
+      });
+      if (file.filePath) {
+        Share.share({
+          url: `file://${file.filePath}`,
+        });
+      }
+    } catch (e: any) {
+      Alert.alert(e.message);
     }
   };
 
@@ -53,7 +78,7 @@ const Vacancy = ({route, navigation}: Props) => {
         <Text style={styles.text}>{vacancy.description}</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.title}>{vacancy.city.title}</Text>
+        {vacancy.city && <Text style={styles.title}>{vacancy.city.title}</Text>}
         <View style={styles.specifications}>
           <Text style={styles.text}>
             <Text style={styles.bold}>Опыт работы:</Text>{' '}
@@ -92,74 +117,12 @@ const Vacancy = ({route, navigation}: Props) => {
           <Text style={[styles.text, styles.bold]}>{vacancy.companyUrl}</Text>
         </TouchableOpacity>
       </View>
-      <CustomButton style={styles.submitBtn} title='Откликнутся на вакансию' />
+      <CustomButton style={styles.submitBtn} title='Откликнутся на вакансию' onPress={() => goToChat(vacancy.userId)}/>
       <CustomButton theme='gray' title='Получить pdf' onPress={downloadPdf}/>
 
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingHorizontal: 21,
-    marginBottom: 10,
-  },
-  card: {
-    backgroundColor: '#fff',
-    marginBottom: 14,
-    paddingVertical: 19,
-    paddingHorizontal: 14,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 3.84,
-    elevation: 5,
-    borderRadius: 5,
-  },
-  mainTitle: {
-    color: '#087BFF',
-    fontWeight: '600',
-    fontSize: 24,
-    marginBottom: 5,
-  },
-  specifications: {
-    marginBottom: 6,
-  },
-  salary: {
-    fontWeight: '500',
-    fontSize: 17,
-    marginBottom: 10,
-  },
-  title: {
-    color: '#071838',
-    fontWeight: '500',
-    fontSize: 15,
-    marginBottom: 15,
-  },
-  bold: {
-    fontWeight: '500',
-    fontSize: 14,
-    color: '#071838',
-  },
-  text: {
-    color: '#071838',
-    fontSize: 14,
-  },
-  title2: {
-    color: '#087BFF',
-    fontWeight: '600',
-    marginBottom: 10,
-  },
-  skillWrapper: {
-    margin: -5,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  skill: {
-    margin: 5,
-  },
-  submitBtn: {
-    marginVertical: 10,
-  },
-});
 
 export default Vacancy;

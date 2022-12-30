@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 500,
   },
   buttonWrapperReject: {
-    backgroundColor: 'rgba(255, 8, 8, 0.7)',
+    backgroundColor: '#dedede',
   },
   buttonText: {
     textAlign: 'center',

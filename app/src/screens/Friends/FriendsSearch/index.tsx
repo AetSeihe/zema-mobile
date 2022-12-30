@@ -168,7 +168,7 @@ const FriendsSearch = ({navigation}: Props) => {
               age={item.age}
               dateOfBirth={item.currentBirthDay}
               gender={item.nameOfGender}
-              education={item.nameOfEducation}
+              education={item.education}
             />
           </Animated.View>)}
       />

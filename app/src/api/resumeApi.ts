@@ -1,9 +1,9 @@
 import {AxiosResponse} from 'axios';
-import {CreateResumeDTO, GetAllVacancyDTO, GetManyVacancyByApi, GetOneVacancyByApi} from '../types/workTypes';
+import {CreateResumeDTO, GetAllResumeType, GetAllVacancyDTO, GetOneVacancyByApi, GetResumeById} from '../types/workTypes';
 import {axiosInstants, getApiConfig} from './axiosInit';
 
 
-const getAllResume = async (data: GetAllVacancyDTO): Promise<AxiosResponse<GetManyVacancyByApi>> => {
+const getAllResume = async (data: GetAllVacancyDTO): Promise<AxiosResponse<GetAllResumeType>> => {
   return axiosInstants.post('resume/all', data, {
     headers: {
       ...getApiConfig().headers,
@@ -20,7 +20,7 @@ const getResumeById = async (vacancyId: number): Promise<AxiosResponse<GetOneVac
   });
 };
 
-const createResume = async (data: CreateResumeDTO): Promise<AxiosResponse<GetOneVacancyByApi>> => {
+const createResume = async (data: CreateResumeDTO): Promise<AxiosResponse<GetResumeById>> => {
   return axiosInstants.post(`resume/create`, data, {
     headers: {
       ...getApiConfig().headers,

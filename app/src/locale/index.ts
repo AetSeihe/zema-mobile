@@ -13,12 +13,12 @@ export const locale = {
       signInText: 'Войти',
     },
 
-    login: 'Номер телефона или email',
-    name: 'Ваше имя',
-    phone: 'Номер телефона',
-    email: 'E-mail',
-    password: 'Пароль',
-    confirmPassword: 'Подтверждение пароля',
+    login: 'Номер телефона или email*',
+    name: 'Ваше имя*',
+    phone: 'Номер телефона*',
+    email: 'E-mail*',
+    password: 'Пароль*',
+    confirmPassword: 'Подтверждение пароля*',
 
   },
   postForm: {

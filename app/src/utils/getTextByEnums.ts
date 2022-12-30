@@ -9,6 +9,8 @@ export const getNameByWorkFormatType = (item: WorkFormatType): string => {
     case 'remote':
       return 'удаленка';
   }
+
+  return 'Не указан';
 };
 
 export const getNameByEmploymentType = (item: EmploymentType): string => {
@@ -18,4 +20,6 @@ export const getNameByEmploymentType = (item: EmploymentType): string => {
     case 'partTime':
       return 'частичная занятость';
   }
+
+  return 'Не указан';
 };

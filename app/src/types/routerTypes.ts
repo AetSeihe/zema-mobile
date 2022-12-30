@@ -1,5 +1,6 @@
 import {routerNames} from '../constants/routerNames';
 import {Post} from '../models/Post';
+import {Resume} from '../models/Resume';
 import {User} from '../models/User';
 import {Vacancy} from '../models/Vacancy';
 
@@ -129,6 +130,26 @@ export type VacancyType = {
     options: VacancyOptionsType
 }
 
+export type VacancyFormType = {
+    name: routerNames.VACANCY_FORM,
+    options?: {}
+}
+
+
+export type ResumeOptionsType = {
+    resume: Resume
+}
+
+
+export type ResumeType = {
+    name: routerNames.RESUME,
+    options: ResumeOptionsType
+}
+
+export type ResumeFormType = {
+    name: routerNames.RESUME_FORM,
+}
+
 
 export type RouterTabBarType = ChatScreenType | ChatScreenType | PostsScreenType
 
@@ -150,5 +171,8 @@ export type RouterType = ErrorScreenType |
                         SettingsSecurityScreenType |
                         SettingsLocationScreenType |
                         BlockUsersType |
-                        VacancyType
+                        VacancyType |
+                        ResumeType |
+                        VacancyFormType |
+                        ResumeFormType
 

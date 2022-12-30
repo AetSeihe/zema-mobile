@@ -74,7 +74,7 @@ const Friends = ({navigation}: Props) => {
               photo={item.user.mainPhoto?.image}
               title={item.user.fullName}
               gender={item.user.nameOfGender}
-              education={item.user.nameOfEducation}
+              education={item.user.education}
               dateOfBirth={item.user.currentBirthDay}
               age={item.user.age}
               onPressCard={() => renderLeftComponent(item.user)}

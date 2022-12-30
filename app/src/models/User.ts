@@ -30,6 +30,8 @@ export const EDUCATION_LITERAL: EducationsLiteralType = {
   doctor: 'Доктор наук',
 };
 
+
+const COUNT_FIELDS = 13;
 export class User {
   id: number;
   name: string;
@@ -38,15 +40,15 @@ export class User {
   isUpdateProfile: boolean;
   surname?: string;
   patronomic?: string;
-  currentCityID?: number;
-  birthCityID?: number;
+  currentCityId?: number;
+  birthCityId?: number;
   work?: string;
   howCanHelp?: string;
   needHelp?: string;
   gender: GenderType;
   interesting?: string;
   birthday?: Date;
-  education: EducationType;
+  education: string;
   createdAt: Date;
   updatedAt: Date;
   birthCity?: CityType;
@@ -66,8 +68,8 @@ export class User {
     this.phone = data.phone;
     this.isUpdateProfile = data.isUpdateProfile;
     this.surname = data.surname;
-    this.currentCityID = data.currentCityID;
-    this.birthCityID = data.birthCityID;
+    this.currentCityId = data.currentCityID;
+    this.birthCityId = data.birthCityID;
     this.work = data.work;
     this.howCanHelp = data.how_can_help;
     this.needHelp = data.need_help;
@@ -116,10 +118,6 @@ export class User {
     return GENDER_LITERAL[this.gender] || GENDER_LITERAL.null;
   }
 
-  get nameOfEducation() {
-    return EDUCATION_LITERAL[this.education] || EDUCATION_LITERAL.null;
-  }
-
 
   get age(): number {
     if (!this.birthday) {
@@ -138,5 +136,52 @@ export class User {
       return '';
     }
     return dateToString(this.birthday);
+  }
+
+  get profileCompletion() {
+    let countFillFields = 0;
+
+    if (this.name) {
+      countFillFields +=1;
+    }
+    if (this.surname) {
+      countFillFields +=1;
+    }
+    if (this.patronomic) {
+      countFillFields +=1;
+    }
+    if (this.mainPhoto) {
+      countFillFields +=1;
+    }
+    if (this.images.length) {
+      countFillFields +=1;
+    }
+    if (this.howCanHelp) {
+      countFillFields +=1;
+    }
+    if (this.needHelp) {
+      countFillFields +=1;
+    }
+
+    if (this.birthCity) {
+      countFillFields +=1;
+    }
+    if (this.currentCity) {
+      countFillFields +=1;
+    }
+    if (this.interesting) {
+      countFillFields +=1;
+    }
+    if (this.education) {
+      countFillFields +=1;
+    }
+    if (this.gender !== 'null') {
+      countFillFields +=1;
+    }
+    if (this.birthday) {
+      countFillFields +=1;
+    }
+
+    return Math.floor((countFillFields / COUNT_FIELDS) * 100);
   }
 }

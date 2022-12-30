@@ -8,6 +8,7 @@ import BigButton from '../../components/buttons/BigButton';
 import Information from '../../components/Information';
 import WorkCard from '../../components/WorkCard';
 import {routerNames} from '../../constants/routerNames';
+import {Resume} from '../../models/Resume';
 import {Vacancy} from '../../models/Vacancy';
 import {routerStore} from '../../store/routerStore';
 import {workStore} from '../../store/workStore';
@@ -22,6 +23,15 @@ const goToVacancy = (item: Vacancy) => {
   });
 };
 
+const goToResume = (item: Resume) => {
+  routerStore.pushToScene({
+    name: routerNames.RESUME,
+    options: {
+      resume: item,
+    },
+  });
+};
+
 
 const WorkMain = () => {
   const [workType, setWorkType] = useState<WorkTabBarType>('vacancy');
@@ -30,7 +40,25 @@ const WorkMain = () => {
     if (workType === 'vacancy' && workStore.isNeverLoadingVacancy) {
       workStore.fetchVacancy({});
     }
+    if (workType === 'resume' && workStore.isNeverLoadingResume) {
+      workStore.fetchResume({});
+    }
   }, [workType]);
+
+
+  const onPressAdd = () => {
+    if (workType === 'vacancy') {
+      routerStore.pushToScene({
+        name: routerNames.VACANCY_FORM,
+      });
+    }
+    if (workType === 'resume') {
+      routerStore.pushToScene({
+        name: routerNames.RESUME_FORM,
+      });
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.wrapper}>
@@ -41,31 +69,54 @@ const WorkMain = () => {
         />
         <BigButton
           style={styles.button}
-          title={'Создать вакансию'}
+          title={workType === 'vacancy' ? 'Создать вакансию': 'Создать резюме'}
           icon={plusIcon}
-          onPress={() => null}
+          onPress={onPressAdd}
         />
       </View>
       <View style={styles.content}>
-        {workStore.vacancy.length === 0 && <Information
+        {workType === 'vacancy' && workStore.vacancy.length === 0 && <Information
           title='Вакансий пока нет'
           text='Попробуйте зайти позже'
         />}
-        {workStore.vacancy.length !== 0 && <FlatList
-          data={workStore.vacancy}
-          style={styles.wrapper}
-          renderItem={({item}) =>(
-            <Animated.View entering={FadeInDown} style={styles.item}>
-              <WorkCard
-                onPress={() => goToVacancy(item)}
-                title={item.title}
-                text={item.description}
-                salary={item.minSalary}
-              />
-            </Animated.View>)
-          }
-          keyExtractor={(item) => item.id.toString()}
+        {workType === 'resume' && workStore.resume.length === 0 && <Information
+          title='Резюме пока нет'
+          text='Попробуйте зайти позже'
         />}
+        {workType === 'vacancy' && workStore.vacancy.length !== 0 && (
+          <FlatList
+            data={workStore.vacancy}
+            style={styles.wrapper}
+            renderItem={({item}) =>(
+              <Animated.View entering={FadeInDown} style={styles.item}>
+                <WorkCard
+                  onPress={() => goToVacancy(item)}
+                  title={item.title}
+                  text={item.description}
+                  salary={item.minSalary}
+                />
+              </Animated.View>)
+            }
+            keyExtractor={(item) => item.id.toString()}
+          />
+        )}
+        {workType === 'resume' && workStore.resume.length !== 0 && (
+          <FlatList
+            data={workStore.resume}
+            style={styles.wrapper}
+            renderItem={({item}) =>(
+              <Animated.View entering={FadeInDown} style={styles.item}>
+                <WorkCard
+                  onPress={() => goToResume(item)}
+                  title={item.title}
+                  text={item.description}
+                  salary={item.salary}
+                />
+              </Animated.View>)
+            }
+            keyExtractor={(item) => item.id.toString()}
+          />
+        )}
       </View>
     </ScrollView>
   );

@@ -140,7 +140,7 @@ export const HomeTabNavigation = observer(() => {
       }}/>
       <Tab.Screen name={routerNames.WORK} component={WorkMain} options={{
         headerTitle: screensNameLocale.work,
-        title: 'Работа',
+        title: 'Бизнес',
         tabBarIcon: ({color}) => <Image source={workIcon} style={{
           width: ICON_SIZE,
           height: ICON_SIZE,

@@ -29,8 +29,6 @@ const schema = yup.object({
 
 const SignInScreen = () => {
   const onSubmit = async (values: typeof initalValues) => {
-    console.log('Presss fuck');
-
     const error = await userStore.signIn(values);
     if (error) {
       Alert.alert(error);

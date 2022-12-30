@@ -4,6 +4,7 @@ import {Friend} from '../models/Friend';
 import {User} from '../models/User';
 import {friendService} from '../services/friendService';
 import {FetchUserNearType} from '../types/friendType';
+import {userStore} from './userStore';
 
 
 class FriendStore {
@@ -31,9 +32,9 @@ class FriendStore {
   @computed
   get currentUsersInSearch() {
     return this.usersInSearch.filter((user) => {
-      // if (user.id === userStore.user?.id) {
-      //   return false;
-      // }
+      if (user.id === userStore.user?.id) {
+        return false;
+      }
       if (friendStore.friends.find((friend) => friend.user.id === user.id)) {
         return false;
       }

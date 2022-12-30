@@ -13,6 +13,7 @@ import {User} from '../../../models/User';
 import {friendService} from '../../../services/friendService';
 import {userService} from '../../../services/userService';
 import {routerStore} from '../../../store/routerStore';
+import {userStore} from '../../../store/userStore';
 import {ProfileScreenOptionsType} from '../../../types/routerTypes';
 import {getPrefixToYears} from '../../../utils/getPrefixToYears';
 
@@ -113,9 +114,13 @@ const ProfileS = ({route}:Props) => {
             {user.birthday?.getFullYear() !== new Date().getFullYear() &&(
               <Text style={styles.text}>{user.currentBirthDay} <Text style={styles.age}>({user.age} {getPrefixToYears(user.age)})</Text></Text>
             )}
-            {user.education !== 'null' && <Text style={styles.text}>{user.nameOfEducation}</Text>}
+            {user.education !== 'null' && <Text style={styles.text}>{user.education}</Text>}
           </View>
         </View>
+        {user.id === userStore.user?.id && (
+          <Text style={styles.compillerProfile}>Ваш профиль заполнен на:{' '}
+            <Text style={styles.compillerProfileBold}>{user.profileCompletion}%</Text>
+          </Text>)}
         {!isBanned && (
           <>
             <View>
@@ -270,6 +275,14 @@ const styles = StyleSheet.create({
   age: {
     color: '#646464',
     fontSize: 14,
+  },
+  compillerProfile: {
+    color: '#087BFF',
+    fontSize: 17,
+    fontWeight: '600',
+  },
+  compillerProfileBold: {
+    fontSize: 34,
   },
 });
 

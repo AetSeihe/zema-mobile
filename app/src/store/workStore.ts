@@ -1,19 +1,21 @@
 import {makeAutoObservable, runInAction} from 'mobx';
+import {Resume} from '../models/Resume';
 import {Vacancy} from '../models/Vacancy';
 import {resumeService} from '../services/resumeService';
 import {vacancyService} from '../services/vacancyService';
-import {CreateResumeDTO, CreateVacancyDTO, GetAllVacancyDataType, GetAllVacancyDTO} from '../types/workTypes';
+import {CreateResumeDTO, CreateVacancyDTO, GetAllVacancyDataType} from '../types/workTypes';
 
 export const LIMIT_TO_FETCH = 15;
 class WorkStore {
   vacancy: Vacancy[] = [];
   vacancyOffset: number = 0;
   isNeverLoadingVacancy: boolean = true;
-
-  resume: Vacancy[] = [];
   isLoadingVacancy: boolean = false;
+
   isLoadingResume: boolean = false;
+  resume: Resume[] = [];
   isNeverLoadingResume: boolean = true;
+  resumeOffset: number = 0;
 
 
   constructor() {
@@ -59,11 +61,17 @@ class WorkStore {
   }
 
 
-  async fetchResume(data: GetAllVacancyDTO) {
+  async fetchResume(data: GetAllVacancyDataType) {
     runInAction(() => {
       this.isLoadingResume = true;
     });
-    const resumes = await resumeService.getAllResume(data);
+    const resumes = await resumeService.getAllResume({
+      data: data,
+      options: {
+        limit: LIMIT_TO_FETCH,
+        offset: this.resumeOffset,
+      },
+    });
     runInAction(() => {
       this.isLoadingResume = false;
       this.isNeverLoadingResume = false;

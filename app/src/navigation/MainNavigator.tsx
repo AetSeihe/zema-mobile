@@ -22,7 +22,10 @@ import Settings from '../screens/Profile/Settings';
 import SettingsLocation from '../screens/Profile/SettingsLocation';
 import SettingsSecurity from '../screens/Profile/SettingsSecurity';
 import UsersMapScreen from '../screens/UsersMapScreen';
+import Resume from '../screens/Work/Resume';
+import ResumeForm from '../screens/Work/ResumeForm';
 import Vacancy from '../screens/Work/Vacancy';
+import VacancyForm from '../screens/Work/VacancyForm';
 import {chatStore} from '../store/chatStore';
 import {routerStore} from '../store/routerStore';
 import {userStore} from '../store/userStore';
@@ -133,6 +136,24 @@ const Main = () => {
         }}/>
         <Stack.Screen name={routerNames.VACANCY} component={Vacancy} options={{
           title: 'Вакансия',
+          animation: 'default',
+          headerShown: true,
+          headerBackTitle: locale.header.backButtonTitle,
+        }}/>
+        <Stack.Screen name={routerNames.VACANCY_FORM} component={VacancyForm} options={{
+          title: 'Добавить свою вакансию',
+          animation: 'default',
+          headerShown: true,
+          headerBackTitle: locale.header.backButtonTitle,
+        }}/>
+        <Stack.Screen name={routerNames.RESUME} component={Resume} options={{
+          title: 'Резюме',
+          animation: 'default',
+          headerShown: true,
+          headerBackTitle: locale.header.backButtonTitle,
+        }}/>
+        <Stack.Screen name={routerNames.RESUME_FORM} component={ResumeForm} options={{
+          title: 'Опубликовать резюме',
           animation: 'default',
           headerShown: true,
           headerBackTitle: locale.header.backButtonTitle,

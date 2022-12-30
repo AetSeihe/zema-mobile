@@ -51,7 +51,7 @@ const UserProfile = ({user}: Props) => {
             <Text style={userProfileStyles.fullname}>{user.fullName}</Text>
           </TouchableOpacity>
           <Text style={userProfileStyles.gender}>{user.nameOfGender}.</Text>
-          <Text style={userProfileStyles.education}>{user.nameOfEducation}</Text>
+          <Text style={userProfileStyles.education}>{user.education}</Text>
         </View>
       </View>
       <ButtonUserEvent currentUser={user}/>

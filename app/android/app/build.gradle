@@ -261,7 +261,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-html-to-pdf')
+    implementation project(':react-native-html-to-pdf')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':@react-native-async-storage')
     //noinspection GradleDynamicVersion

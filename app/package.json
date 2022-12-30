@@ -21,6 +21,7 @@
     "@thevsstech/react-native-skeleton": "^2.0.11",
     "axios": "^1.2.0",
     "formik": "^2.2.9",
+    "maven": "^5.0.0",
     "mobx": "^6.6.0",
     "mobx-react": "^7.5.0",
     "react": "17.0.2",

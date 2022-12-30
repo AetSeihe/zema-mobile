@@ -111,7 +111,7 @@ export type UserType = {
     gender: GenderType;
     interesting?: string;
     birthday?: string;
-    education: EducationType;
+    education: string;
     createdAt: Date;
     updatedAt: Date;
     birthCity?: CityType;

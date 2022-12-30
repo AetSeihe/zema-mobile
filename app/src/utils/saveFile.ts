@@ -17,7 +17,6 @@ const saveFileToAndroid = async (file: FileModule)=> {
   const res = await RNFetchBlob
       .config({
         fileCache: true,
-        appendExt: 'jpg',
       })
       .fetch('GET', file.url);
   const url = res.path();

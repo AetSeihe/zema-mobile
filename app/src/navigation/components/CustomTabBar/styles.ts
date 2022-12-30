@@ -14,28 +14,20 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
   plusWrapper: {
+    marginTop: 10,
     position: 'relative',
-    top: -25,
+    top: 5,
     backgroundColor: '#fff',
     borderRadius: 50,
     padding: 10,
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+    borderWidth: 3,
+    borderColor: '#1E205A',
   },
 
   menuItem: {
     fontWeight: '500',
   },
   iconImage: {
-    // position: 'absolute',
     width: 35,
     height: 35,
   },
