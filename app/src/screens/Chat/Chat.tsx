@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/core';
 import {observer} from 'mobx-react';
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, FlatList, StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, SectionList, SectionListData, StyleSheet, View} from 'react-native';
 import {Swipeable} from 'react-native-gesture-handler';
 import {Asset, launchImageLibrary} from 'react-native-image-picker';
 import Animated, {SlideInLeft, SlideOutLeft} from 'react-native-reanimated';
@@ -11,9 +11,15 @@ import {Message as MessageModel} from '../../models/Message';
 import {chatStore} from '../../store/chatStore';
 import {routerStore} from '../../store/routerStore';
 import {userStore} from '../../store/userStore';
+import {getNameMonthByNumber} from '../../utils/getNameMonthByNumber';
 import ChatFooter from './components/ChatFooter';
+import DateHeader from './components/DateHeader';
 import Header from './components/Header';
 import Message from './components/Message';
+
+
+const JUST_NOW_STRING = 'Сегодня';
+
 
 type Props = {
     route: {
@@ -23,7 +29,44 @@ type Props = {
     }
 }
 
+
 const MAX_PHOTO_COUNT = 10;
+
+
+const getMessagesSections = (messages: MessageModel[]): SectionListData<MessageModel>[] => {
+  const sections: SectionListData<MessageModel, any>[] = [];
+  const now = new Date();
+  messages.forEach((message) => {
+    const messageCreatedAtDate = message.createdAt;
+    if (messageCreatedAtDate.getFullYear() === now.getFullYear() &&
+     messageCreatedAtDate.getMonth() === now.getMonth() &&
+     messageCreatedAtDate.getDate() === now.getDate() ) {
+      const candidate = sections.find((sec) => sec.title === JUST_NOW_STRING);
+      if (candidate) {
+        candidate.data.push(message);
+        return;
+      }
+      sections.push({
+        title: JUST_NOW_STRING,
+        data: [message],
+      });
+      return;
+    }
+    const date = `${messageCreatedAtDate.getDate()} ${getNameMonthByNumber(messageCreatedAtDate.getMonth())} ${messageCreatedAtDate.getFullYear()}`;
+    const candidate = sections.find((sec) => sec.title === date);
+    if (candidate) {
+      candidate.data.push(message);
+    } else {
+      sections.push({
+        title: date,
+        data: [message],
+      });
+    }
+  });
+
+
+  return sections;
+};
 
 const MockChatList = () => {
   return (
@@ -46,23 +89,8 @@ const Chat = ({route}: Props) => {
   const [loading, setLoading] = useState(true);
   const [images, setImages] = useState<Asset[]>([]);
   const [replyMessage, setReplyMessage] = useState<MessageModel | null>(null);
-  const chatFlatList = useRef<FlatList<MessageModel> | null>(null);
   const companion = chatStore.activeChat?.companion;
   const messages = chatStore.currentMessageList;
-
-
-  const init = async () => {
-    if (userStore.user?.id) {
-      await chatStore.getActiveChatByUsers(userStore.user?.id, route.params.userId);
-      await chatStore.fetchMessagesFromActiveChat();
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
-
 
   const handlePressBack = () => {
     if (navigation.canGoBack()) {
@@ -74,6 +102,24 @@ const Chat = ({route}: Props) => {
       name: routerNames.HOME,
     });
   };
+
+  const init = async () => {
+    if (userStore.user?.id) {
+      try {
+        await chatStore.getActiveChatByUsers(userStore.user?.id, route.params.userId);
+        await chatStore.fetchMessagesFromActiveChat();
+      } catch (e) {
+        Alert.alert('Ошибка!', 'Пользователь вас заблокировал');
+        handlePressBack();
+      }
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
 
   const onPressAddImage = async () => {
     if (images.length == MAX_PHOTO_COUNT) {
@@ -120,13 +166,13 @@ const Chat = ({route}: Props) => {
         onPressBack={handlePressBack}/>
       <View style={styles.content}>
         {!loading && chatStore.activeChat && companion ? (
-         <FlatList
+         <SectionList
            inverted
            keyExtractor={(item) => item.id.toString()}
-           ref={(ref) => {
-             chatFlatList.current = ref;
-           }}
-           data={messages}
+           sections={getMessagesSections(messages)}
+           renderSectionFooter={({section: {title}}) => (
+             <DateHeader title={title}/>
+           )}
            renderItem={({item}) =>
              <Message
                onSwipeableOpen={onSwipeableOpen(item)}

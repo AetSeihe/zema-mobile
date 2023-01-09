@@ -83,7 +83,7 @@ const ChatList = () => {
 
   return (
     <View style={styles.wrapper}>
-      <ChatListHeader placeholder={`🔎 поиск по чатам ${userStore.user?.id}`} placeholderTextColor={'#5c5c5c'} value={searchValue} onChangeText={setSearchValue}/>
+      <ChatListHeader placeholder={`🔎 поиск по чатам`} placeholderTextColor={'#5c5c5c'} value={searchValue} onChangeText={setSearchValue}/>
       {!!searchValue && (
         <Animated.View style={styles.content} entering={SlideInRight} exiting={SlideOutRight}>
           <ListHeader text='Чаты и контакты' />

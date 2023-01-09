@@ -19,7 +19,6 @@ const ChatItem = ({chat, onPress}: Props) => {
         <Avatar style={styles.avatar} image={person.mainPhoto?.image}/>
       </View>
       <View style={styles.content}>
-        <Text style={styles.fullName}>{chat.updatedAt.getTime()}</Text>
         <Text style={styles.fullName}>{person.fullName}</Text>
         {message && <Text style={styles.message}>{message.message}</Text>}
       </View>

@@ -6,11 +6,15 @@ import {theme} from './src/styles/theme';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import YaMap from 'react-native-yamap';
 import FullScreenPhoto from './src/modals/FullScreenPhoto';
+import {enableLayoutAnimations} from 'react-native-reanimated';
+import {Platform} from 'react-native';
 
 YaMap.init('9a008c7f-40ab-4197-b24f-ee3e92b8faa2');
 
 
 const App = () => {
+  enableLayoutAnimations(Platform.OS === 'ios');
+
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaProvider>

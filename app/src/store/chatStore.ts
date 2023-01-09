@@ -63,14 +63,12 @@ class ChatStore {
     });
     const chats = await chatServices.getAll(data);
 
-    setTimeout(() => {
-      runInAction(() => {
-        chats.forEach((chat) => {
-          this.chats.set(chat.id, chat);
-        });
-        this.loadingChats = false;
+    runInAction(() => {
+      chats.forEach((chat) => {
+        this.chats.set(chat.id, chat);
       });
-    }, 4000);
+      this.loadingChats = false;
+    });
   }
 
   // GET CHATS
@@ -81,12 +79,10 @@ class ChatStore {
     });
     const chats = await chatServices.getUsersByName(data);
 
-    setTimeout(() => {
-      runInAction(() => {
-        this.chatsByUserName = chats;
-        this.loadingChatsByUserName = false;
-      });
-    }, 4000);
+    runInAction(() => {
+      this.chatsByUserName = chats;
+      this.loadingChatsByUserName = false;
+    });
   }
 
   async getChatsByMessageText(data: GetChatsByMsgText) {
@@ -95,12 +91,10 @@ class ChatStore {
     });
     const chats = await chatServices.getChatsByMessageText(data);
 
-    setTimeout(() => {
-      runInAction(() => {
-        this.chatsByMessage = chats;
-        this.loadingChatsByMessage = false;
-      });
-    }, 2000);
+    runInAction(() => {
+      this.chatsByMessage = chats;
+      this.loadingChatsByMessage = false;
+    });
   }
 
   async getActiveChatByUsers(userOneId:number, userTwoId: number) {

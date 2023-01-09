@@ -56,8 +56,10 @@ const ResumeForm = ({navigation}:Props) => {
   };
 
   const addSkill = () => {
-    setSkills((prev)=> [skillValue, ...prev]);
-    setSkillValue('');
+    if (skillValue.trim()) {
+      setSkills((prev)=> [skillValue.trim(), ...prev]);
+      setSkillValue('');
+    }
   };
 
   const deleteSkill = (value: string) => {

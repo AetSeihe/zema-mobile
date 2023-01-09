@@ -6,10 +6,10 @@ import ImagesGallery from '../../../components/ImagesGallery';
 import {Message as MessageModel} from '../../../models/Message';
 import {User} from '../../../models/User';
 import {theme} from '../../../styles/theme';
-import {dateToString} from '../../../utils/dateToString';
 import Icon from '../../../components/Icon';
 
 const clockIcon = require('../images/clock.png');
+const checkIcon = require('../images/check.png');
 
 
 type MessageFloatType = 'right' | 'left'
@@ -67,17 +67,23 @@ const Message = ({message, float, onSwipeableOpen}: Props) => {
           <Text style={[styles.message, float === 'left' ? styles.textLeft: styles.textRight]}>
             {message.message}
           </Text>
-          <View>
-            <Text style={[styles.date, float === 'left' ? styles.textLeft: styles.textRight]}>{dateToString(new Date(message.createdAt))}</Text>
+          <View style={styles.desc}>
+            {message.readed && (
+              <View style={styles.checkWrapper}>
+                <Image source={checkIcon} style={styles.checkIcon}/>
+                <Image source={checkIcon} style={styles.checkIcon}/>
+              </View>
+            )}
+            <Text style={[styles.date, float === 'left' ? styles.textLeft: styles.textRight]}>{message.dateSendMessage}</Text>
+
           </View>
         </View>
-      </Animated.View >
+      </Animated.View>
     </Swipeable>
   );
 };
 
 const styles = StyleSheet.create({
-
   wrapper: {
     paddingVertical: 10,
     marginVertical: 2,
@@ -90,8 +96,6 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
   },
   gallery: {
   },
@@ -133,10 +137,28 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 16,
   },
+
   date: {
     fontSize: 10,
     opacity: 0.5,
+  },
+  desc: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     marginLeft: 5,
+    marginTop: 10,
+  },
+  checkWrapper: {
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  checkIcon: {
+    opacity: 0.4,
+    width: 12,
+    height: 12,
+    marginLeft: -9,
   },
 });
 

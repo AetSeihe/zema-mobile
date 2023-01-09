@@ -35,6 +35,10 @@ target 'app' do
 
   pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
 
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-async-storage/async-storage'
+
   target 'appTests' do
     inherit! :complete
     # Pods for testing

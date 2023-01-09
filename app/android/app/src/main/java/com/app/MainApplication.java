@@ -1,12 +1,18 @@
 package com.app;
+import cl.json.RNSharePackage;
+import cl.json.ShareApplication;
 import com.christopherdro.htmltopdf.RNHTMLtoPDFPackage;
 import android.app.Application;
 import android.content.Context;
 import com.app.newarchitecture.MainApplicationReactNativeHost;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import cl.json.RNSharePackage;
 import ru.vvdev.yamap.RNYamapPackage;
 import ru.vvdev.yamap.RNYamapPackage;
+
+
 import com.rnfs.RNFSPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -18,7 +24,7 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
+ 
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -33,8 +39,8 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           new AsyncStoragePackage();
-          new MainReactPackage();
           new RNHTMLtoPDFPackage();
+          new RNSharePackage();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

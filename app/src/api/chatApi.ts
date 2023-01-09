@@ -1,5 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {Asset} from 'react-native-image-picker';
+import {Message} from '../models/Message';
 import {ChatType, GetAllChatOptionsType, GetAllChatsResponseType, GetChatByUserType, GetChatsByMsgText, GetMessagesInChatType, GetUsersInChatsByName, MessageType, ResponseGetMessagesInChatType, SendMessageType} from '../types/chatTypes';
 import {axiosInstants, getApiConfig} from './axiosInit';
 
@@ -19,6 +20,16 @@ const getChatByUsers = (data: GetChatByUserType): Promise<AxiosResponse<ChatType
       ...getApiConfig().headers,
     },
     params: data,
+  });
+};
+
+const readMessages = (messages: Message[]): Promise<AxiosResponse<MessageType>> => {
+  const messagesIdList = messages.map((message) => message.id);
+
+  return axiosInstants.put('chat/read', messagesIdList, {
+    headers: {
+      ...getApiConfig().headers,
+    },
   });
 };
 
@@ -69,4 +80,4 @@ const getMessages = (data: GetMessagesInChatType): Promise<AxiosResponse<Respons
   });
 };
 
-export const chatApi = {getAll, getUsersByName, getChatsByMessageText, getChatByUsers, sendMessage, getMessages};
+export const chatApi = {getAll, getUsersByName, getChatsByMessageText, getChatByUsers, sendMessage, getMessages, readMessages};

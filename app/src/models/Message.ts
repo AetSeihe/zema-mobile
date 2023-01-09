@@ -33,4 +33,8 @@ export class Message {
   get images() {
     return this.files.filter((file) => file.type === 'image');
   }
+
+  get dateSendMessage(): string {
+    return `${this.createdAt.getHours()}:${this.createdAt.getMinutes()}`;
+  }
 }

@@ -1,7 +1,7 @@
 import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import React, {useEffect} from 'react';
-import {Alert, Linking, Share, View} from 'react-native';
+import {Alert, Linking, Platform, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import CustomButton from '../../components/CustomButton';
 import Skill from '../../components/Skill';
@@ -9,10 +9,11 @@ import {VacancyOptionsType} from '../../types/routerTypes';
 import {getPrefixToYears} from '../../utils/getPrefixToYears';
 import {getNameByEmploymentType, getNameByWorkFormatType} from '../../utils/getTextByEnums';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import {workToPdfString} from '../../utils/workToHtmlString';
+import {getVacancyHTML} from '../../utils/workToHtmlString';
 import {routerStore} from '../../store/routerStore';
 import {routerNames} from '../../constants/routerNames';
 import {styles} from './styles';
+import Share from 'react-native-share';
 
 
 type Props = {
@@ -39,20 +40,15 @@ const Vacancy = ({route, navigation}: Props) => {
   const downloadPdf = async () => {
     try {
       const file = await RNHTMLtoPDF.convert({
-        html: workToPdfString({
-          mainTitile: vacancy.title,
-          salary: `${vacancy.minSalary} - ${vacancy.maxSalary} рублей.`,
-          description: vacancy.description,
-          city: vacancy.city.title,
-          workExpirience: vacancy.workExperience === 0 ? 'не требутеся': `${vacancy.workExperience} ${getPrefixToYears(vacancy.workExperience)}`,
-          workFormat: getNameByWorkFormatType(vacancy.workFormat),
-          requirement: vacancy.requirement,
-          responsibilities: vacancy.responsibilities,
-        }),
+        directory: 'Documents',
+        html: getVacancyHTML(vacancy),
         fileName: vacancy.title,
+        base64: Platform.OS === 'android',
       });
+
       if (file.filePath) {
-        Share.share({
+        Share.open({
+          title: vacancy.title,
           url: `file://${file.filePath}`,
         });
       }
@@ -104,12 +100,15 @@ const Vacancy = ({route, navigation}: Props) => {
         <Text style={styles.title2}>Обязанности</Text>
         <Text style={styles.text}>{vacancy.responsibilities}</Text>
       </View>
-      <View style={styles.card}>
-        <Text style={styles.title2}>Навыки</Text>
-        <View style={styles.skillWrapper}>{vacancy.skills.map((item) =>
-          <Skill style={styles.skill} title={item.title} key={item.id} />)}
+      {vacancy.skills.length !== 0 && (
+        <View style={styles.card}>
+          <Text style={styles.title2}>Навыки</Text>
+          <View style={styles.skillWrapper}>{vacancy.skills.map((item) =>
+            <Skill style={styles.skill} title={item.title} key={item.id} />)}
+          </View>
         </View>
-      </View>
+      )}
+
       <View style={styles.card}>
         <Text style={styles.title2}>{vacancy.companyName}</Text>
         <Text style={styles.text}>{vacancy.descriptionCompany}</Text>

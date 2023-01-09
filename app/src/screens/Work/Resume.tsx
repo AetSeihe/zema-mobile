@@ -1,7 +1,7 @@
 import {Text} from '@react-native-material/core';
 import {NavigationProp} from '@react-navigation/core';
 import React, {useEffect} from 'react';
-import {Alert, Share, View} from 'react-native';
+import {Alert, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
@@ -12,8 +12,9 @@ import {routerStore} from '../../store/routerStore';
 import {ResumeOptionsType} from '../../types/routerTypes';
 import {getPrefixToYears} from '../../utils/getPrefixToYears';
 import {getNameByEmploymentType, getNameByWorkFormatType} from '../../utils/getTextByEnums';
-import {workToPdfString} from '../../utils/workToHtmlString';
+import {getHtmlResume} from '../../utils/workToHtmlString';
 import {styles} from './styles';
+import Share from 'react-native-share';
 
 type Props = {
   navigation: NavigationProp<any>,
@@ -43,18 +44,13 @@ const Resume = ({navigation, route}:Props) => {
   const downloadPdf = async () => {
     try {
       const file = await RNHTMLtoPDF.convert({
-        html: workToPdfString({
-          mainTitile: resume.title,
-          salary: `${resume.salary} рублей.`,
-          description: resume.description,
-          city: resume.city.title,
-          workExpirience: resume.workExperience === 0 ? 'не требутеся': `${resume.workExperience} ${getPrefixToYears(resume.workExperience)}`,
-          workFormat: getNameByWorkFormatType(resume.workFormat),
-        }),
+        html: getHtmlResume(resume),
         fileName: resume.title,
+        width: 340,
       });
       if (file.filePath) {
-        Share.share({
+        Share.open({
+          title: resume.title,
           url: `file://${file.filePath}`,
         });
       }
@@ -89,12 +85,14 @@ const Resume = ({navigation, route}:Props) => {
           </Text>
         </View>
       </View>
-      <View style={styles.card}>
-        <Text style={styles.title2}>Навыки</Text>
-        <View style={styles.skillWrapper}>{resume.resumeSkills.map((item) =>
-          <Skill style={styles.skill} title={item.title} key={item.id} />)}
-        </View>
-      </View>
+      {resume.resumeSkills.length !== 0 && (
+        <View style={styles.card}>
+          <Text style={styles.title2}>Навыки</Text>
+          <View style={styles.skillWrapper}>{resume.resumeSkills.map((item) =>
+            <Skill style={styles.skill} title={item.title} key={item.id} />)}
+          </View>
+        </View>)}
+
       <CustomButton style={styles.submitBtn} title='Откликнутся на вакансию' onPress={() => goToChat(resume.userId)}/>
       <CustomButton theme='gray' title='Получить pdf' onPress={downloadPdf}/>
     </ScrollView>
