@@ -9,7 +9,7 @@ import {CheckBoxWithLabel} from '../../../components/CheckBoxWithLabel';
 import {InputField} from '../../../components/InputField';
 import InputSelect from '../../../components/InputSelect';
 import {Title} from '../../../components/Title';
-import {EDUCATION_LITERAL, GENDER_LITERAL} from '../../../models/User';
+import {GENDER_LITERAL} from '../../../models/User';
 import {userStore} from '../../../store/userStore';
 import {theme} from '../../../styles/theme';
 import {CityType} from '../../../types/userTypes';
@@ -24,7 +24,6 @@ import {Tint} from '../../../components/Tint';
 import {FileModule} from '../../../models/FileModule';
 import Icon from '../../../components/Icon';
 import RNDateTimePicker, {DateTimePickerEvent} from '@react-native-community/datetimepicker';
-import {dateToString} from '../../../utils/dateToString';
 import Animated, {FadeInLeft, FadeOut, Layout} from 'react-native-reanimated';
 
 
@@ -45,7 +44,7 @@ const schema = yup.object().shape({
   cityToName: yup.string(),
   work: yup.string().max(MAX_LENGHT_MULTY_FIELDS),
   gender: yup.string().oneOf(Object.keys(GENDER_LITERAL), 'Это поле должно иметь значения предложенные в списке').required(fieldLocale.required),
-  educacation: yup.string().oneOf(Object.values(EDUCATION_LITERAL), 'Это поле должно иметь значения предложенные в списке').required(fieldLocale.required),
+  educacation: yup.string().required(fieldLocale.required),
   interesting: yup.string().max(MAX_LENGHT_MULTY_FIELDS),
   howCanHelp: yup.string().max(MAX_LENGHT_MULTY_FIELDS),
   needHelp: yup.string().max(MAX_LENGHT_MULTY_FIELDS),
@@ -119,7 +118,7 @@ const ProfileSettingScreen = () => {
         gender: values.gender,
         birthCityId: birthCity?.id,
         currentCityId: сurrentCity?.id,
-        education: Object.keys(EDUCATION_LITERAL).find((key) => EDUCATION_LITERAL[key] == values.educacation),
+        education: values.educacation,
         work: values.work,
         interesting: values.interesting,
         how_can_help: values.howCanHelp,
@@ -191,13 +190,6 @@ const ProfileSettingScreen = () => {
               <AddPhotoButton onPress={addPhoto}/>
             </Animated.View>
           </ScrollView>
-          {/* <FlatList
-            data={images}
-            renderItem={renderImages}
-            keyExtractor={(item) => item.id.toString()}
-            ListFooterComponent={() => <AddPhotoButton onPress={addPhoto}/>}
-            horizontal
-          /> */}
           <Tint style={styles.tint}>Нажмите на фото чтобы сделать его главным</Tint>
         </Card>
         <Formik
@@ -260,10 +252,9 @@ const ProfileSettingScreen = () => {
                 }}
                 error={errors.cityToName}
               />
-              <InputSelect
-                options={Object.values(EDUCATION_LITERAL)}
-                label='Образование'
+              <InputField
                 wrapperStyle={styles.field}
+                label='Образование'
                 value={values.educacation}
                 onChangeText={handleChange('educacation')}
                 error={errors.educacation}

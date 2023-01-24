@@ -58,17 +58,20 @@ class ChatStore {
 
 
   async getAll(data: GetAllChatOptionsType) {
-    runInAction(() => {
-      this.loadingChats = true;
-    });
-    const chats = await chatServices.getAll(data);
-
-    runInAction(() => {
-      chats.forEach((chat) => {
-        this.chats.set(chat.id, chat);
+    try {
+      runInAction(() => {
+        this.loadingChats = true;
       });
-      this.loadingChats = false;
-    });
+      const chats = await chatServices.getAll(data);
+      runInAction(() => {
+        chats.forEach((chat) => {
+          this.chats.set(chat.id, chat);
+        });
+        this.loadingChats = false;
+      });
+    } catch (e) {
+      Alert.alert('Упс... что-то пошло не так');
+    }
   }
 
   // GET CHATS

@@ -7,7 +7,9 @@ import {GetAllChatOptionsType, GetChatByUserType, GetChatsByMsgText, GetMessages
 
 const getAll = async (data: GetAllChatOptionsType): Promise<Chat[]> => {
   const res = await chatApi.getAll(data);
-  return res.data.chats.map((chat) => new Chat(chat));
+
+  const filterRes = res.data.chats.filter((chat) => chat.companion);
+  return filterRes.map((chat) => new Chat(chat));
 };
 
 

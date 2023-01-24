@@ -244,17 +244,15 @@ const styles = StyleSheet.create({
     marginBottom: 9,
   },
   citiesWrapper: {
-    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 20,
   },
   city: {
     color: '#8F89A0',
-    marginRight: 9,
     fontSize: 13,
     fontWeight: '500',
   },
   currentCity: {
-    marginLeft: 9,
     color: '#087BFF',
     fontSize: 13,
     fontWeight: '500',
