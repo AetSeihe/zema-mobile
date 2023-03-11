@@ -1,19 +1,19 @@
-import {Text} from '@react-native-material/core';
-import {NavigationProp} from '@react-navigation/core';
-import React, {useEffect} from 'react';
-import {Alert, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import { Text } from '@react-native-material/core';
+import { NavigationProp } from '@react-navigation/core';
+import React, { useEffect } from 'react';
+import { Alert, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 import CustomButton from '../../components/CustomButton';
 import Skill from '../../components/Skill';
-import {routerNames} from '../../constants/routerNames';
-import {routerStore} from '../../store/routerStore';
-import {ResumeOptionsType} from '../../types/routerTypes';
-import {getPrefixToYears} from '../../utils/getPrefixToYears';
-import {getNameByEmploymentType, getNameByWorkFormatType} from '../../utils/getTextByEnums';
-import {getHtmlResume} from '../../utils/workToHtmlString';
-import {styles} from './styles';
+import { routerNames } from '../../constants/routerNames';
+import { routerStore } from '../../store/routerStore';
+import { ResumeOptionsType } from '../../types/routerTypes';
+import { getPrefixToYears } from '../../utils/getPrefixToYears';
+import { getNameByEmploymentType, getNameByWorkFormatType } from '../../utils/getTextByEnums';
+import { getHtmlResume } from '../../utils/workToHtmlString';
+import { styles } from './styles';
 import Share from 'react-native-share';
 
 type Props = {
@@ -32,7 +32,7 @@ const goToChat = (userId: number) => {
   });
 };
 
-const Resume = ({navigation, route}:Props) => {
+const Resume = ({ navigation, route }: Props) => {
   const resume = route.params.resume;
 
   useEffect(() => {
@@ -67,11 +67,11 @@ const Resume = ({navigation, route}:Props) => {
         <Text style={styles.text}>{resume.description}</Text>
       </View>
       <View style={styles.card}>
-        <Text style={styles.title}>{resume.city.title}</Text>
+        {resume.city && <Text style={styles.title}>{resume.city.title}</Text>}
         <View style={styles.specifications}>
           <Text style={styles.text}>
             <Text style={styles.bold}>Опыт работы:</Text>{' '}
-            {resume.workExperience === 0 ? 'Не требуется': `${resume.workExperience} ${getPrefixToYears(resume.workExperience)}`}
+            {resume.workExperience === 0 ? 'Не требуется' : `${resume.workExperience} ${getPrefixToYears(resume.workExperience)}`}
           </Text>
         </View>
         <View style={styles.specifications}>
@@ -93,8 +93,8 @@ const Resume = ({navigation, route}:Props) => {
           </View>
         </View>)}
 
-      <CustomButton style={styles.submitBtn} title='Откликнутся на вакансию' onPress={() => goToChat(resume.userId)}/>
-      <CustomButton theme='gray' title='Получить pdf' onPress={downloadPdf}/>
+      <CustomButton style={styles.submitBtn} title='Откликнутся на вакансию' onPress={() => goToChat(resume.userId)} />
+      <CustomButton theme='gray' title='Получить pdf' onPress={downloadPdf} />
     </ScrollView>
   );
 };

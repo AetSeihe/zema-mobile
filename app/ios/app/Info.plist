@@ -38,15 +38,15 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>true</string>
+	<string>Это нужны чтобы вы могли загружать фотографии в свой профиль,посты или резюме</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is required for use geolocation in app</string>
+	<string>Благодаря этому вы сможете увидеть земляков на онлайн-карте</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is required for use geolocation in app</string>
+	<string>Благодаря этому вы сможете увидеть земляков на онлайн-карте</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>true</string>
+	<string>Это нужны чтобы вы могли загружать фотографии в свой профиль,посты или резюме</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>true</string>
+	<string>Это нужны чтобы вы могли загружать фотографии в свой профиль,посты или резюме</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

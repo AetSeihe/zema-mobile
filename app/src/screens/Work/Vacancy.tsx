@@ -1,18 +1,18 @@
-import {Text} from '@react-native-material/core';
-import {NavigationProp} from '@react-navigation/core';
-import React, {useEffect} from 'react';
-import {Alert, Linking, Platform, View} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { Text } from '@react-native-material/core';
+import { NavigationProp } from '@react-navigation/core';
+import React, { useEffect } from 'react';
+import { Alert, Linking, Platform, View } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import CustomButton from '../../components/CustomButton';
 import Skill from '../../components/Skill';
-import {VacancyOptionsType} from '../../types/routerTypes';
-import {getPrefixToYears} from '../../utils/getPrefixToYears';
-import {getNameByEmploymentType, getNameByWorkFormatType} from '../../utils/getTextByEnums';
+import { VacancyOptionsType } from '../../types/routerTypes';
+import { getPrefixToYears } from '../../utils/getPrefixToYears';
+import { getNameByEmploymentType, getNameByWorkFormatType } from '../../utils/getTextByEnums';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import {getVacancyHTML} from '../../utils/workToHtmlString';
-import {routerStore} from '../../store/routerStore';
-import {routerNames} from '../../constants/routerNames';
-import {styles} from './styles';
+import { getVacancyHTML } from '../../utils/workToHtmlString';
+import { routerStore } from '../../store/routerStore';
+import { routerNames } from '../../constants/routerNames';
+import { styles } from './styles';
 import Share from 'react-native-share';
 
 
@@ -33,7 +33,7 @@ const goToChat = (userId: number) => {
   });
 };
 
-const Vacancy = ({route, navigation}: Props) => {
+const Vacancy = ({ route, navigation }: Props) => {
   const vacancy = route.params.vacancy;
 
 
@@ -63,7 +63,7 @@ const Vacancy = ({route, navigation}: Props) => {
     });
   }, []);
 
-  const goToCompanyWeb =() => {
+  const goToCompanyWeb = () => {
     Linking.openURL(vacancy.companyUrl);
   };
   return (
@@ -78,7 +78,7 @@ const Vacancy = ({route, navigation}: Props) => {
         <View style={styles.specifications}>
           <Text style={styles.text}>
             <Text style={styles.bold}>Опыт работы:</Text>{' '}
-            {vacancy.workExperience === 0 ? 'Не требуется': `${vacancy.workExperience} ${getPrefixToYears(vacancy.workExperience)}`}
+            {vacancy.workExperience === 0 ? 'Не требуется' : `${vacancy.workExperience} ${getPrefixToYears(vacancy.workExperience)}`}
           </Text>
         </View>
         <View style={styles.specifications}>
@@ -116,8 +116,8 @@ const Vacancy = ({route, navigation}: Props) => {
           <Text style={[styles.text, styles.bold]}>{vacancy.companyUrl}</Text>
         </TouchableOpacity>
       </View>
-      <CustomButton style={styles.submitBtn} title='Откликнутся на вакансию' onPress={() => goToChat(vacancy.userId)}/>
-      <CustomButton theme='gray' title='Получить pdf' onPress={downloadPdf}/>
+      <CustomButton style={styles.submitBtn} title='Откликнутся на вакансию' onPress={() => goToChat(vacancy.userId)} />
+      <CustomButton theme='gray' title='Получить pdf' onPress={downloadPdf} />
 
     </ScrollView>
   );

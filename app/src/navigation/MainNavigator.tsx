@@ -84,7 +84,6 @@ const Main = () => {
           <Stack.Screen name={routerNames.FRIENDS_REQUEST} component={FriendsRequest} options={{
             title: 'запросы в друзья',
           }}/>
-          <Stack.Screen name={routerNames.USER_MAP} component={UsersMapScreen}/>
         </Stack.Group>
         <Stack.Group screenOptions={{
           animation: 'slide_from_bottom',
@@ -125,6 +124,7 @@ const Main = () => {
           <Stack.Screen name={routerNames.HOME} component={HomeTabNavigation}/>
           <Stack.Screen name={routerNames.SIGN_IN} component={SignInScreen} />
           <Stack.Screen name={routerNames.SIGN_UP} component={SignUpScreen}/>
+          <Stack.Screen name={routerNames.USER_MAP} component={UsersMapScreen}/>
           <Stack.Screen name={routerNames.Chat_Item} component={Chat} options={{
             title: locale.screensName.chatItem,
             animation: 'default',

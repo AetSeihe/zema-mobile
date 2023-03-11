@@ -1,16 +1,16 @@
-import {Text} from '@react-native-material/core';
-import {Formik} from 'formik';
+import { Text } from '@react-native-material/core';
+import { Formik } from 'formik';
 import React from 'react';
-import {Alert, TouchableOpacity, View} from 'react-native';
-import {locale} from '../../locale';
-import {theme} from '../../styles/theme';
-import {styles} from './styles';
+import { Alert, TouchableOpacity, View } from 'react-native';
+import { locale } from '../../locale';
+import { theme } from '../../styles/theme';
+import { styles } from './styles';
 import * as yup from 'yup';
-import {userStore} from '../../store/userStore';
-import {routerStore} from '../../store/routerStore';
-import {routerNames} from '../../constants/routerNames';
-import {observer} from 'mobx-react-lite';
-import {InputField} from '../../components/InputField';
+import { userStore } from '../../store/userStore';
+import { routerStore } from '../../store/routerStore';
+import { routerNames } from '../../constants/routerNames';
+import { observer } from 'mobx-react-lite';
+import { InputField } from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
 import AuthHeader from '../../navigation/components/AuthHeader';
 
@@ -52,7 +52,7 @@ const SignInScreen = () => {
           onSubmit={onSubmit}
           validationSchema={schema}
         >
-          {({handleChange, handleSubmit, values, errors}) => (
+          {({ handleChange, handleSubmit, values, errors }) => (
             <>
               <InputField
                 wrapperStyle={styles.inputWrapper}

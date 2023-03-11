@@ -1,10 +1,10 @@
-import {autorun, makeAutoObservable, runInAction} from 'mobx';
-import {Alert, Linking, Platform} from 'react-native';
+import { autorun, makeAutoObservable, runInAction } from 'mobx';
+import { Alert, Linking, Platform } from 'react-native';
 import * as permissions from 'react-native-permissions';
-import {request, check, PERMISSIONS} from 'react-native-permissions';
+import { request, check, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
-import {getUserLocationRules, setUserLocationRules} from '../utils/userLocationRools';
-import {FileModule} from '../models/FileModule';
+import { getUserLocationRules, setUserLocationRules } from '../utils/userLocationRools';
+import { FileModule } from '../models/FileModule';
 class ApplicationStore {
   appIsLoading: boolean = false;
   geoLocationStatus: permissions.PermissionStatus = 'unavailable';
@@ -38,15 +38,15 @@ class ApplicationStore {
   async fetchLocation() {
     if (this.canFetchLocation()) {
       Geolocation.getCurrentPosition(
-          (position) => {
-            runInAction(() => {
-              this.cordY = position.coords.longitude;
-              this.cordX = position.coords.latitude;
-            });
-          },
-          (error) => {
-            console.log(error.code, error.message);
-          },
+        (position) => {
+          runInAction(() => {
+            this.cordY = position.coords.longitude;
+            this.cordX = position.coords.latitude;
+          });
+        },
+        (error) => {
+          console.log(error.code, error.message);
+        },
       );
     }
   }
@@ -64,6 +64,7 @@ class ApplicationStore {
         },
       ]);
     }
+
     runInAction(() => {
       this.isGeolocationLoading = true;
     });
@@ -74,8 +75,8 @@ class ApplicationStore {
         canShowLocation: res == 'granted',
       });
       this.canUpdateLocation = res == 'granted',
-      this.canShowLocation = res == 'granted' || res === 'limited',
-      this.geoLocationStatus = res;
+        this.canShowLocation = res == 'granted' || res === 'limited',
+        this.geoLocationStatus = res;
       this.isGeolocationLoading = false;
     });
 

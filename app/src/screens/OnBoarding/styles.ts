@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 
 export const styles = StyleSheet.create({
@@ -25,7 +25,14 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '700',
     fontSize: 20,
+    marginBottom: 15,
+  },
+  subtitle: {
+    textAlign: 'center',
+    maxWidth: 217,
+    alignSelf: 'center',
     marginBottom: 35,
+
   },
   buttonWrapper: {
     backgroundColor: 'rgba(8, 123, 255, 0.7)',
@@ -36,7 +43,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 500,
   },
   buttonWrapperReject: {
-    backgroundColor: '#dedede',
+    backgroundColor: '#c9c9c9',
   },
   buttonText: {
     textAlign: 'center',
@@ -44,4 +51,5 @@ export const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
   },
+
 });

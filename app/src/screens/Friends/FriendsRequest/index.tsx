@@ -1,18 +1,18 @@
-import {NavigationProp} from '@react-navigation/core';
-import {observer} from 'mobx-react';
+import { NavigationProp } from '@react-navigation/core';
+import { observer } from 'mobx-react';
 import React from 'react';
-import {FlatList, Text} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import Animated, {FadeIn, SlideInRight} from 'react-native-reanimated';
-import {CatAlert} from '../../../components/CatAlert';
-import {FriendNames, routerNames} from '../../../constants/routerNames';
-import {Friend} from '../../../models/Friend';
-import {User} from '../../../models/User';
-import {friendStore} from '../../../store/friendStore';
-import {routerStore} from '../../../store/routerStore';
-import {FriendHeader} from '../components/FriendHeader';
+import { FlatList, Text } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import Animated, { FadeIn, SlideInRight } from 'react-native-reanimated';
+import { CatAlert } from '../../../components/CatAlert';
+import { FriendNames, routerNames } from '../../../constants/routerNames';
+import { Friend } from '../../../models/Friend';
+import { User } from '../../../models/User';
+import { friendStore } from '../../../store/friendStore';
+import { routerStore } from '../../../store/routerStore';
+import { FriendHeader } from '../components/FriendHeader';
 import UserCard from '../components/UserCard';
-import {styles} from '../FriendsSearch/styles';
+import { styles } from '../FriendsSearch/styles';
 
 type Props = {
   navigation: NavigationProp<any>,
@@ -28,7 +28,7 @@ const onPressCard = (user: User) => {
 };
 
 
-const FriendsRequest = ({navigation}: Props) => {
+const FriendsRequest = ({ navigation }: Props) => {
   const onPressSearch = () => {
     navigation.navigate(FriendNames.FriendsSearch);
   };
@@ -65,9 +65,9 @@ const FriendsRequest = ({navigation}: Props) => {
       />
       <FlatList
         style={styles.cardWrapper}
-        ListEmptyComponent={<CatAlert title='У вас еще нет запросов в друзья'/>}
+        ListEmptyComponent={<CatAlert title='У вас еще нет запросов в друзья' />}
         data={friendStore.requests}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <Animated.View key={item.id} entering={FadeIn} exiting={SlideInRight} style={styles.card}>
             <UserCard
               photo={item.user.mainPhoto?.image}

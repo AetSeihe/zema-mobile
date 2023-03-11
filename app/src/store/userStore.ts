@@ -1,12 +1,12 @@
-import {makeAutoObservable, reaction, runInAction} from 'mobx';
-import {FileModule} from '../models/FileModule';
-import {User} from '../models/User';
-import {userService} from '../services/userService';
-import {SignInDataType, SignUpDataType, UpdateProfileType} from '../types/userTypes';
-import {friendStore} from './friendStore';
-import {applicationStore} from './applicationStore';
+import { makeAutoObservable, reaction, runInAction } from 'mobx';
+import { FileModule } from '../models/FileModule';
+import { User } from '../models/User';
+import { userService } from '../services/userService';
+import { SignInDataType, SignUpDataType, UpdateProfileType } from '../types/userTypes';
+import { friendStore } from './friendStore';
+import { applicationStore } from './applicationStore';
 import Geolocation from 'react-native-geolocation-service';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 
 
 class UserStore {
@@ -21,20 +21,20 @@ class UserStore {
     reaction(() => !!this.user?.id && applicationStore.canUpdateLocation, () => {
       if (applicationStore.canUpdateLocation) {
         Geolocation.getCurrentPosition(
-            (position) => {
-              const cordX = +position.coords.latitude;
-              const cordY = +position.coords.longitude;
-              if (cordY && cordX) {
-                this.update({
-                  cordX: cordX,
-                  cordY: cordY,
-                });
-              }
-            },
-            (error) => {
-              Alert.alert('Призошла ошибка при отправке геолокации');
-            },
-            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+          (position) => {
+            const cordX = +position.coords.latitude;
+            const cordY = +position.coords.longitude;
+            if (cordY && cordX) {
+              this.update({
+                cordX: cordX,
+                cordY: cordY,
+              });
+            }
+          },
+          (error) => {
+            Alert.alert('Призошла ошибка при отправке геолокации');
+          },
+          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
         );
       }
     });
@@ -62,7 +62,7 @@ class UserStore {
       });
     } catch (e: any) {
       runInAction(() => {
-        this.authErrors = ['Пользователь не найден'];
+        this.authErrors = ['Логин или пароль введен не верно'];
         this.loading = false;
       });
 
@@ -89,7 +89,7 @@ class UserStore {
     }
   }
 
-  async signInById(id:number) {
+  async signInById(id: number) {
     try {
       runInAction(() => {
         this.loading = true;
@@ -99,7 +99,7 @@ class UserStore {
         this.user = user;
         this.loading = false;
       });
-    } catch (e) {}
+    } catch (e) { }
   }
 
   async update(data: UpdateProfileType): Promise<User> {

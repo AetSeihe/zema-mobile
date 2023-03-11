@@ -15,7 +15,7 @@ import Animated, {FadeIn, FadeOut, Layout} from 'react-native-reanimated';
 
 const formLocale = locale.postForm;
 const MAX_POST_TEXT_COUNT = 5000;
-const MIN_POST_TITLE_COUNT = 7;
+const MIN_POST_TITLE_COUNT = 2;
 const MAX_POST_TITLE_COUNT = 50;
 const MAX_PHOTO_COUNT = 10;
 

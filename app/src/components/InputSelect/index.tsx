@@ -1,6 +1,7 @@
 import {Text, TextInputProps} from '@react-native-material/core';
 import React, {useState} from 'react';
 import {FlatList, ListRenderItemInfo, TouchableOpacity, View} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import {ViewStyle} from 'react-native-material-ui';
 import {theme} from '../../styles/theme';
 import {InputField, InputFieldProps} from '../InputField';
@@ -30,9 +31,9 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
   };
 
 
-  const renderOption = ({item}: ListRenderItemInfo<string> ) => {
+  const renderOption = (item: string ) => {
     return (
-      <TouchableOpacity onPress={() => onPress(item)} style={styles.option}>
+      <TouchableOpacity key={item} onPress={() => onPress(item)} style={styles.option}>
         <Text style={styles.optionText}>{item}</Text>
       </TouchableOpacity>
     );
@@ -50,15 +51,11 @@ const InputSelect = ({wrapperStyle, options, onPressOption, onChangeText, ...pro
         onPressIn={() => setNeedShowOptions(true)}
         onBlur={() => setTimeout(() => setNeedShowOptions(false), 2000)}
       />
-      {needShowOptions && !!options.length && <FlatList
-        nestedScrollEnabled
-        keyboardShouldPersistTaps='always'
-        style={styles.optionsWrapper}
-        data={options}
-        renderItem={renderOption}
-        keyExtractor={(option) => option}
-      />}
-
+  {needShowOptions && (
+    <ScrollView  style={styles.optionsWrapper}>
+      {options.map(item => renderOption(item))}
+    </ScrollView>
+  )}
     </View>
   );
 };

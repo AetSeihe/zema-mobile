@@ -1,8 +1,8 @@
-import {setAuthorizationToken} from '../api/axiosInit';
-import {userApi} from '../api/userApi';
-import {User} from '../models/User';
-import {GetAllUsersOptions, SignInDataType, SignUpDataType, UpdateProfileType, UserType} from '../types/userTypes';
-import {setAuthUserData} from '../utils/userAuthToken';
+import { setAuthorizationToken } from '../api/axiosInit';
+import { userApi } from '../api/userApi';
+import { User } from '../models/User';
+import { GetAllUsersOptions, SignInDataType, SignUpDataType, UpdateProfileType, UserType } from '../types/userTypes';
+import { setAuthUserData } from '../utils/userAuthToken';
 
 
 const getAllUsersByOptions = async (data: GetAllUsersOptions): Promise<User[]> => {
@@ -23,7 +23,7 @@ const signIn = async (data: SignInDataType): Promise<UserType> => {
 
     return resData.user;
   } catch (e: any) {
-    throw new Error('Пользователь не найден');
+    throw new Error('Логин или пароль введен не верно');
   }
 };
 
@@ -65,4 +65,4 @@ const deletePhotoByName = async (photoName: string): Promise<void> => {
 };
 
 
-export const userService = {signIn, signUp, getUserById, update, getAllUsersByOptions, deletePhotoByName};
+export const userService = { signIn, signUp, getUserById, update, getAllUsersByOptions, deletePhotoByName };

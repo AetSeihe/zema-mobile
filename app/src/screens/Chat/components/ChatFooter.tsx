@@ -1,6 +1,6 @@
 import {Text} from '@react-native-material/core';
 import React from 'react';
-import {Image, StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
+import {Image, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import {Asset} from 'react-native-image-picker';
 import Animated, {FadeIn, FadeInDown, FadeOutDown, Layout, SlideInRight, SlideOutDown, SlideOutRight} from 'react-native-reanimated';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -30,7 +30,7 @@ const ChatFooter = ({value,
   onCloseReply,
 }: Props) => {
   return (
-    <>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View>
         {!!images.length && (
           <Animated.ScrollView
@@ -85,7 +85,7 @@ const ChatFooter = ({value,
         )}
 
       </SafeAreaView>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -152,11 +152,12 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    minHeight: 40,
     paddingHorizontal: 10,
+    paddingVertical: 15,
     borderRadius: 15,
     backgroundColor: theme.gray,
     marginRight: 5,
+    textAlignVertical: 'center'
 
   },
   sendMessage: {
